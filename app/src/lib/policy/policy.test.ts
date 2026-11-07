@@ -1,10 +1,14 @@
 import { describe, expect, it } from "vitest";
 import {
+  CENARIO_PADRAO,
+  CENARIO_VIGENTE,
   compensaResolverSozinho,
   custoEsperadoResolver,
   decidirNivel,
   diasUteisEntre,
   LIMIAR_CONFIANCA,
+  limiteDoAtendente,
+  sorteio,
   MENSAGEM_EM_ANALISE,
   podeAprovar,
   podeDecidirSuspeita,
@@ -16,6 +20,7 @@ import {
 } from "./index";
 
 // ---------- apoio (casos fictícios) ----------
+// Os testes das regras de politicas.csv fixam o cenário VIGENTE; os do cenário configurável ficam no fim.
 
 function entrada(motivo: Motivo, fatos: Partial<FatosPedido> = {}, extra: Partial<EntradaPolitica> = {}): EntradaPolitica {
   return {
@@ -25,6 +30,7 @@ function entrada(motivo: Motivo, fatos: Partial<FatosPedido> = {}, extra: Partia
     sinais: [],
     valorAcao: 0,
     canal: "whatsapp",
+    cenario: CENARIO_VIGENTE,
     ...extra,
   };
 }
@@ -469,5 +475,152 @@ describe("dias úteis", () => {
     const parado = diasUteisEntre("2026-10-29", "2026-11-04"); // sex, ter, qua
     expect(parado).toBe(3);
     expect(decidirNivel(entrada("rastreio", { diasUteisAtraso: 0, diasUteisSemAtualizacao: parado })).ferramenta).toBe("abrir_chamado_transportadora");
+  });
+});
+
+// ---------- Cenário de política (docs/decisoes.md, seção 4) ----------
+
+describe("cenário: padrão recomendado pela simulação", () => {
+  it("é o 6b: limite de reenvio 500, auditoria 10%, estorno sem teto, brinde sem foto, fotos bloqueadas, sem freio, p 0,05", () => {
+    expect(CENARIO_PADRAO).toMatchObject({
+      limiteReenvioRs: 500,
+      auditoriaAmostraPct: 10,
+      estornoDuplicidadeSemTeto: true,
+      brindeSemFoto: true,
+      bloquearFotosConfirmadas: true,
+      freioDiarioRs: null,
+      pSemSinal: 0.05,
+    });
+  });
+  it("vigente reproduz politicas.csv", () => {
+    expect(CENARIO_VIGENTE).toMatchObject({ limiteReenvioRs: 200, auditoriaAmostraPct: 0, estornoDuplicidadeSemTeto: false, brindeSemFoto: false, freioDiarioRs: null, pSemSinal: 0.05 });
+  });
+  it("sem cenário na entrada vale o padrão", () => {
+    const { cenario: _c, ...semCenario } = entrada("avaria", { ...ELEGIVEL, valorPedido: 100 }, { valorAcao: 300 });
+    void _c;
+    expect(decidirNivel(semCenario).nivel).toBe(0); // 300 <= 500 do padrão
+  });
+});
+
+describe("cenário: limite do atendente para reenvio", () => {
+  const cen = { ...CENARIO_VIGENTE, limiteReenvioRs: 300, pSemSinal: 0.02 }; // p 0,02 para a fórmula não ser o que barra
+  it("R$ 300 exatos passa; R$ 300,01 vai para nível 1", () => {
+    expect(evidencia("avaria", { valorPedido: 300 }, { valorAcao: 300, cenario: cen }).nivel).toBe(0);
+    expect(evidencia("avaria", { valorPedido: 300 }, { valorAcao: 300.01, cenario: cen }).nivel).toBe(1);
+  });
+  it("vale para reimpressão; troca continua em R$ 200 e reembolso em R$ 100", () => {
+    expect(evidencia("erro_personalizacao", { valorPedido: 250 }, { valorAcao: 250, cenario: cen }).nivel).toBe(0);
+    expect(limiteDoAtendente("trocar_produto", cen)).toBe(200);
+    expect(limiteDoAtendente("reembolsar", cen)).toBe(100);
+  });
+});
+
+describe("cenário: auditoria por amostra", () => {
+  const cen = { ...CENARIO_VIGENTE, auditoriaAmostraPct: 10 };
+  const chaves = Array.from({ length: 2000 }, (_, i) => `AT${String(100000 + i)}`);
+  it("desligada: nenhum caso sorteado", () => {
+    expect(chaves.some((k) => decidirNivel(entrada("cupom", {}, { chaveAmostra: k })).auditoriaPosterior)).toBe(false);
+  });
+  it("ligada: cerca de 10% do nível 0 sorteado, executa no nível 0 e cita a regra", () => {
+    const sorteados = chaves.filter((k) => decidirNivel(entrada("cupom", {}, { chaveAmostra: k, cenario: cen })).auditoriaPosterior);
+    expect(sorteados.length / chaves.length).toBeGreaterThan(0.08);
+    expect(sorteados.length / chaves.length).toBeLessThan(0.12);
+    const d = decidirNivel(entrada("cupom", {}, { chaveAmostra: sorteados[0], cenario: cen }));
+    expect(d.nivel).toBe(0);
+    expect(d.justificativa).toContain("auditoria");
+  });
+  it("sorteio determinístico e só no nível 0", () => {
+    const k = chaves.find((x) => sorteio(x) < 10)!;
+    expect(sorteio(k)).toBe(sorteio(k));
+    expect(decidirNivel(entrada("cancelamento", {}, { chaveAmostra: k, cenario: cen })).auditoriaPosterior).toBeUndefined();
+  });
+  it("sem chave não sorteia", () => {
+    expect(decidirNivel(entrada("cupom", {}, { cenario: { ...cen, auditoriaAmostraPct: 100 } })).auditoriaPosterior).toBeUndefined();
+  });
+});
+
+describe("cenário: estorno de duplicidade sem teto", () => {
+  const confirmada = { duplicidadeConfirmadaGateway: true, duplicidadeJaEstornada: false };
+  const cen = { ...CENARIO_VIGENTE, estornoDuplicidadeSemTeto: true };
+  it("ligado: R$ 450 comprovado no gateway vai no nível 0", () => {
+    const r = decidirNivel(entrada("cobranca_duplicada", confirmada, { valorAcao: 450, cenario: cen }));
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "reembolsar" });
+    expect(r.justificativa).toContain("estorno de duplicidade sem teto");
+  });
+  it("ligado, mas sem comprovação no gateway: continua nível 1", () => {
+    expect(decidirNivel(entrada("cobranca_duplicada", { duplicidadeConfirmadaGateway: false }, { valorAcao: 450, cenario: cen })).nivel).toBe(1);
+  });
+  it("não tira o teto de outros reembolsos", () => {
+    expect(decidirNivel(entrada("atraso", { diasUteisAtraso: 9 }, { valorAcao: 450, cenario: cen })).nivel).toBe(1);
+  });
+});
+
+describe("cenário: brinde sem foto", () => {
+  const cen = { ...CENARIO_VIGENTE, brindeSemFoto: true };
+  it("ligado: brinde sem foto vai para a fórmula e resolve no nível 0", () => {
+    const r = evidencia("brinde", { temFoto: false, valorPedido: 150 }, { valorAcao: 24.9, cenario: cen });
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "reenviar_produto" });
+    expect(r.justificativa).toContain("brinde sem foto");
+  });
+  it("ligado: pedido acima de R$ 266,66 com p 0,05 vai para nível 1 pela fórmula", () => {
+    expect(evidencia("brinde", { temFoto: false, valorPedido: 300 }, { valorAcao: 24.9, cenario: cen }).nivel).toBe(1);
+  });
+  it("não vale para item faltante nem avaria", () => {
+    expect(evidencia("item_faltante", { temFoto: false }, { cenario: cen }).ferramenta).toBe("solicitar_foto");
+    expect(evidencia("avaria", { temFoto: false }, { cenario: cen }).ferramenta).toBe("solicitar_foto");
+  });
+  it("desligado: brinde sem foto pede a foto", () => {
+    expect(evidencia("brinde", { temFoto: false }).ferramenta).toBe("solicitar_foto");
+  });
+});
+
+describe("cenário: fotos bloqueadas", () => {
+  const cen = { ...CENARIO_VIGENTE, bloquearFotosConfirmadas: true, hashesBloqueados: new Set(["ffff000011112222"]) };
+  it("ligada: foto com hash confirmado vai para nível 2 antes de qualquer regra, sem acusação", () => {
+    const r = evidencia("avaria", { diasDesdeRecebimento: 20 }, { hashesFotos: ["aaaa", "ffff000011112222"], cenario: cen });
+    expect(r).toMatchObject({ nivel: 2, ferramenta: "sinalizar_suspeita", mensagemCliente: MENSAGEM_EM_ANALISE });
+    expect(r.justificativa).toContain("fotos bloqueadas");
+  });
+  it("hash fora da lista segue a regra normal", () => {
+    expect(evidencia("avaria", {}, { hashesFotos: ["aaaa"], cenario: cen }).nivel).toBe(0);
+  });
+  it("desligada: a lista é ignorada", () => {
+    expect(evidencia("avaria", {}, { hashesFotos: ["ffff000011112222"], cenario: { ...cen, bloquearFotosConfirmadas: false } }).nivel).toBe(0);
+  });
+});
+
+describe("cenário: freio diário", () => {
+  const cen = { ...CENARIO_VIGENTE, freioDiarioRs: 1000 };
+  it("até o teto exato: nível 0; um centavo acima: nível 1 com a regra citada", () => {
+    expect(evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 920, cenario: cen }).nivel).toBe(0);
+    const r = evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 920.01, cenario: cen });
+    expect(r.nivel).toBe(1);
+    expect(r.justificativa).toContain("Freio diário");
+  });
+  it("ação sem dinheiro não é freada", () => {
+    expect(decidirNivel(entrada("rastreio", { diasUteisAtraso: 0 }, { gastoAutonomoHojeRs: 99999, cenario: cen })).nivel).toBe(0);
+  });
+  it("desligado (null): sem teto", () => {
+    expect(evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 1e9 }).nivel).toBe(0);
+  });
+});
+
+describe("cenário: p inicial sem sinal", () => {
+  it.each<[number, number, number]>([
+    [0.02, 666.66, 666.67],
+    [0.05, 266.66, 266.67],
+    [0.1, 133.33, 133.34],
+  ])("p %s: pedido de R$ %s resolve, R$ %s vai para nível 1", (p, abaixo, acima) => {
+    const cen = { ...CENARIO_VIGENTE, pSemSinal: p, limiteReenvioRs: 10_000 };
+    expect(evidencia("item_faltante", { valorPedido: abaixo }, { valorAcao: 50, cenario: cen }).nivel).toBe(0);
+    expect(evidencia("item_faltante", { valorPedido: acima }, { valorAcao: 50, cenario: cen }).nivel).toBe(1);
+  });
+  it("não muda a probabilidade com sinais", () => {
+    expect(probabilidadeImprocedente(["software_de_edicao"], 0.01)).toBe(0.15);
+  });
+  it("cenário inválido → RangeError", () => {
+    for (const ruim of [{ pSemSinal: 1.5 }, { auditoriaAmostraPct: 101 }, { limiteReenvioRs: -1 }, { freioDiarioRs: -5 }]) {
+      expect(() => decidirNivel(entrada("cupom", {}, { cenario: { ...CENARIO_VIGENTE, ...ruim } }))).toThrow(RangeError);
+    }
   });
 });

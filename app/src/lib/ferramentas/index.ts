@@ -6,7 +6,7 @@
 import { mascararPii } from "../pii";
 import { AGORA, BASE, dia, type Base, type Pedido } from "../dados";
 import { STATUS_COBRANCA_EFETIVADA } from "../contexto";
-import { podeAprovar, type Papel, type Pessoa } from "../policy";
+import { CENARIO_PADRAO, podeAprovar, type CenarioPolitica, type Papel, type Pessoa } from "../policy";
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -71,12 +71,14 @@ export interface OpcoesSimulador {
   base?: Base;
   papel?: Papel; // papel com que o agente age (padrão: atendente)
   agora?: () => string; // "AAAA-MM-DD HH:MM:SS"
+  cenario?: CenarioPolitica; // limite de reenvio e estorno sem teto (padrão: CENARIO_PADRAO)
 }
 
 export class Simulador {
   readonly base: Base;
   readonly papel: Papel;
   readonly agora: () => string;
+  readonly cenario: CenarioPolitica;
   readonly log: RegistroAcao[] = [];
   readonly aprovacoes = new Map<string, Aprovacao>();
   readonly suspeitas: Suspeita[] = [];
@@ -88,6 +90,7 @@ export class Simulador {
     this.base = o.base ?? BASE;
     this.papel = o.papel ?? "atendente";
     this.agora = o.agora ?? (() => AGORA);
+    this.cenario = o.cenario ?? CENARIO_PADRAO;
   }
 
   get eu(): Pessoa {
@@ -122,6 +125,7 @@ export class Simulador {
 // ---------------------------------------------------------------------------
 interface Pedidos {
   valor?: number;
+  motivo?: string;
   order_id?: string | null;
   aprovacao_id?: string;
 }
@@ -155,7 +159,13 @@ function autorizar(sim: Simulador, ferramenta: string, p: Pedidos): { erro: Resu
     }
   }
 
-  const limite = def.limites.valor_max_sem_aprovacao_rs;
+  let limite: number | boolean | undefined = def.limites.valor_max_sem_aprovacao_rs;
+  // Cenário de política: limite de reenvio/reimpressão configurável; estorno de duplicidade comprovada sem teto.
+  if (ferramenta === "reenviar_produto" || ferramenta === "reimprimir_personalizacao") limite = sim.cenario.limiteReenvioRs;
+  if (ferramenta === "reembolsar" && p.motivo === "cobranca_duplicada" && sim.cenario.estornoDuplicidadeSemTeto && p.order_id) {
+    const efetivadas = sim.base.pagamentos.filter((x) => x.order_id === p.order_id && STATUS_COBRANCA_EFETIVADA.has(x.status));
+    if (efetivadas.length > 1) limite = undefined;
+  }
   if (typeof limite === "number" && p.valor !== undefined) {
     if (!Number.isFinite(p.valor) || p.valor < 0) return { erro: { ok: false, erro: `valor inválido: ${p.valor}` } };
     if (p.valor > limite) {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { BASE, baseVazia, type Base, type Pedido } from "../dados";
 import { decidirNivel } from "../policy";
-import { fatosParaPolitica, montarContexto } from "./index";
+import { fatosParaPolitica, montarContexto, pedidoNaData } from "./index";
 
 // ---------- base fictícia ----------
 
@@ -171,5 +171,68 @@ describe("dados reais exportados (fila de 02/11)", () => {
         expect([0, 1, 2]).toContain(d.nivel);
       }
     }
+  });
+});
+
+describe("contexto em outra data (simulação sobre o histórico)", () => {
+  const eventos = [
+    { portal: "Expressa Já", pedido_ref: "GBH900001", data_hora_evento: "2026-10-21 15:00", status: "coletado", local: "CD1", previsao_entrega: null, codigo_rastreio: null },
+    { portal: "Expressa Já", pedido_ref: "GBH900001", data_hora_evento: "2026-10-29 10:00", status: "entregue", local: "BA", previsao_entrega: null, codigo_rastreio: null },
+  ];
+  const final = pedido({ status_entrega: "entregue", data_entrega: "2026-10-29", data_separacao: "2026-10-21 10:00:00", cd_separacao: "CD1" });
+
+  it("na posição dos dados (02/11 08:00) o pedido fica como está", () => {
+    expect(pedidoNaData(final, eventos, "2026-11-02 08:00:00")).toBe(final);
+  });
+
+  it("antes da separação: aguardando, sem separação e sem entrega", () => {
+    expect(pedidoNaData(final, eventos, "2026-10-20 12:00:00")).toMatchObject({
+      status_entrega: "aguardando_separacao",
+      data_separacao: null,
+      cd_separacao: null,
+      data_entrega: null,
+    });
+  });
+
+  it("separado e antes do evento de entrega: em trânsito", () => {
+    expect(pedidoNaData(final, eventos, "2026-10-29 09:59:00")).toMatchObject({ status_entrega: "em_transito", data_entrega: null });
+    expect(pedidoNaData(final, eventos, "2026-10-29 10:00:00")).toMatchObject({ status_entrega: "entregue", data_entrega: "2026-10-29" });
+  });
+
+  it("extravio só a partir do evento", () => {
+    const ext = [...eventos.slice(0, 1), { ...eventos[0], data_hora_evento: "2026-10-25 08:00", status: "extraviado" }];
+    const p = pedido({ status_entrega: "extraviado" });
+    expect(pedidoNaData(p, ext, "2026-10-24 08:00:00").status_entrega).toBe("em_transito");
+    expect(pedidoNaData(p, ext, "2026-10-26 08:00:00").status_entrega).toBe("extraviado");
+  });
+
+  it("a ficha não enxerga eventos, cobranças, estornos nem chamados do futuro", () => {
+    const pag = (id: string, status: "capturada" | "estornada", criacao: string) => ({
+      transacao_id: id, order_id: "GBH900001", metodo: "cartao", status, valor: 129.9, valor_estornado: status === "estornada" ? 129.9 : 0, data_hora_criacao: criacao,
+    });
+    const b = base({
+      pagamentos: [pag("T1", "capturada", "2026-10-20 10:00:00"), pag("T2", "estornada", "2026-10-20 10:01:00")],
+      estornos: [{ estorno_id: "E1", transacao_id: "T2", order_id: "GBH900001", valor: 129.9, motivo: "cobranca_indevida", status: "concluido", data_hora_solicitacao: "2026-10-28 10:00:00" }],
+      chamados: [{ chamado_id: "EXJ-1", transportadora: "Expressa Já", order_id: "GBH900001", conversation_id: null, data_abertura: "2026-10-26 10:00:00", motivo: "x", prazo_resposta: null, status: "encerrado", resposta_transportadora: null, nova_previsao_entrega: null, data_encerramento: "2026-10-30 10:00:00" }],
+    });
+    const antes = montarContexto("AT900001", b, "2026-10-22 08:00:00")!;
+    expect(antes.rastreio.valor.map((e) => e.status)).toEqual(["coletado"]);
+    expect(antes.resumo.duplicidade.valor).toBe(true);
+    expect(antes.resumo.duplicidadeJaEstornada.valor).toBe(false); // status "estornada" é da posição de 02/11
+    expect(antes.resumo.chamadosAbertos.valor).toHaveLength(0);
+    const depois = montarContexto("AT900001", b, "2026-10-29 12:00:00")!;
+    expect(depois.resumo.duplicidadeJaEstornada.valor).toBe(true); // estorno registrado em 28/10
+    expect(depois.resumo.chamadosAbertos.valor.map((c) => c.chamado_id)).toEqual(["EXJ-1"]); // encerrado só em 30/10
+  });
+
+  it("reenvios do cliente no OMS nos 365 dias antes de agora", () => {
+    const t = (id: string, data: string) => ({
+      solicitacao_id: id, customer_id: "CH900001", order_id_original: "GBH800000", tipo: "reenvio" as const, motivo_registrado: "x", data_solicitacao: data, status: "entregue", custo_total: 10,
+    });
+    const b = base({ trocas: [t("S0", "2025-09-01 10:00:00"), t("S1", "2026-03-01 10:00:00"), t("S2", "2026-10-01 10:00:00"), t("S3", "2026-11-01 10:00:00")] });
+    const f = montarContexto("AT900001", b, "2026-10-15 12:00:00")!;
+    expect(f.resumo.reenviosOms12m.valor).toBe(2); // S1 e S2; S0 tem mais de 365 dias, S3 é futuro
+    expect(fatosParaPolitica(f, { reenvios: "oms" })!.reenviosCliente12m).toBe(2);
+    expect(fatosParaPolitica(f)!.reenviosCliente12m).toBe(2); // CRM da base fictícia
   });
 });

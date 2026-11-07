@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { BASE, baseVazia, type Base, type Pedido } from "../dados";
+import { CENARIO_PADRAO, CENARIO_VIGENTE } from "../policy";
 import * as F from "./index";
 import { EXECUTADO_POR, FERRAMENTAS, PRECISA_APROVACAO, Simulador } from "./index";
 
@@ -54,7 +55,7 @@ function base(parcial: Partial<Base> = {}): Base {
 }
 
 function sim(papel: "atendente" | "analista" | "supervisor" = "atendente") {
-  return new Simulador({ base: base(), papel, agora: () => "2026-11-02 09:00:00" });
+  return new Simulador({ base: base(), papel, agora: () => "2026-11-02 09:00:00", cenario: CENARIO_VIGENTE });
 }
 
 const COLUNAS_LOG = ["acao_id", "conversation_id", "order_id", "data_hora", "sistema", "acao", "valor_rs", "executado_por", "aprovado_por", "referencia_sistema"];
@@ -131,6 +132,23 @@ describe("limites (valor_max_sem_aprovacao_rs)", () => {
     expect(!r.ok && r.erro).toContain(PRECISA_APROVACAO);
   });
 
+  it("cenário padrão (6b): reenvio até R$ 500 sem aprovação; reembolso continua R$ 100", () => {
+    const s = new Simulador({ base: base(), cenario: CENARIO_PADRAO });
+    expect(F.reenviar_produto(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 500, motivo: "avaria" }).ok).toBe(true);
+    expect(F.reenviar_produto(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 500.01, motivo: "avaria" }).ok).toBe(false);
+    expect(F.reembolsar(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 100.01, motivo: "atraso" }).ok).toBe(false);
+  });
+
+  it("cenário com estorno sem teto: duplicidade comprovada no gateway estorna acima de R$ 100", () => {
+    const cen = { ...CENARIO_VIGENTE, estornoDuplicidadeSemTeto: true };
+    const s = new Simulador({ base: base(), cenario: cen });
+    expect(F.reembolsar(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 250, motivo: "cobranca_duplicada" }).ok).toBe(true);
+    // pedido sem duplicidade no gateway: teto continua
+    expect(F.reembolsar(s, { conversation_id: "AT900001", order_id: "GCH900002", valor: 250, motivo: "cobranca_duplicada" }).ok).toBe(false);
+    // outro motivo: teto continua
+    expect(F.reembolsar(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 250, motivo: "atraso" }).ok).toBe(false);
+  });
+
   it("acima do limite com aprovação do supervisor: executa e registra quem aprovou", () => {
     const s = sim();
     const pedido = F.solicitar_aprovacao(s, { acao: "reembolsar", order_id: "GCH900001", conversation_id: "AT900001", valor: 250, justificativa: "cobrança duplicada confirmada" });
@@ -163,7 +181,7 @@ describe("limites (valor_max_sem_aprovacao_rs)", () => {
   });
 
   it("supervisor não aprova a própria ação", () => {
-    const s = new Simulador({ base: base(), papel: "atendente" });
+    const s = new Simulador({ base: base(), papel: "atendente", cenario: CENARIO_VIGENTE });
     const r = F.solicitar_aprovacao(s, { acao: "reembolsar", order_id: "GCH900001", valor: 150, justificativa: "x" });
     const id = r.ok ? r.dados!.aprovacao_id : "";
     const d = s.decidirAprovacao(id, { id: EXECUTADO_POR, papel: "supervisor" }, true);

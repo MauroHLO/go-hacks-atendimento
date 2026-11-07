@@ -4,7 +4,9 @@
 
 import {
   ATRASO_LIMITE_DIAS_UTEIS,
+  CENARIO_PADRAO,
   CUSTO_SINALIZAR_RS,
+  type CenarioPolitica,
   FATOR_CUSTO_IMPROCEDENTE,
   LIMIAR_CONFIANCA,
   LIMITE_ATENDENTE_REEMBOLSO_RS,
@@ -113,6 +115,10 @@ export interface EntradaPolitica {
   valorAcao: number; // R$ da ação proposta (reenvio, reembolso etc.); 0 se não houver dinheiro
   canal: Canal;
   mencaoSaude?: boolean; // o texto do cliente fala de saúde ou reação (lib/agent/sinais)
+  cenario?: CenarioPolitica; // padrão: CENARIO_PADRAO
+  hashesFotos?: readonly string[]; // hash_perceptual das fotos da conversa (lista de bloqueio)
+  gastoAutonomoHojeRs?: number; // R$ já gastos hoje em ações autônomas (freio diário)
+  chaveAmostra?: string; // ex.: conversation_id; sorteio determinístico da auditoria
 }
 
 export interface DecisaoPolitica {
@@ -123,6 +129,7 @@ export interface DecisaoPolitica {
   justificativa: string; // cita a regra de origem
   precisaAprovacaoDe?: "supervisor";
   mensagemCliente?: string; // só quando a política fixa o texto (caso sinalizado)
+  auditoriaPosterior?: boolean; // nível 0 sorteado para revisão depois de executado
 }
 
 // ---------------------------------------------------------------------------
@@ -164,8 +171,19 @@ const LIMITE_POR_FERRAMENTA: Partial<Record<Ferramenta, number>> = {
 };
 
 // Limite do atendente para a ferramenta; null = ferramenta sem limite de valor.
-export function limiteDoAtendente(f: Ferramenta): number | null {
+export function limiteDoAtendente(f: Ferramenta, cenario: CenarioPolitica = CENARIO_PADRAO): number | null {
+  if (f === "reenviar_produto" || f === "reimprimir_personalizacao") return cenario.limiteReenvioRs;
   return LIMITE_POR_FERRAMENTA[f] ?? null;
+}
+
+// Sorteio determinístico 0-99 (FNV-1a 32 bits): a mesma chave cai sempre na mesma faixa.
+export function sorteio(chave: string): number {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < chave.length; i++) {
+    h ^= chave.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h % 100;
 }
 
 // ---------------------------------------------------------------------------
@@ -181,12 +199,12 @@ export function classificarSinais(sinais: readonly SinalEvidencia[]) {
 }
 
 // Sinais de elegibilidade não contam: não são suspeita.
-export function probabilidadeImprocedente(sinais: readonly SinalEvidencia[]): number {
+export function probabilidadeImprocedente(sinais: readonly SinalEvidencia[], pSemSinal: number = PROB_IMPROCEDENTE.nenhumSinal): number {
   const { fortes, fracos } = classificarSinais(sinais);
   if (fortes.length > 0) return PROB_IMPROCEDENTE.algumForte;
   if (fracos.length >= 2) return PROB_IMPROCEDENTE.doisOuMaisFracos;
   if (fracos.length === 1) return PROB_IMPROCEDENTE.umFraco;
-  return PROB_IMPROCEDENTE.nenhumSinal;
+  return pSemSinal;
 }
 
 // Custo esperado de resolver sem olhar: p × 45% × valor do pedido (parametros.md).
@@ -263,6 +281,7 @@ const ACAO_EVIDENCIA: Record<"avaria" | "item_faltante" | "brinde" | "erro_perso
 
 function regraEvidencia(motivo: keyof typeof ACAO_EVIDENCIA, e: EntradaPolitica): Parcial {
   const { regra, ferramenta, acao } = ACAO_EVIDENCIA[motivo];
+  const cenario = e.cenario ?? CENARIO_PADRAO;
   const f = e.fatos;
   const sinais = [...(e.sinais ?? [])];
   if ((f.reenviosCliente12m ?? 0) >= 2) sinais.push("cliente_2_ou_mais_reenvios_12m");
@@ -281,9 +300,12 @@ function regraEvidencia(motivo: keyof typeof ACAO_EVIDENCIA, e: EntradaPolitica)
       regra,
     );
   }
-  if (elegibilidade.includes("sem_foto") || f.temFoto !== true) {
+  const semFoto = elegibilidade.includes("sem_foto") || f.temFoto !== true;
+  const dispensaFoto = motivo === "brinde" && cenario.brindeSemFoto;
+  if (semFoto && !dispensaFoto) {
     return d(0, "solicitar_foto", "solicitar_foto", "A política exige foto: pede a foto antes de decidir.", regra);
   }
+  const regraCusto: IdRegra = semFoto ? "brinde_sem_foto" : regra;
 
   // 2. Sinal forte: sempre nível 2, antes de qualquer fórmula. O supervisor decide.
   //    Nunca nega por suspeita; ao cliente, só "em análise".
@@ -295,25 +317,29 @@ function regraEvidencia(motivo: keyof typeof ACAO_EVIDENCIA, e: EntradaPolitica)
 
   // 3. Sem sinal forte, a fórmula decide entre 0 e 1 (inclusive com sinais fracos):
   //    nível 0 se p × 45% × valor do pedido < R$ 6 e o valor da ação cabe no limite do atendente.
-  const p = probabilidadeImprocedente(sinais);
+  const p = probabilidadeImprocedente(sinais, cenario.pSemSinal);
   const custo = custoEsperadoResolver(p, f.valorPedido);
-  const limite = limiteDoAtendente(ferramenta)!;
+  const limite = limiteDoAtendente(ferramenta, cenario)!;
   const fracosTxt = fracos.length > 0 ? `sinais fracos: ${fracos.join(", ")}; ` : "sem sinal; ";
   const textoCusto = `${fracosTxt}p=${p.toFixed(2)}, custo esperado ${reais(custo)} contra ${reais(CUSTO_SINALIZAR_RS)} de sinalizar`;
   const compensa = compensaResolverSozinho(p, f.valorPedido);
+  const foto = semFoto ? "Brinde sem exigência de foto" : "Foto recebida";
   if (compensa && e.valorAcao <= limite) {
-    return d(0, acao, ferramenta, `Foto recebida, dentro do prazo e de ${reais(limite)} (${textoCusto}).`, regra);
+    return d(0, acao, ferramenta, `${foto}, dentro do prazo e de ${reais(limite)} (${textoCusto}).`, regraCusto);
   }
   const porques: string[] = [];
   if (!compensa) porques.push("custo esperado acima do de sinalizar");
   if (e.valorAcao > limite) porques.push(`valor ${reais(e.valorAcao)} acima de ${reais(limite)}`);
-  return d(1, acao, ferramenta, `${porques.join("; ")} (${textoCusto}): prepara ${acao} para aprovação.`, regra);
+  return d(1, acao, ferramenta, `${porques.join("; ")} (${textoCusto}): prepara ${acao} para aprovação.`, regraCusto);
 }
 
 function regraCobranca(e: EntradaPolitica): Parcial {
   const f = e.fatos;
   if (f.duplicidadeConfirmadaGateway !== true || f.duplicidadeJaEstornada !== false) {
     return d(1, "verificar_pagamento", "verificar_pagamento", "Duplicidade não confirmada no gateway ou já estornada: uma pessoa verifica.", "fora_da_tabela");
+  }
+  if ((e.cenario ?? CENARIO_PADRAO).estornoDuplicidadeSemTeto) {
+    return d(0, "estorno", "reembolsar", `Duplicidade comprovada no gateway e sem estorno: estorna ${reais(e.valorAcao)} sem teto.`, "estorno_sem_teto");
   }
   if (e.valorAcao > LIMITE_ATENDENTE_REEMBOLSO_RS) {
     return d(1, "estorno", "reembolsar", `Duplicidade confirmada; estorno de ${reais(e.valorAcao)} acima de ${reais(LIMITE_ATENDENTE_REEMBOLSO_RS)}: supervisor aprova.`, "cobranca_duplicada");
@@ -420,23 +446,51 @@ function validar(e: EntradaPolitica): void {
   if (!Number.isFinite(e.fatos.valorPedido) || e.fatos.valorPedido < 0) {
     throw new RangeError(`valorPedido inválido: ${e.fatos.valorPedido}`);
   }
+  const c = e.cenario;
+  if (c) {
+    if (!(c.pSemSinal >= 0 && c.pSemSinal <= 1)) throw new RangeError(`pSemSinal fora de 0 a 1: ${c.pSemSinal}`);
+    if (!(c.auditoriaAmostraPct >= 0 && c.auditoriaAmostraPct <= 100)) throw new RangeError(`auditoriaAmostraPct fora de 0 a 100: ${c.auditoriaAmostraPct}`);
+    if (!(c.limiteReenvioRs >= 0)) throw new RangeError(`limiteReenvioRs inválido: ${c.limiteReenvioRs}`);
+    if (c.freioDiarioRs !== null && !(c.freioDiarioRs >= 0)) throw new RangeError(`freioDiarioRs inválido: ${c.freioDiarioRs}`);
+  }
   if (!(MOTIVOS as readonly string[]).includes(e.motivo)) throw new RangeError(`motivo desconhecido: ${e.motivo}`);
 }
 
 // ---------------------------------------------------------------------------
 // Decisão
 // ---------------------------------------------------------------------------
+function fotoBloqueada(e: EntradaPolitica, cenario: CenarioPolitica): string | null {
+  if (!cenario.bloquearFotosConfirmadas) return null;
+  return (e.hashesFotos ?? []).find((h) => cenario.hashesBloqueados.has(h)) ?? null;
+}
+
 export function decidirNivel(entrada: EntradaPolitica): DecisaoPolitica {
   validar(entrada);
-  const r = porMotivo(entrada);
+  const cenario = entrada.cenario ?? CENARIO_PADRAO;
+
+  // Foto já confirmada como fraude: supervisor, antes de qualquer outra regra.
+  const bloqueada = fotoBloqueada(entrada, cenario);
+  const r: Parcial = bloqueada
+    ? d(2, "sinalizar_suspeita", "sinalizar_suspeita", `Foto com hash ${bloqueada.slice(0, 8)}… já confirmado como fraude: o supervisor decide.`, "fotos_bloqueadas", {
+        mensagemCliente: MENSAGEM_EM_ANALISE,
+      })
+    : porMotivo(entrada);
   let nivel = r.nivel;
   const motivos = [...r.motivos];
 
   // Limite do atendente vale para qualquer motivo: acima dele, pelo menos nível 1.
-  const limite = limiteDoAtendente(r.ferramenta);
+  // Exceção do cenário: estorno de duplicidade comprovada sem teto.
+  const semTeto = entrada.motivo === "cobranca_duplicada" && cenario.estornoDuplicidadeSemTeto && r.ferramenta === "reembolsar";
+  const limite = semTeto ? null : limiteDoAtendente(r.ferramenta, cenario);
   if (limite !== null && entrada.valorAcao > limite && nivel === 0) {
     nivel = 1;
     motivos.push(`Valor ${reais(entrada.valorAcao)} acima do limite do atendente (${reais(limite)}): supervisor aprova. ${cita("limites")}`);
+  }
+  // Freio diário: ação autônoma com dinheiro que passaria do teto do dia vai para o nível 1.
+  const gasto = entrada.gastoAutonomoHojeRs ?? 0;
+  if (nivel === 0 && cenario.freioDiarioRs !== null && entrada.valorAcao > 0 && gasto + entrada.valorAcao > cenario.freioDiarioRs) {
+    nivel = 1;
+    motivos.push(`Freio diário: ${reais(gasto)} já gastos hoje + ${reais(entrada.valorAcao)} passam de ${reais(cenario.freioDiarioRs)}. ${cita("freio")}`);
   }
   // Reclame Aqui: resposta pública, sempre pelo menos nível 1.
   if (entrada.canal === "reclame_aqui" && nivel < 1) {
@@ -458,6 +512,11 @@ export function decidirNivel(entrada: EntradaPolitica): DecisaoPolitica {
   if (r.ferramentasAdicionais) decisao.ferramentasAdicionais = r.ferramentasAdicionais;
   if (r.mensagemCliente) decisao.mensagemCliente = r.mensagemCliente;
   if (nivel >= 1) decisao.precisaAprovacaoDe = "supervisor";
+  // Auditoria por amostra: o caso de nível 0 executa e entra na fila de revisão posterior.
+  if (nivel === 0 && cenario.auditoriaAmostraPct > 0 && entrada.chaveAmostra && sorteio(entrada.chaveAmostra) < cenario.auditoriaAmostraPct) {
+    decisao.auditoriaPosterior = true;
+    decisao.justificativa += ` Sorteado para auditoria posterior (${cenario.auditoriaAmostraPct}% do nível 0). ${cita("auditoria")}`;
+  }
   return decisao;
 }
 

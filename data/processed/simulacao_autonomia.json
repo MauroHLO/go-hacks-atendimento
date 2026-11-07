@@ -1,0 +1,1605 @@
+{
+  "gerado_por": "app/scripts/simular-autonomia.ts",
+  "escala": {
+    "fator_amostra": 4,
+    "meses": 3,
+    "observacao": "valores por mês = amostra × 4 ÷ 3"
+  },
+  "parametros": {
+    "custo_por_conversa_rs": {
+      "whatsapp": 4.8,
+      "email": 7.2,
+      "reclame_aqui": 42
+    },
+    "fator_custo_improcedente": 0.45,
+    "custo_sinalizar_rs": 6,
+    "custo_auditoria_rs": 6,
+    "custo_brinde_rs": 24.9,
+    "p_sem_sinal_testados": [
+      0.02,
+      0.05,
+      0.1
+    ],
+    "freio_teto_rs": 1700,
+    "freio_origem": "p90 do gasto autônomo diário (×4) no cenário 6b com p = 0,05: R$ 1669.2"
+  },
+  "definicoes": {
+    "custo_atendimento_evitado": "custo por conversa do canal (parametros.md) das conversas de nível 0",
+    "perda_esperada": "soma de p × 0,45 × valor do pedido das reclamações com evidência resolvidas no nível 0",
+    "atrito": "(1 − p) × R$ 6 por caso sinalizado ao supervisor",
+    "auditoria": "R$ 6 por caso de nível 0 sorteado",
+    "saldo_liquido": "custo evitado − perda esperada − atrito − auditoria",
+    "perda_evitada": "informativa, fora do saldo: p × 0,45 × valor dos casos com sinal forte"
+  },
+  "limitacoes": [
+    "motivo = tag_agente mapeada (rótulo humano), não a saída do classificador; confiança 1,0",
+    "conversa sem tag (só bot) = nível 1",
+    "pedido reconstruído na data da última mensagem do cliente",
+    "reenvios do cliente contados no OMS nos 365 dias anteriores",
+    "lista de fotos bloqueadas supõe que o supervisor confirma toda foto repetida sinalizada (limite superior)",
+    "p é hipótese; por isso a sensibilidade em 0,02, 0,05 e 0,10",
+    "níveis 1 e 2 não contam economia, mesmo quando o agente prepara o caso"
+  ],
+  "motivos_amostra": {
+    "sem_interacao": 330,
+    "rastreio": 616,
+    "troca_fragrancia": 158,
+    "item_faltante": 144,
+    "cancelamento": 156,
+    "outro": 242,
+    "duvida_produto": 187,
+    "cupom": 105,
+    "avaria": 213,
+    "endereco": 118,
+    "atraso": 466,
+    "cobranca_duplicada": 55,
+    "pagamento_pendente": 83,
+    "elogio": 37,
+    "erro_personalizacao": 35,
+    "reacao_adversa": 5,
+    "brinde": 34
+  },
+  "niveis_por_motivo_p005": {
+    "1_vigente": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        99,
+        44,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        155,
+        45,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        13,
+        42,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        29,
+        5,
+        0
+      ]
+    },
+    "2_auditoria_10pct": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        99,
+        44,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        155,
+        45,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        13,
+        42,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        29,
+        5,
+        0
+      ]
+    },
+    "3_estorno_sem_teto": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        99,
+        44,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        155,
+        45,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        23,
+        32,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        29,
+        5,
+        0
+      ]
+    },
+    "4_brinde_sem_foto": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        99,
+        44,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        155,
+        45,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        23,
+        32,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        28,
+        6,
+        0
+      ]
+    },
+    "5_fotos_bloqueadas": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        99,
+        44,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        155,
+        45,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        23,
+        32,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        28,
+        6,
+        0
+      ]
+    },
+    "6a_limite_300": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        105,
+        38,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        158,
+        42,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        23,
+        32,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        28,
+        6,
+        0
+      ]
+    },
+    "6b_limite_500": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        105,
+        38,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        158,
+        42,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        263,
+        203,
+        0
+      ],
+      "cobranca_duplicada": [
+        23,
+        32,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        22,
+        11,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        28,
+        6,
+        0
+      ]
+    },
+    "7_freio_1700": {
+      "sem_interacao": [
+        0,
+        330,
+        0
+      ],
+      "rastreio": [
+        518,
+        98,
+        0
+      ],
+      "troca_fragrancia": [
+        0,
+        158,
+        0
+      ],
+      "item_faltante": [
+        97,
+        46,
+        1
+      ],
+      "cancelamento": [
+        0,
+        156,
+        0
+      ],
+      "outro": [
+        0,
+        242,
+        0
+      ],
+      "duvida_produto": [
+        104,
+        77,
+        6
+      ],
+      "cupom": [
+        101,
+        4,
+        0
+      ],
+      "avaria": [
+        150,
+        50,
+        13
+      ],
+      "endereco": [
+        107,
+        11,
+        0
+      ],
+      "atraso": [
+        254,
+        212,
+        0
+      ],
+      "cobranca_duplicada": [
+        23,
+        32,
+        0
+      ],
+      "pagamento_pendente": [
+        78,
+        5,
+        0
+      ],
+      "elogio": [
+        37,
+        0,
+        0
+      ],
+      "erro_personalizacao": [
+        21,
+        12,
+        2
+      ],
+      "reacao_adversa": [
+        0,
+        0,
+        5
+      ],
+      "brinde": [
+        26,
+        8,
+        0
+      ]
+    }
+  },
+  "causas_nivel1_p005": {
+    "1_vigente": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "sem_regra_cobranca_duplicada": 28,
+      "custo_esperado": 27,
+      "sem_regra_rastreio": 13,
+      "regra_cobranca_duplicada": 10,
+      "regra_item_faltante": 6,
+      "regra_avaria": 3,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "2_auditoria_10pct": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "sem_regra_cobranca_duplicada": 28,
+      "custo_esperado": 27,
+      "sem_regra_rastreio": 13,
+      "regra_cobranca_duplicada": 10,
+      "regra_item_faltante": 6,
+      "regra_avaria": 3,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "3_estorno_sem_teto": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "sem_regra_cobranca_duplicada": 28,
+      "custo_esperado": 27,
+      "sem_regra_rastreio": 13,
+      "regra_item_faltante": 6,
+      "regra_avaria": 3,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "4_brinde_sem_foto": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "custo_esperado": 28,
+      "sem_regra_cobranca_duplicada": 28,
+      "sem_regra_rastreio": 13,
+      "regra_item_faltante": 6,
+      "regra_avaria": 3,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "5_fotos_bloqueadas": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "custo_esperado": 28,
+      "sem_regra_cobranca_duplicada": 28,
+      "sem_regra_rastreio": 13,
+      "regra_item_faltante": 6,
+      "regra_avaria": 3,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "6a_limite_300": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "custo_esperado": 28,
+      "sem_regra_cobranca_duplicada": 28,
+      "sem_regra_rastreio": 13,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "6b_limite_500": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 200,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "custo_esperado": 28,
+      "sem_regra_cobranca_duplicada": 28,
+      "sem_regra_rastreio": 13,
+      "sem_regra_erro_personalizacao": 2
+    },
+    "7_freio_1700": {
+      "sem_regra_sem_interacao": 330,
+      "sem_regra_outro": 242,
+      "reclame_aqui": 191,
+      "troca_fragrancia_sempre_nivel1": 158,
+      "cancelamento_sempre_nivel1": 156,
+      "regra_atraso": 148,
+      "regra_duvida_produto": 71,
+      "regra_rastreio": 37,
+      "freio_diario": 37,
+      "custo_esperado": 28,
+      "sem_regra_cobranca_duplicada": 28,
+      "sem_regra_rastreio": 13,
+      "sem_regra_erro_personalizacao": 2
+    }
+  },
+  "efeito_isolado_p005": [
+    {
+      "alavanca": "auditoria_10pct",
+      "delta_nivel0": 0,
+      "delta_pct_nivel0": 0,
+      "delta_saldo_mes_rs": -1096,
+      "delta_perda_mes_rs": 0
+    },
+    {
+      "alavanca": "estorno_sem_teto",
+      "delta_nivel0": 10,
+      "delta_pct_nivel0": 0.4,
+      "delta_saldo_mes_rs": 76.8,
+      "delta_perda_mes_rs": 0
+    },
+    {
+      "alavanca": "brinde_sem_foto",
+      "delta_nivel0": -1,
+      "delta_pct_nivel0": 0,
+      "delta_saldo_mes_rs": -55.69,
+      "delta_perda_mes_rs": 49.29
+    },
+    {
+      "alavanca": "fotos_bloqueadas",
+      "delta_nivel0": 0,
+      "delta_pct_nivel0": 0,
+      "delta_saldo_mes_rs": 0,
+      "delta_perda_mes_rs": 0
+    },
+    {
+      "alavanca": "limite_300",
+      "delta_nivel0": 9,
+      "delta_pct_nivel0": 0.3,
+      "delta_saldo_mes_rs": 6.56,
+      "delta_perda_mes_rs": 60.64
+    },
+    {
+      "alavanca": "limite_500",
+      "delta_nivel0": 9,
+      "delta_pct_nivel0": 0.3,
+      "delta_saldo_mes_rs": 6.56,
+      "delta_perda_mes_rs": 60.64
+    },
+    {
+      "alavanca": "freio_1700",
+      "delta_nivel0": -18,
+      "delta_pct_nivel0": -0.6,
+      "delta_saldo_mes_rs": -125.08,
+      "delta_perda_mes_rs": -9.32
+    }
+  ],
+  "resultados": [
+    {
+      "cenario": "1_vigente",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1526,
+      "nivel1": 1431,
+      "nivel2": 27,
+      "pct_nivel0": 51.1,
+      "pct_nivel1": 48,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2035,
+      "horas_mes_liberadas": 366.5,
+      "custo_atendimento_evitado_mes_rs": 11164.8,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 111,
+      "perda_esperada_mes_rs": 183.57,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 0,
+      "auditoria_mes_rs": 0,
+      "saldo_liquido_mes_rs": 10968.43,
+      "gasto_autonomo_dia_p90_rs": 1436.84
+    },
+    {
+      "cenario": "1_vigente",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1526,
+      "nivel1": 1431,
+      "nivel2": 27,
+      "pct_nivel0": 51.1,
+      "pct_nivel1": 48,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2035,
+      "horas_mes_liberadas": 366.5,
+      "custo_atendimento_evitado_mes_rs": 11164.8,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 111,
+      "perda_esperada_mes_rs": 417.55,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 0,
+      "auditoria_mes_rs": 0,
+      "saldo_liquido_mes_rs": 10734.45,
+      "gasto_autonomo_dia_p90_rs": 1436.84
+    },
+    {
+      "cenario": "1_vigente",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1482,
+      "nivel1": 1475,
+      "nivel2": 27,
+      "pct_nivel0": 49.7,
+      "pct_nivel1": 49.4,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1976,
+      "horas_mes_liberadas": 354.1,
+      "custo_atendimento_evitado_mes_rs": 10832,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 0,
+      "auditoria_mes_rs": 0,
+      "saldo_liquido_mes_rs": 10457.84,
+      "gasto_autonomo_dia_p90_rs": 1021.12
+    },
+    {
+      "cenario": "2_auditoria_10pct",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1526,
+      "nivel1": 1431,
+      "nivel2": 27,
+      "pct_nivel0": 51.1,
+      "pct_nivel1": 48,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2035,
+      "horas_mes_liberadas": 366.5,
+      "custo_atendimento_evitado_mes_rs": 11164.8,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 111,
+      "perda_esperada_mes_rs": 183.57,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9872.43,
+      "gasto_autonomo_dia_p90_rs": 1436.84
+    },
+    {
+      "cenario": "2_auditoria_10pct",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1526,
+      "nivel1": 1431,
+      "nivel2": 27,
+      "pct_nivel0": 51.1,
+      "pct_nivel1": 48,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2035,
+      "horas_mes_liberadas": 366.5,
+      "custo_atendimento_evitado_mes_rs": 11164.8,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 111,
+      "perda_esperada_mes_rs": 417.55,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9638.45,
+      "gasto_autonomo_dia_p90_rs": 1436.84
+    },
+    {
+      "cenario": "2_auditoria_10pct",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1482,
+      "nivel1": 1475,
+      "nivel2": 27,
+      "pct_nivel0": 49.7,
+      "pct_nivel1": 49.4,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1976,
+      "horas_mes_liberadas": 354.1,
+      "custo_atendimento_evitado_mes_rs": 10832,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 134,
+      "auditoria_mes_rs": 1072,
+      "saldo_liquido_mes_rs": 9385.84,
+      "gasto_autonomo_dia_p90_rs": 1021.12
+    },
+    {
+      "cenario": "3_estorno_sem_teto",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1536,
+      "nivel1": 1421,
+      "nivel2": 27,
+      "pct_nivel0": 51.5,
+      "pct_nivel1": 47.6,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2048,
+      "horas_mes_liberadas": 368.5,
+      "custo_atendimento_evitado_mes_rs": 11241.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 111,
+      "perda_esperada_mes_rs": 183.57,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9949.23,
+      "gasto_autonomo_dia_p90_rs": 1630.2
+    },
+    {
+      "cenario": "3_estorno_sem_teto",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1536,
+      "nivel1": 1421,
+      "nivel2": 27,
+      "pct_nivel0": 51.5,
+      "pct_nivel1": 47.6,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2048,
+      "horas_mes_liberadas": 368.5,
+      "custo_atendimento_evitado_mes_rs": 11241.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 111,
+      "perda_esperada_mes_rs": 417.55,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9715.25,
+      "gasto_autonomo_dia_p90_rs": 1630.2
+    },
+    {
+      "cenario": "3_estorno_sem_teto",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1492,
+      "nivel1": 1465,
+      "nivel2": 27,
+      "pct_nivel0": 50,
+      "pct_nivel1": 49.1,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1989,
+      "horas_mes_liberadas": 356.1,
+      "custo_atendimento_evitado_mes_rs": 10908.8,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 134,
+      "auditoria_mes_rs": 1072,
+      "saldo_liquido_mes_rs": 9462.64,
+      "gasto_autonomo_dia_p90_rs": 1188.96
+    },
+    {
+      "cenario": "4_brinde_sem_foto",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1535,
+      "nivel1": 1422,
+      "nivel2": 27,
+      "pct_nivel0": 51.4,
+      "pct_nivel1": 47.7,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2047,
+      "horas_mes_liberadas": 368.2,
+      "custo_atendimento_evitado_mes_rs": 11235.2,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 121,
+      "perda_esperada_mes_rs": 203.28,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9923.12,
+      "gasto_autonomo_dia_p90_rs": 1630.2
+    },
+    {
+      "cenario": "4_brinde_sem_foto",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1535,
+      "nivel1": 1422,
+      "nivel2": 27,
+      "pct_nivel0": 51.4,
+      "pct_nivel1": 47.7,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2047,
+      "horas_mes_liberadas": 368.2,
+      "custo_atendimento_evitado_mes_rs": 11235.2,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 121,
+      "perda_esperada_mes_rs": 466.84,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9659.56,
+      "gasto_autonomo_dia_p90_rs": 1630.2
+    },
+    {
+      "cenario": "4_brinde_sem_foto",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1481,
+      "nivel1": 1476,
+      "nivel2": 27,
+      "pct_nivel0": 49.6,
+      "pct_nivel1": 49.5,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1975,
+      "horas_mes_liberadas": 353.5,
+      "custo_atendimento_evitado_mes_rs": 10825.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 131,
+      "auditoria_mes_rs": 1048,
+      "saldo_liquido_mes_rs": 9403.44,
+      "gasto_autonomo_dia_p90_rs": 1188.96
+    },
+    {
+      "cenario": "5_fotos_bloqueadas",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1535,
+      "nivel1": 1422,
+      "nivel2": 27,
+      "pct_nivel0": 51.4,
+      "pct_nivel1": 47.7,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2047,
+      "horas_mes_liberadas": 368.2,
+      "custo_atendimento_evitado_mes_rs": 11235.2,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 121,
+      "perda_esperada_mes_rs": 203.28,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9923.12,
+      "gasto_autonomo_dia_p90_rs": 1630.2
+    },
+    {
+      "cenario": "5_fotos_bloqueadas",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1535,
+      "nivel1": 1422,
+      "nivel2": 27,
+      "pct_nivel0": 51.4,
+      "pct_nivel1": 47.7,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2047,
+      "horas_mes_liberadas": 368.2,
+      "custo_atendimento_evitado_mes_rs": 11235.2,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 121,
+      "perda_esperada_mes_rs": 466.84,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9659.56,
+      "gasto_autonomo_dia_p90_rs": 1630.2
+    },
+    {
+      "cenario": "5_fotos_bloqueadas",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1481,
+      "nivel1": 1476,
+      "nivel2": 27,
+      "pct_nivel0": 49.6,
+      "pct_nivel1": 49.5,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1975,
+      "horas_mes_liberadas": 353.5,
+      "custo_atendimento_evitado_mes_rs": 10825.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 131,
+      "auditoria_mes_rs": 1048,
+      "saldo_liquido_mes_rs": 9403.44,
+      "gasto_autonomo_dia_p90_rs": 1188.96
+    },
+    {
+      "cenario": "6a_limite_300",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1547,
+      "nivel1": 1410,
+      "nivel2": 27,
+      "pct_nivel0": 51.8,
+      "pct_nivel1": 47.3,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2063,
+      "horas_mes_liberadas": 371.8,
+      "custo_atendimento_evitado_mes_rs": 11328,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 133,
+      "perda_esperada_mes_rs": 237.58,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 138,
+      "auditoria_mes_rs": 1104,
+      "saldo_liquido_mes_rs": 9973.62,
+      "gasto_autonomo_dia_p90_rs": 1675.44
+    },
+    {
+      "cenario": "6a_limite_300",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1544,
+      "nivel1": 1413,
+      "nivel2": 27,
+      "pct_nivel0": 51.7,
+      "pct_nivel1": 47.4,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2059,
+      "horas_mes_liberadas": 370.8,
+      "custo_atendimento_evitado_mes_rs": 11302.4,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 130,
+      "perda_esperada_mes_rs": 527.48,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 138,
+      "auditoria_mes_rs": 1104,
+      "saldo_liquido_mes_rs": 9658.12,
+      "gasto_autonomo_dia_p90_rs": 1669.2
+    },
+    {
+      "cenario": "6a_limite_300",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1481,
+      "nivel1": 1476,
+      "nivel2": 27,
+      "pct_nivel0": 49.6,
+      "pct_nivel1": 49.5,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1975,
+      "horas_mes_liberadas": 353.5,
+      "custo_atendimento_evitado_mes_rs": 10825.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 131,
+      "auditoria_mes_rs": 1048,
+      "saldo_liquido_mes_rs": 9403.44,
+      "gasto_autonomo_dia_p90_rs": 1188.96
+    },
+    {
+      "cenario": "6b_limite_500",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1553,
+      "nivel1": 1404,
+      "nivel2": 27,
+      "pct_nivel0": 52,
+      "pct_nivel1": 47.1,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2071,
+      "horas_mes_liberadas": 373.6,
+      "custo_atendimento_evitado_mes_rs": 11372.8,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 139,
+      "perda_esperada_mes_rs": 266.02,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 138,
+      "auditoria_mes_rs": 1104,
+      "saldo_liquido_mes_rs": 9989.98,
+      "gasto_autonomo_dia_p90_rs": 2158.16
+    },
+    {
+      "cenario": "6b_limite_500",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1544,
+      "nivel1": 1413,
+      "nivel2": 27,
+      "pct_nivel0": 51.7,
+      "pct_nivel1": 47.4,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2059,
+      "horas_mes_liberadas": 370.8,
+      "custo_atendimento_evitado_mes_rs": 11302.4,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 130,
+      "perda_esperada_mes_rs": 527.48,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 138,
+      "auditoria_mes_rs": 1104,
+      "saldo_liquido_mes_rs": 9658.12,
+      "gasto_autonomo_dia_p90_rs": 1669.2
+    },
+    {
+      "cenario": "6b_limite_500",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1481,
+      "nivel1": 1476,
+      "nivel2": 27,
+      "pct_nivel0": 49.6,
+      "pct_nivel1": 49.5,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1975,
+      "horas_mes_liberadas": 353.5,
+      "custo_atendimento_evitado_mes_rs": 10825.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 131,
+      "auditoria_mes_rs": 1048,
+      "saldo_liquido_mes_rs": 9403.44,
+      "gasto_autonomo_dia_p90_rs": 1188.96
+    },
+    {
+      "cenario": "7_freio_1700",
+      "p_sem_sinal": 0.02,
+      "conversas": 2984,
+      "nivel0": 1511,
+      "nivel1": 1446,
+      "nivel2": 27,
+      "pct_nivel0": 50.6,
+      "pct_nivel1": 48.5,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2015,
+      "horas_mes_liberadas": 363.7,
+      "custo_atendimento_evitado_mes_rs": 11065.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 128,
+      "perda_esperada_mes_rs": 234,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 136,
+      "auditoria_mes_rs": 1088,
+      "saldo_liquido_mes_rs": 9730.8,
+      "gasto_autonomo_dia_p90_rs": 1699.2
+    },
+    {
+      "cenario": "7_freio_1700",
+      "p_sem_sinal": 0.05,
+      "conversas": 2984,
+      "nivel0": 1516,
+      "nivel1": 1441,
+      "nivel2": 27,
+      "pct_nivel0": 50.8,
+      "pct_nivel1": 48.3,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 2021,
+      "horas_mes_liberadas": 364.6,
+      "custo_atendimento_evitado_mes_rs": 11097.6,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 125,
+      "perda_esperada_mes_rs": 504.28,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 137,
+      "auditoria_mes_rs": 1096,
+      "saldo_liquido_mes_rs": 9484.52,
+      "gasto_autonomo_dia_p90_rs": 1669.2
+    },
+    {
+      "cenario": "7_freio_1700",
+      "p_sem_sinal": 0.1,
+      "conversas": 2984,
+      "nivel0": 1476,
+      "nivel1": 1481,
+      "nivel2": 27,
+      "pct_nivel0": 49.5,
+      "pct_nivel1": 49.6,
+      "pct_nivel2": 0.9,
+      "conversas_mes_liberadas": 1968,
+      "horas_mes_liberadas": 352.5,
+      "custo_atendimento_evitado_mes_rs": 10787.2,
+      "reclamacoes_evidencia": 426,
+      "reclamacoes_nivel0": 67,
+      "perda_esperada_mes_rs": 361.36,
+      "casos_sinal_forte": 16,
+      "fraudes_esperadas_mes": 19.2,
+      "perda_evitada_mes_rs": 1068.34,
+      "atrito_mes_rs": 12.8,
+      "auditados": 131,
+      "auditoria_mes_rs": 1048,
+      "saldo_liquido_mes_rs": 9365.04,
+      "gasto_autonomo_dia_p90_rs": 1188.96
+    }
+  ],
+  "recomendado": {
+    "nome": "6b_limite_500",
+    "autonomia": 51.7,
+    "autonomiaMedia": 51.1,
+    "saldoMinimo": 9403.44,
+    "positivoEmTodos": true
+  },
+  "avaliacao": [
+    {
+      "nome": "1_vigente",
+      "autonomia": 51.1,
+      "autonomiaMedia": 50.63,
+      "saldoMinimo": 10457.84,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "2_auditoria_10pct",
+      "autonomia": 51.1,
+      "autonomiaMedia": 50.63,
+      "saldoMinimo": 9385.84,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "3_estorno_sem_teto",
+      "autonomia": 51.5,
+      "autonomiaMedia": 51,
+      "saldoMinimo": 9462.64,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "4_brinde_sem_foto",
+      "autonomia": 51.4,
+      "autonomiaMedia": 50.8,
+      "saldoMinimo": 9403.44,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "5_fotos_bloqueadas",
+      "autonomia": 51.4,
+      "autonomiaMedia": 50.8,
+      "saldoMinimo": 9403.44,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "6a_limite_300",
+      "autonomia": 51.7,
+      "autonomiaMedia": 51.03,
+      "saldoMinimo": 9403.44,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "6b_limite_500",
+      "autonomia": 51.7,
+      "autonomiaMedia": 51.1,
+      "saldoMinimo": 9403.44,
+      "positivoEmTodos": true
+    },
+    {
+      "nome": "7_freio_1700",
+      "autonomia": 50.8,
+      "autonomiaMedia": 50.3,
+      "saldoMinimo": 9365.04,
+      "positivoEmTodos": true
+    }
+  ]
+}

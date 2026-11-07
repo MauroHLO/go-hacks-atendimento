@@ -62,6 +62,59 @@ export const PROB_IMPROCEDENTE = {
   doisOuMaisFracos: 0.3,
   algumForte: 0.9,
 } as const;
+// Custo de revisar depois um caso de nível 0 sorteado para auditoria: o mesmo tempo de supervisor de
+// "Sinalizar para o supervisor ... R$ 6" (parametros.md).
+export const CUSTO_AUDITORIA_RS = CUSTO_SINALIZAR_RS;
+
+// ---------------------------------------------------------------------------
+// Cenário de política (docs/decisoes.md, seção 4)
+// ---------------------------------------------------------------------------
+// O mentor deu autonomia para mudar políticas que melhorem as decisões. Cada alavanca é configurável;
+// CENARIO_VIGENTE reproduz politicas.csv e CENARIO_PADRAO é o recomendado pela simulação
+// (app/scripts/simular-autonomia.ts).
+export interface CenarioPolitica {
+  nome: string;
+  // politicas.csv › limites_por_papel › atendente.reenvio_ou_reimpressao_max_rs (vigente: 200)
+  limiteReenvioRs: number;
+  // % dos casos de nível 0 sorteados para revisão posterior (executam e são revistos; R$ 6 cada). 0 = desligada.
+  auditoriaAmostraPct: number;
+  // Cobrança duplicada confirmada no gateway e sem estorno: estorno no nível 0 sem o teto de R$ 100.
+  estornoDuplicidadeSemTeto: boolean;
+  // Brinde de campanha faltante: reenvio sem exigir foto.
+  brindeSemFoto: boolean;
+  // Foto com hash confirmado como fraude pelo supervisor: nível 2, antes de qualquer outra regra.
+  bloquearFotosConfirmadas: boolean;
+  hashesBloqueados: ReadonlySet<string>;
+  // Teto diário em R$ de ações autônomas com dinheiro; acima dele, vão para o nível 1. null = sem freio.
+  freioDiarioRs: number | null;
+  // Probabilidade inicial de a reclamação não proceder sem nenhum sinal (HIPÓTESE; vigente 0,05).
+  pSemSinal: number;
+}
+
+export const CENARIO_VIGENTE: CenarioPolitica = {
+  nome: "vigente",
+  limiteReenvioRs: LIMITE_ATENDENTE_REENVIO_RS,
+  auditoriaAmostraPct: 0,
+  estornoDuplicidadeSemTeto: false,
+  brindeSemFoto: false,
+  bloquearFotosConfirmadas: false,
+  hashesBloqueados: new Set(),
+  freioDiarioRs: null,
+  pSemSinal: 0.05,
+};
+
+// Recomendado pela simulação de autonomia (cenário 6b; docs/decisoes.md, seção 4): maior autonomia com
+// saldo líquido positivo com p sem sinal em 0,02, 0,05 e 0,10.
+export const CENARIO_PADRAO: CenarioPolitica = {
+  ...CENARIO_VIGENTE,
+  nome: "padrao_6b_limite_500",
+  limiteReenvioRs: 500,
+  auditoriaAmostraPct: 10,
+  estornoDuplicidadeSemTeto: true,
+  brindeSemFoto: true,
+  bloquearFotosConfirmadas: true,
+};
+
 // Mensagem neutra ao cliente quando o caso é sinalizado.
 // politicas.csv › reclamacao_suspeita › comunicacao_com_cliente: "nunca acusar o cliente de fraude;
 // enquanto o caso está em análise, informar apenas que a solicitação está em análise"
@@ -191,6 +244,26 @@ export const REGRAS = {
   elogio: {
     origem: "politicas.csv › categorias › elogio.acoes_permitidas",
     texto: "agradecer.",
+  },
+  fotos_bloqueadas: {
+    origem: "docs/decisoes.md › seção 4 (cenário: fotos bloqueadas)",
+    texto: "Foto com hash já confirmado como fraude pelo supervisor vai para o supervisor (nível 2).",
+  },
+  estorno_sem_teto: {
+    origem: "docs/decisoes.md › seção 4 (cenário: estorno de duplicidade sem teto)",
+    texto: "Duplicidade comprovada pelo gateway e sem estorno: estorno no nível 0 sem o teto de R$ 100.",
+  },
+  brinde_sem_foto: {
+    origem: "docs/decisoes.md › seção 4 (cenário: brinde sem foto)",
+    texto: "Brinde de campanha faltante: reenvio sem exigir foto.",
+  },
+  freio: {
+    origem: "docs/decisoes.md › seção 4 (cenário: freio diário)",
+    texto: "Acima do teto diário em R$ de ações autônomas, as ações com dinheiro vão para o nível 1.",
+  },
+  auditoria: {
+    origem: "docs/decisoes.md › seção 4 (cenário: auditoria por amostra)",
+    texto: "Uma amostra dos casos de nível 0 executa e é revista depois pelo supervisor (R$ 6 cada).",
   },
 } as const satisfies Record<string, Regra>;
 

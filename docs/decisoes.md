@@ -77,6 +77,22 @@
 - *Elegibilidade:* sem foto; reclamação mais de 7 dias corridos após a entrega.
 - *Conferência com os dados reais* (fora do repositório, sobre os 382 anexos do histórico): 17 anexos com hash em outro pedido/cliente, 11 com EXIF antes da entrega, 10 com software de edição e 82 fora do prazo, os mesmos números de `analysis/analise_atendimento.py`; 9 com produto diferente do pedido (ex.: "foto mostra necessaire, o pedido tem Connect Card").
 
+*Os 9 anexos com "produto da foto diferente do pedido"* (para conferência manual). Todos também têm o mesmo hash em outro pedido ou cliente; 4 deles têm ainda EXIF anterior à entrega. Ou seja, nenhum dos 9 depende só da comparação de produto.
+
+| anexo_id | conversa | pedido | descrição visual (resumida) | produto do pedido | regra que disparou |
+| --- | --- | --- | --- | --- | --- |
+| IMG000010 | AT104936 | GCH525527 | Necessaire estampada rasgada na costura | Connect Card Magsafe Personalizado Iniciais | categoria (necessaire × connect card) |
+| IMG000021 | AT105239 | GCH526998 | Copo térmico de inox com pintura descascada e amassado | Garrafa Fresh 950ml Personalizada Iniciais | categoria (copo × garrafa) |
+| IMG000074 | AT107296 | GCH532004 | Necessaire estampada com zíper arrebentado | Tote Bag Daily Personalizada Nome | categoria (necessaire × bolsa) |
+| IMG000082 | AT107636 | GCH532504 | Capinha transparente com estampa rachada na lateral | Case Anti Impacto Slim Air / Samsung Galaxy A56 Personalizada Iniciais | estampa × personalização por iniciais |
+| IMG000098 | AT108179 | GCH533082 | Necessaire estampada rasgada na costura | Mini Tote Personalizada Iniciais | categoria (necessaire × bolsa) |
+| IMG000102 | AT108282 | GCH535148 | Copo térmico de inox com pintura descascada e amassado | Garrafa Urban 500ml Personalizada Iniciais | categoria (copo × garrafa) |
+| IMG000209 | AT112299 | GCH544744 | Capinha transparente com estampa rachada na lateral | Case Guard Magsafe / iPhone 16 Pro Personalizada Iniciais | estampa × personalização por iniciais |
+| IMG000236 | AT113281 | GCH547544 | Copo térmico de inox com pintura descascada e amassado | Garrafa Mini 350ml Personalizada Nome | categoria (copo × garrafa) |
+| IMG000322 | AT115610 | GCH555045 | Necessaire estampada com zíper arrebentado | Necessaire Voyage Personalizada Nome | estampa × personalização por nome |
+
+Pontos para a conferência: "copo × garrafa" depende de a descrição visual distinguir os dois (um copo térmico e uma garrafa térmica podem ser confundidos pelo módulo de visão); "estampa × personalização" supõe que nome e iniciais não aparecem como "estampa" na descrição.
+
 **`lib/ferramentas`.** Uma função por ferramenta, com o nome de `ferramentas.csv` (26), e o registro `FERRAMENTAS` para chamar por nome. Nenhuma ação tem efeito real.
 
 - Toda chamada passa pela mesma checagem: o papel do simulador (padrão `atendente`) precisa estar em `papeis_permitidos`; `valor_max_sem_aprovacao_rs` (R$ 200 reenvio/reimpressão/troca, R$ 100 reembolso; o valor exato passa); `somente_antes_da_separacao` (cancelar, alterar endereço); `max_por_dia` (300 notificações, contadas por pedido no dia). Acima do limite, a ação é recusada com "precisa aprovação de supervisor", a menos que traga um `aprovacao_id` aprovado para a mesma ação, o mesmo pedido e valor igual ou maior.
@@ -85,3 +101,57 @@
 - `responder_cliente` e `notificar_clientes` recusam texto com CPF, cartão, telefone ou e-mail. `alterar_endereco` não grava o endereço no log.
 - O log segue as colunas de `acoes_executadas_sistemas.csv`, com `executado_por = "agente"` e referências simuladas (`OMS-SIM-…`, `EST-SIM-…`, `CHM-SIM-…`, `APR-SIM-…`, `SUS-SIM-…`). Consultas também entram no log, como `consultar_pedido` no log real, para medir os sistemas acessados. Ações recusadas não entram no log.
 - Sistema de cada ação, como no log real: OMS (reenvio, troca), Sistema de produção Gocase (reimpressão), Gateway (reembolso, verificar pagamento), ERP (consulta, cancelamento, endereço), Plataforma de cupons, Portal da transportadora do pedido (status, chamado), Central de atendimento (mensagens, suspeita, aprovação, incidente, notificação) e Canal do time (acionar pessoa).
+
+## Feedback recebido e ajustes
+
+**Mentor (07/11):** temos autonomia para mudar políticas desde que melhorem as decisões; o foco é expandir a autonomia ao máximo, medindo, sem valoração fictícia; humano só como supervisor.
+
+Ajustes feitos em resposta (seção 4):
+
+- As políticas que limitam a autonomia viraram alavancas configuráveis (`CenarioPolitica` em `lib/policy/regras.ts`), com o vigente de `politicas.csv` preservado em `CENARIO_VIGENTE`.
+- Cada alavanca foi medida sobre as 2.984 conversas do histórico pelo motor real (`app/scripts/simular-autonomia.ts`), só com parâmetros de `parametros.md` e dados medidos; o que é hipótese (p) é testado em três valores.
+- O cenário padrão passou a ser o recomendado pela simulação.
+- Para não medir com informação do futuro, `lib/contexto` passou a montar a ficha na data da conversa (status do pedido, eventos, cobranças, estornos, chamados, reenvios do OMS). Isso corrigiu um vazamento: o status "estornada" do gateway é a posição de 02/11 e fazia parecer já estornadas cobranças estornadas depois da conversa.
+
+## 4. Simulação de autonomia e cenário recomendado
+
+**Alavancas (`CenarioPolitica`).** `limiteReenvioRs` (vigente 200); `auditoriaAmostraPct` (0 = desligada; ligada, 10% dos casos de nível 0 executam e vão para revisão posterior a R$ 6 cada, sorteio determinístico pelo `conversation_id`); `estornoDuplicidadeSemTeto` (duplicidade comprovada no gateway e sem estorno: nível 0 sem o teto de R$ 100); `brindeSemFoto` (brinde faltante dispensa foto e vai direto à fórmula); `bloquearFotosConfirmadas` + `hashesBloqueados` (hash confirmado como fraude pelo supervisor → nível 2 antes de qualquer regra); `freioDiarioRs` (teto diário de R$ em ações autônomas com dinheiro; acima, nível 1; null = sem freio); `pSemSinal` (vigente 0,05). O simulador de ferramentas (`lib/ferramentas`) usa o mesmo cenário para o limite de reenvio e o estorno sem teto, para não divergir do motor.
+
+**Método (`npm run simular`, em `app/`).** Lê `data/raw/atendimento` localmente e grava `data/processed/simulacao_autonomia.{json,csv}`. Para cada conversa: monta a ficha com `lib/contexto` na data da última mensagem do cliente; calcula os sinais com `lib/evidencias` usando só os anexos enviados até ali; decide com `lib/policy`. Conversas em ordem cronológica, para o freio diário e a lista de fotos bloqueadas evoluírem no tempo.
+
+- *Motivo* = `tag_agente` mapeada: Rastreio→rastreio, Atraso→atraso, Avaria→avaria, Produto faltando→brinde se o pedido tem brinde e o cliente fala em brinde/mimo/necessaire (senão item_faltante), Troca→troca_fragrancia, Cancelamento→cancelamento, Reclamação produto→reacao_adversa se `lib/agent/sinais` detecta saúde, erro_personalizacao se o pedido é personalizado, senão outro; Financeiro→cobranca_duplicada se há 2+ cobranças efetivadas até ali, senão pagamento_pendente; Dúvida→duvida_produto; Promoção→cupom; Endereço→endereco; Elogio→elogio; Outros→outro; sem tag→sem_interacao (só bot, nível 1).
+- *Valor da ação*: valor do pedido para reenvio, reimpressão, troca, cancelamento e atraso; custo do brinde no catálogo (R$ 24,90) para brinde; excedente das cobranças efetivadas para cobrança duplicada.
+- *Escala*: por mês = amostra × 4 ÷ 3 (90 dias).
+
+**Métricas.** % de nível 0/1/2; conversas e horas humanas liberadas por mês (nível 0, `minutos_trabalhados` de `tempo_por_conversa`); **custo de atendimento evitado** = custo por conversa do canal (`parametros.md`) das conversas de nível 0; **perda esperada** = Σ p × 0,45 × valor do pedido das reclamações com evidência resolvidas no nível 0; **fraudes esperadas** entre as reclamações com sinal forte = Σ p (0,90); **atrito** = Σ (1 − p) × R$ 6 dos casos sinalizados; **auditoria** = R$ 6 por caso sorteado; **saldo líquido** = custo evitado − perda − atrito − auditoria. A perda evitada pelas fraudes detectadas (R$ 1.068/mês) é informada, mas fica fora do saldo, porque não sabemos quanto o processo atual já barra.
+
+**Limitações.** (1) O motivo é o rótulo humano (tag), não a saída do classificador, e a confiança é 1,0: a autonomia real depende da qualidade do classificador e do limiar de 0,7. (2) As tags são ruidosas ("Reclamação produto" mistura saúde, personalização e avaria). (3) Cancelamento e devolução não têm data nos dados: antes do corte, o pedido aparece como aguardando separação, em trânsito ou entregue. (4) A lista de fotos bloqueadas supõe que o supervisor confirma toda foto repetida sinalizada (limite superior do efeito). (5) Níveis 1 e 2 não contam economia, mesmo quando o agente prepara o caso. (6) O custo por conversa é o de `parametros.md`; o Reclame Aqui nunca chega ao nível 0, então seu custo de R$ 42 não entra no evitado.
+
+**Resultados (por mês, escalados; p = probabilidade inicial sem sinal).**
+
+| Cenário (cumulativo) | p | % N0 | % N1 | % N2 | conversas liberadas | horas liberadas | custo evitado | perda esperada | auditoria | saldo líquido |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 vigente | 0,02 | 51,1 | 48,0 | 0,9 | 2.035 | 366,5 | 11.164,80 | 183,57 | 0 | 10.968,43 |
+| 1 vigente | 0,05 | 51,1 | 48,0 | 0,9 | 2.035 | 366,5 | 11.164,80 | 417,55 | 0 | 10.734,45 |
+| 1 vigente | 0,10 | 49,7 | 49,4 | 0,9 | 1.976 | 354,1 | 10.832,00 | 361,36 | 0 | 10.457,84 |
+| 2 + auditoria 10% | 0,05 | 51,1 | 48,0 | 0,9 | 2.035 | 366,5 | 11.164,80 | 417,55 | 1.096,00 | 9.638,45 |
+| 3 + estorno sem teto | 0,05 | 51,5 | 47,6 | 0,9 | 2.048 | 368,5 | 11.241,60 | 417,55 | 1.096,00 | 9.715,25 |
+| 4 + brinde sem foto | 0,05 | 51,4 | 47,7 | 0,9 | 2.047 | 368,2 | 11.235,20 | 466,84 | 1.096,00 | 9.659,56 |
+| 5 + fotos bloqueadas | 0,05 | 51,4 | 47,7 | 0,9 | 2.047 | 368,2 | 11.235,20 | 466,84 | 1.096,00 | 9.659,56 |
+| 6a + limite 300 | 0,05 | 51,7 | 47,4 | 0,9 | 2.059 | 370,8 | 11.302,40 | 527,48 | 1.104,00 | 9.658,12 |
+| **6b + limite 500** | 0,02 | 52,0 | 47,1 | 0,9 | 2.071 | 373,6 | 11.372,80 | 266,02 | 1.104,00 | 9.989,98 |
+| **6b + limite 500** | 0,05 | 51,7 | 47,4 | 0,9 | 2.059 | 370,8 | 11.302,40 | 527,48 | 1.104,00 | 9.658,12 |
+| **6b + limite 500** | 0,10 | 49,6 | 49,5 | 0,9 | 1.975 | 353,5 | 10.825,60 | 361,36 | 1.048,00 | 9.403,44 |
+| 7 + freio R$ 1.700/dia | 0,05 | 50,8 | 48,3 | 0,9 | 2.021 | 364,6 | 11.097,60 | 504,28 | 1.096,00 | 9.484,52 |
+
+Tabela completa (todos os cenários × p, mais atrito, fraudes e auditados) em `data/processed/simulacao_autonomia.csv`. Em todos os cenários: 16 reclamações com sinal forte na amostra (19,2 fraudes esperadas por mês) e atrito de R$ 12,80/mês. Com p = 0,10, a perda cai em vez de subir porque a fórmula manda mais reclamações para o nível 1 (só 67 resolvidas no nível 0, contra 111 a 139 com p menor).
+
+**Efeito isolado de cada alavanca** (sobre o vigente, p = 0,05, na amostra): estorno sem teto +10 conversas no nível 0 e +R$ 76,80/mês de saldo; limite 300 ou 500 +9 conversas, +R$ 6,56 de saldo e +R$ 60,64 de perda (com p = 0,05 a fórmula já barra pedidos acima de R$ 266,66, por isso 300 e 500 empatam; com p = 0,02 o 500 rende mais); brinde sem foto −1 conversa e −R$ 55,69 de saldo (pedidos acima de R$ 266,66 saem de `solicitar_foto`, nível 0, para o nível 1 pela fórmula, que usa o valor do pedido e não o do brinde); fotos bloqueadas 0 (toda foto que entraria na lista já é sinal forte pelo índice de hash, então a lista só valerá contra fotos que voltem depois de apagadas do histórico); freio de R$ 1.700/dia −18 conversas e −R$ 125,08; auditoria 0 conversas e −R$ 1.096/mês.
+
+**Recomendado: cenário 6b** (limite de reenvio R$ 500, auditoria 10%, estorno de duplicidade sem teto, brinde sem foto, fotos bloqueadas, sem freio). Regra de escolha: maior % de nível 0 com p = 0,05 entre os cenários com saldo líquido positivo nos três valores de p; empate (6a e 6b com 51,7%) decidido pela maior autonomia média nos três p (6b: 51,1%). Saldo mínimo do 6b: R$ 9.403,44/mês (p = 0,10). Ficou como `CENARIO_PADRAO`. Observações:
+
+- O ganho de autonomia das alavancas pedidas é pequeno: de 51,1% para 51,7% de nível 0 (de 2.035 para 2.059 conversas liberadas por mês). A auditoria custa R$ 1.096/mês e não muda o nível; o que ela compra é a medida de p (a taxa real de reclamações improcedentes entre as resolvidas sozinhas), que hoje é hipótese. Vale manter até p estar medido.
+- Brinde sem foto entrou porque o cenário é cumulativo e a regra de escolha olha o total, mas isoladamente piora (−1 conversa, −R$ 55,69). Se o time preferir, desligar só essa alavanca do padrão.
+- O freio não entrou porque reduz a autonomia (−18 conversas) e o saldo; fica disponível como proteção operacional se o gasto diário sair do padrão medido (p90 de R$ 1.669/dia).
+
+**Onde está o resto da autonomia (causas do nível 1 no 6b, p = 0,05, 1.413 casos de nível 1 na amostra).** Conversas só de bot sem regra (330), motivo "outro" (242), Reclame Aqui (200), troca de fragrância sempre nível 1 (158), cancelamento sempre nível 1 (156), atraso acima de 7 dias úteis ou extravio (148), dúvida sem ficha ou sem pedido (71), rastreio de pedido já entregue (37 + 13 sem regra), custo esperado acima de R$ 6 (28), cobrança duplicada já estornada ou não confirmada (28). As alavancas com efeito grande são essas, não as simuladas: encerrar sem ação as conversas só de bot, permitir cancelamento antes da separação e troca de fragrância dentro das regras no nível 0, e classificar melhor o "outro". Cada uma muda política e precisa da mesma medição antes de entrar.
