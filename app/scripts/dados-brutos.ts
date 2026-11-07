@@ -165,7 +165,7 @@ export function motivoDaTag(tag: string | null, pedido: Linha | undefined, texto
     case "Outros":
       return "outro";
     default:
-      return "sem_interacao";
+      return "sem_demanda";
   }
 }
 

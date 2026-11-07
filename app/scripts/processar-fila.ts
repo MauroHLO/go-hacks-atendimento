@@ -5,9 +5,10 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { configDoAmbiente, criarClienteProxy } from "../src/lib/agent/cliente";
+import { comNovaTentativa } from "../src/lib/agent/servico";
 import { detectarIncidentes } from "../src/lib/agent/analista";
 import { novoEstado, processarConversa } from "../src/lib/agent/orquestrador";
-import { resumo } from "./resumo";
+import { resumo } from "../src/lib/agent/resumo";
 import { BASE } from "../src/lib/dados";
 import { Simulador } from "../src/lib/ferramentas";
 import { CENARIO_PADRAO } from "../src/lib/policy";
@@ -29,7 +30,7 @@ async function emLotes<T, R>(itens: T[], n: number, f: (x: T) => Promise<R>): Pr
 }
 
 async function main() {
-  const ia = criarClienteProxy(configDoAmbiente());
+  const ia = comNovaTentativa(criarClienteProxy(configDoAmbiente())); // 429 também na redação
   const sim = new Simulador({ cenario: CENARIO_PADRAO });
   const estado = novoEstado();
   const inicio = Date.now();

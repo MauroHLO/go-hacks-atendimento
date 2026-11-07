@@ -1,4 +1,4 @@
-// Cliente do AI Proxy da GoGroup (formato OpenAI), por fetch (docs/decisoes.md, seção 6).
+// Cliente do AI Proxy da Gogroup (formato OpenAI), por fetch (docs/decisoes.md, seção 6).
 // Variáveis: AI_PROXY_BASE_URL, AI_PROXY_API_KEY, AI_PROXY_MODEL (só em .env.local e na Vercel).
 // Jev: POST {base}/systemone com { state, questions: { id: { type, ... } } }.
 //   choice: { type: "choice", criteria: { opção: descrição } } → { choice, confidence, probabilities }

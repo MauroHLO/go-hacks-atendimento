@@ -3,8 +3,8 @@
 
 import type { Motivo } from "../policy";
 
-// "sem_interacao" não vai para o Jev: sem mensagem do cliente não há o que classificar.
-export const DESCRICAO_MOTIVO: Readonly<Record<Exclude<Motivo, "sem_interacao">, string>> = {
+// "sem_demanda" não vai para o Jev: sem mensagem do cliente não há o que classificar.
+export const DESCRICAO_MOTIVO: Readonly<Record<Exclude<Motivo, "sem_demanda">, string>> = {
   rastreio: "quer saber onde está o pedido ou o status da entrega, sem reclamar de prazo vencido",
   atraso: "reclama que o pedido passou do prazo de entrega, está parado ou sumiu (extravio)",
   avaria: "produto chegou quebrado, vazando, amassado, rachado ou danificado",
@@ -41,7 +41,7 @@ export const TAG_DO_MOTIVO: Readonly<Record<Motivo, string>> = {
   pagamento_pendente: "Financeiro",
   elogio: "Elogio",
   outro: "Outros",
-  sem_interacao: "(sem tag)",
+  sem_demanda: "(sem tag)",
 };
 
 export const SINAIS_TEXTO = {

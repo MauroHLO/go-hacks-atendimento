@@ -53,7 +53,7 @@ export const MOTIVOS = [
   // Fora da tabela de autonomia (existem em politicas.csv, sem nível definido): nível 1.
   "pagamento_pendente",
   "elogio",
-  "sem_interacao",
+  "sem_demanda",
   "outro",
 ] as const;
 export type Motivo = (typeof MOTIVOS)[number];
@@ -460,8 +460,9 @@ function porMotivo(e: EntradaPolitica): Parcial {
       });
     case "elogio":
       return d(0, "agradecer", "agradecer", "Elogio: agradece.", "elogio");
-    case "sem_interacao":
-      return d(1, "encerrar_sem_acao", "encerrar_conversa", "Sem interação do cliente: fora da tabela de autonomia, uma pessoa revisa.", "fora_da_tabela");
+    case "sem_demanda":
+      // A política só permite encerrar sem ação; não há o que uma pessoa decidir (docs/decisoes.md, seção 7).
+      return d(0, "encerrar_sem_acao", "encerrar_conversa", "Sem demanda: o cliente não escreveu nada; encerra a conversa sem ação.", "sem_demanda");
     case "outro":
       return foraDaTabela("Motivo não reconhecido");
   }
@@ -556,7 +557,7 @@ export function decidirNivel(entrada: EntradaPolitica): DecisaoPolitica {
   if (nivel >= 1 || aprovacaoResposta) decisao.precisaAprovacaoDe = "supervisor";
   if (semTeto && nivel === 0) decisao.acaoSemTeto = true;
   // Auditoria por amostra: o caso de nível 0 executa e entra na fila de revisão posterior.
-  if (nivel === 0 && cenario.auditoriaAmostraPct > 0 && entrada.chaveAmostra && sorteio(entrada.chaveAmostra) < cenario.auditoriaAmostraPct) {
+  if (nivel === 0 && entrada.motivo !== "sem_demanda" && cenario.auditoriaAmostraPct > 0 && entrada.chaveAmostra && sorteio(entrada.chaveAmostra) < cenario.auditoriaAmostraPct) {
     decisao.auditoriaPosterior = true;
     decisao.justificativa += ` Sorteado para auditoria posterior (${cenario.auditoriaAmostraPct}% do nível 0). ${cita("auditoria")}`;
   }

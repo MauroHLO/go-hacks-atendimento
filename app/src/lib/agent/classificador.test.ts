@@ -10,7 +10,7 @@ describe("perguntas ao Jev", () => {
     expect(PERGUNTAS.motivo).toEqual({ type: "choice", criteria: DESCRICAO_MOTIVO });
     expect(PERGUNTAS.urgencia).toEqual({ type: "score", criteria: ["baixa", "media", "alta"] });
     for (const k of Object.keys(SINAIS_TEXTO)) expect(PERGUNTAS[k]).toMatchObject({ type: "noul" });
-    expect(Object.keys(DESCRICAO_MOTIVO)).not.toContain("sem_interacao");
+    expect(Object.keys(DESCRICAO_MOTIVO)).not.toContain("sem_demanda");
   });
 });
 
@@ -38,10 +38,10 @@ describe("mascaramento", () => {
 });
 
 describe("regras do código sobre a saída do Jev", () => {
-  it("sem mensagem do cliente: sem_interacao sem chamar o Jev", async () => {
+  it("sem mensagem do cliente: sem_demanda sem chamar o Jev", async () => {
     const { ia, chamadas } = clienteFalso({ jev: [{ json: respostaJev("rastreio") }] });
     const r = await classificar(ia, { mensagensCliente: ["  "] });
-    expect(r).toMatchObject({ valida: true, motivo: "sem_interacao", semMensagemDoCliente: true });
+    expect(r).toMatchObject({ valida: true, motivo: "sem_demanda", semMensagemDoCliente: true });
     expect(chamadas).toHaveLength(0);
   });
 

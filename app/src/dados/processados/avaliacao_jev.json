@@ -1,0 +1,5479 @@
+{
+  "gerado_por": "app/scripts/avaliar-jev.ts",
+  "semente": 20261107,
+  "modelo": "jev-1.14.0",
+  "chamadas": 348,
+  "falhas_primeira_passada": {
+    "total": 95,
+    "por_tipo": {
+      "http_429": 95
+    },
+    "de": 348
+  },
+  "invalidas_depois_da_nova_tentativa": 0,
+  "ms_total": 325410,
+  "custo_usd": 0.014897,
+  "amostra": {
+    "n": 120,
+    "alocacao": {
+      "Atraso": 10,
+      "Avaria": 10,
+      "Cancelamento": 9,
+      "Dúvida": 9,
+      "Elogio": 9,
+      "Endereço": 9,
+      "Financeiro": 9,
+      "Outros": 9,
+      "Produto faltando": 9,
+      "Promoção": 9,
+      "Rastreio": 10,
+      "Reclamação produto": 9,
+      "Troca": 9
+    },
+    "concordancia_tag": 0.592,
+    "concordancia_motivo_mapeado": 0.558,
+    "concordancia_por_tag": {
+      "Atraso": {
+        "n": 10,
+        "concordancia_tag": 0.7
+      },
+      "Avaria": {
+        "n": 10,
+        "concordancia_tag": 0.4
+      },
+      "Cancelamento": {
+        "n": 9,
+        "concordancia_tag": 0.444
+      },
+      "Dúvida": {
+        "n": 9,
+        "concordancia_tag": 0.778
+      },
+      "Elogio": {
+        "n": 9,
+        "concordancia_tag": 1
+      },
+      "Endereço": {
+        "n": 9,
+        "concordancia_tag": 0.667
+      },
+      "Financeiro": {
+        "n": 9,
+        "concordancia_tag": 0.889
+      },
+      "Outros": {
+        "n": 9,
+        "concordancia_tag": 0.111
+      },
+      "Produto faltando": {
+        "n": 9,
+        "concordancia_tag": 1
+      },
+      "Promoção": {
+        "n": 9,
+        "concordancia_tag": 0.889
+      },
+      "Rastreio": {
+        "n": 10,
+        "concordancia_tag": 0.5
+      },
+      "Reclamação produto": {
+        "n": 9,
+        "concordancia_tag": 0.222
+      },
+      "Troca": {
+        "n": 9,
+        "concordancia_tag": 0.111
+      }
+    },
+    "matriz_confusao_tag_x_jev": {
+      "Atraso": {
+        "atraso": 7,
+        "rastreio": 2,
+        "cancelamento": 1
+      },
+      "Avaria": {
+        "avaria": 4,
+        "item_faltante": 2,
+        "erro_personalizacao": 2,
+        "brinde": 1,
+        "reacao_adversa": 1
+      },
+      "Cancelamento": {
+        "cancelamento": 4,
+        "cobranca_duplicada": 1,
+        "atraso": 4
+      },
+      "Dúvida": {
+        "duvida_produto": 7,
+        "atraso": 1,
+        "outro": 1
+      },
+      "Elogio": {
+        "elogio": 9
+      },
+      "Endereço": {
+        "endereco": 6,
+        "rastreio": 2,
+        "atraso": 1
+      },
+      "Financeiro": {
+        "cobranca_duplicada": 3,
+        "pagamento_pendente": 5,
+        "cupom": 1
+      },
+      "Outros": {
+        "atraso": 2,
+        "item_faltante": 3,
+        "outro": 1,
+        "rastreio": 1,
+        "cobranca_duplicada": 1,
+        "brinde": 1
+      },
+      "Produto faltando": {
+        "item_faltante": 7,
+        "brinde": 2
+      },
+      "Promoção": {
+        "cupom": 8,
+        "duvida_produto": 1
+      },
+      "Rastreio": {
+        "rastreio": 5,
+        "atraso": 5
+      },
+      "Reclamação produto": {
+        "atraso": 2,
+        "avaria": 4,
+        "erro_personalizacao": 2,
+        "item_faltante": 1
+      },
+      "Troca": {
+        "troca_fragrancia": 1,
+        "brinde": 2,
+        "reacao_adversa": 1,
+        "duvida_produto": 3,
+        "avaria": 2
+      }
+    },
+    "confianca_todas": {
+      "<0,5": 0,
+      "0,5-0,7": 7,
+      "0,7-0,9": 12,
+      ">=0,9": 101
+    },
+    "confianca_concordantes": {
+      "<0,5": 0,
+      "0,5-0,7": 4,
+      "0,7-0,9": 6,
+      ">=0,9": 61
+    },
+    "confianca_discordantes": {
+      "<0,5": 0,
+      "0,5-0,7": 3,
+      "0,7-0,9": 6,
+      ">=0,9": 40
+    },
+    "desencontros_para_revisao": [
+      {
+        "conversation_id": "AT105029",
+        "tag": "Atraso",
+        "motivo_jev": "rastreio",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT109431",
+        "tag": "Avaria",
+        "motivo_jev": "item_faltante",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT107906",
+        "tag": "Avaria",
+        "motivo_jev": "item_faltante",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT115773",
+        "tag": "Avaria",
+        "motivo_jev": "brinde",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT107397",
+        "tag": "Avaria",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT105583",
+        "tag": "Cancelamento",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT106167",
+        "tag": "Cancelamento",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT114627",
+        "tag": "Cancelamento",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT111783",
+        "tag": "Cancelamento",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT116017",
+        "tag": "Financeiro",
+        "motivo_jev": "cupom",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT112433",
+        "tag": "Outros",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT113975",
+        "tag": "Outros",
+        "motivo_jev": "item_faltante",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT114565",
+        "tag": "Outros",
+        "motivo_jev": "item_faltante",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT111126",
+        "tag": "Outros",
+        "motivo_jev": "rastreio",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT111772",
+        "tag": "Outros",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT110382",
+        "tag": "Outros",
+        "motivo_jev": "item_faltante",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT106712",
+        "tag": "Rastreio",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT107642",
+        "tag": "Reclamação produto",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT116143",
+        "tag": "Reclamação produto",
+        "motivo_jev": "avaria",
+        "confianca": 1
+      },
+      {
+        "conversation_id": "AT108759",
+        "tag": "Reclamação produto",
+        "motivo_jev": "atraso",
+        "confianca": 1
+      }
+    ]
+  },
+  "reclassificacao_572": {
+    "n": 572,
+    "sem_mensagem_do_cliente": 330,
+    "com_mensagem": 242,
+    "motivo_jev_das_com_mensagem": {
+      "atraso": 60,
+      "avaria": 39,
+      "rastreio": 34,
+      "item_faltante": 18,
+      "duvida_produto": 14,
+      "cupom": 11,
+      "brinde": 11,
+      "troca_fragrancia": 10,
+      "reacao_adversa": 8,
+      "cobranca_duplicada": 8,
+      "cancelamento": 8,
+      "endereco": 7,
+      "outro": 7,
+      "elogio": 3,
+      "erro_personalizacao": 2,
+      "pagamento_pendente": 2
+    },
+    "confianca_das_com_mensagem": {
+      "<0,5": 5,
+      "0,5-0,7": 13,
+      "0,7-0,9": 27,
+      ">=0,9": 197
+    },
+    "conversas": [
+      {
+        "conversation_id": "AT104605",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104608",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104644",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.71,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104650",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104654",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104663",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104679",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104707",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104718",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104775",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104791",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104823",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104840",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104849",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104864",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.62,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104892",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104904",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104919",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104940",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104953",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104968",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT104976",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104985",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT104994",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105034",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105047",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105053",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105056",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105099",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.49,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105158",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105199",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105274",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105279",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105300",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105349",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105400",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.89,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105428",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105445",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105467",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105516",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105535",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.7,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105556",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.54,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105595",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105609",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105615",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105639",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105704",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105729",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105740",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105742",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105750",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.79,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105778",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105835",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105874",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105889",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.96,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105908",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105912",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105914",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.52,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105949",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT105962",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT105971",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106005",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106015",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106032",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106043",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106054",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.93,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106116",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 0.94,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106126",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106149",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106161",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106171",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106175",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106193",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.97,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106236",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.52,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106238",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106240",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106294",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106297",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106322",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106350",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106361",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106364",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106380",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106405",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106447",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106488",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106495",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106520",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106528",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106560",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 0.89,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106579",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106621",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106649",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106665",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106702",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106794",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106802",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106804",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106815",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106839",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106844",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.9,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106851",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106890",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 0.84,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106892",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT106943",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 0.77,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT106987",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "elogio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107037",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107041",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107044",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107063",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107087",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "elogio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107089",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107098",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107164",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.86,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107185",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107199",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107259",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107296",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107320",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107361",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107365",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107406",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107440",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107472",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107488",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.95,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107511",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107527",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107562",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107567",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107573",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107605",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.75,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107615",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107620",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107642",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107680",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107736",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107747",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107767",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107806",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107811",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107844",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107848",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107854",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107868",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107871",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107876",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107886",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107919",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107967",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT107983",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT107999",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108009",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108029",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108040",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108056",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.88,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108063",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108141",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108157",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.88,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108187",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108223",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108250",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108258",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108277",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108294",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108299",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108307",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108319",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108338",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108343",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108351",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108388",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108390",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108393",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108398",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108426",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108436",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108483",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108501",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108531",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108553",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108567",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108576",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108588",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108592",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108610",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108661",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108672",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108701",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108709",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108719",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108749",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108759",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108785",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108797",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108828",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT108924",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108942",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108968",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT108989",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109028",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.57,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109041",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109046",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109068",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109082",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109094",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109115",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109121",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109123",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109134",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.72,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109138",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.59,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109144",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109153",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109162",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109176",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109188",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109251",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109260",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109270",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.8,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109276",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.71,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109280",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109283",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109323",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.9,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109326",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109346",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109349",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109358",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109377",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.54,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109396",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109409",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109425",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109440",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109447",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109450",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.86,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109461",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109473",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109481",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109501",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109510",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109532",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109542",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109547",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109566",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109571",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109577",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109623",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109630",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109644",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109649",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109664",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109697",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109740",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.5,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109745",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109766",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.82,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109778",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109802",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.94,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109806",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109865",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109889",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109915",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109945",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT109953",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT109994",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110001",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110102",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110107",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110117",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110166",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110179",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110190",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110205",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110277",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110296",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110299",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110309",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110326",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110328",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110335",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110371",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110379",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110382",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110402",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110439",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110466",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110584",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 0.93,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110594",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110626",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110631",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110692",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110698",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110737",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110776",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110780",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 0.43,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110850",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110860",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110881",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.93,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110918",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110922",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110930",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110939",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 0.96,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT110965",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT110997",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.86,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111026",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111039",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111045",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111068",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111091",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111112",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111118",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111120",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.94,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111126",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111162",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111186",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111209",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111219",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111291",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111302",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.77,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111306",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111327",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111331",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111363",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111373",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111375",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111379",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111430",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111435",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111446",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111451",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111459",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111469",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111489",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111508",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111542",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111644",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111656",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111696",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.59,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111710",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111729",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.91,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111745",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111747",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111768",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111772",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111775",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111777",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111792",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111795",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111851",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111881",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111887",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111917",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111922",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT111932",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111941",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111973",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT111991",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112005",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112016",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112030",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112034",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112040",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112058",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112072",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112076",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 0.96,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112135",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112151",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112153",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112182",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112194",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "erro_personalizacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112222",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112239",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112252",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.88,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112254",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112277",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112325",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112399",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112413",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112424",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112433",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112449",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112479",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.94,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112500",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112522",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112531",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112573",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112643",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112654",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112661",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112674",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112692",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112711",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112734",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112757",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112766",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cancelamento",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112800",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112811",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112817",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112862",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112864",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 0.73,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112892",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112922",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112954",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT112962",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT112967",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113014",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "outro",
+        "confianca": 0.84,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113025",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113035",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113044",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113062",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113066",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113069",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113071",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113124",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 0.87,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113172",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113181",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113184",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113206",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113214",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.78,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113246",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113258",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113262",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113274",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.52,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113298",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113343",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113371",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113374",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113378",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.86,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113395",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113471",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113494",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113503",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113514",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113547",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113586",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.82,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113645",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113693",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113710",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113813",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.91,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113819",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 0.9,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113836",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113860",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113865",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113871",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113882",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 0.48,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113896",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113916",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113942",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 0.95,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113946",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT113951",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 0.96,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT113975",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114003",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114013",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 0.81,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114020",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "pagamento_pendente",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114031",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114065",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114075",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.97,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114100",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114108",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114177",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 0.9,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114182",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114236",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114248",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114259",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114302",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114316",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114329",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114361",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114403",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114441",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114454",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114481",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114534",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114537",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114542",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114549",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114562",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114565",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114610",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114620",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114650",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.98,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114660",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114672",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114688",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114708",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114721",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114726",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 0.36,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114740",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114762",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114777",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114782",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114794",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.57,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114797",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114803",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114808",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114864",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114873",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114919",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114929",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT114965",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT114989",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cobranca_duplicada",
+        "confianca": 0.68,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115018",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115028",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115036",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115042",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115056",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115066",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115086",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115100",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115168",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115175",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115191",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115202",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115209",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115238",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115240",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115295",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115312",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115345",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115354",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115383",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115386",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115417",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115432",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115436",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115464",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115490",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115504",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115511",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115570",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115645",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "erro_personalizacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115648",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115651",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115684",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115703",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115738",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115754",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115756",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.83,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115761",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "elogio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115810",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.93,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115817",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT115846",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115868",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 0.65,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115890",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT115958",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116009",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116034",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116044",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116052",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116085",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116090",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 0.96,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116143",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116179",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "rastreio",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116184",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116193",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116232",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116236",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "atraso",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116261",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116291",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116339",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116352",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116357",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116394",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "troca_fragrancia",
+        "confianca": 0.9,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116478",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "endereco",
+        "confianca": 0.49,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116488",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116505",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116519",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "pagamento_pendente",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116549",
+        "tag": "Reclamação produto",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "avaria",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116579",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116593",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116599",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "duvida_produto",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116601",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "cupom",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116605",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      },
+      {
+        "conversation_id": "AT116655",
+        "tag": "Outros",
+        "motivo_simulacao": "outro",
+        "motivo_jev": "brinde",
+        "confianca": 0.99,
+        "valida": true,
+        "sem_mensagem_do_cliente": false
+      },
+      {
+        "conversation_id": "AT116662",
+        "tag": null,
+        "motivo_simulacao": "sem_interacao",
+        "motivo_jev": "sem_interacao",
+        "confianca": 1,
+        "valida": true,
+        "sem_mensagem_do_cliente": true
+      }
+    ]
+  }
+}

@@ -1,6 +1,10 @@
-// Resumo de um ResultadoProcessamento para gravar em data/processed: estrutura, decisão, log e a resposta
+// Resumo de um ResultadoProcessamento (data/processed, rota api/agent e interface): estrutura, decisão, log e a resposta
 // redigida (já checada). Nenhum texto escrito pelo cliente.
-import type { ResultadoProcessamento } from "../src/lib/agent/orquestrador";
+import type { ResultadoProcessamento } from "./orquestrador";
+
+const arredondar = (o: Record<string, number>) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, Math.round(v * 1000) / 1000]));
+
+export type Resumo = ReturnType<typeof resumo>;
 
 export function resumo(r: ResultadoProcessamento, opcoes: { evidencias?: boolean } = {}) {
   const c = r.classificacao;
@@ -15,8 +19,11 @@ export function resumo(r: ResultadoProcessamento, opcoes: { evidencias?: boolean
       motivo: c.motivo,
       motivo_jev: c.motivoJev,
       confianca: Math.round(c.confianca * 1000) / 1000,
+      probabilidades: arredondar(c.probabilidades),
       urgencia: c.urgencia,
+      sinais_texto: arredondar(c.sinais),
       flags: c.flags,
+      tentativas: c.tentativas,
       mencao_saude: c.mencaoSaude,
     },
     sinais: r.sinais?.detalhes.map((d) => ({ sinal: d.sinal, tipo: d.tipo, anexo: d.anexoId ?? null, ...(opcoes.evidencias ? { evidencia: d.evidencia } : {}) })) ?? [],

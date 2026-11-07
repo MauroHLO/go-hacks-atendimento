@@ -146,11 +146,15 @@ describe("nível 1 e aprovação", () => {
     expect(r.resposta).toMatchObject({ texto: TEXTO_RESERVA, reserva: true, enviada: false });
   });
 
-  it("conversa só com o bot: sem chamar o Jev, nível 1", async () => {
-    const { r, chamadas } = await rodar("AT8", { chat: [{ json: respostaChat("Recebemos sua mensagem. Uma pessoa da equipe vai analisar.") }] });
-    expect(r.classificacao.motivo).toBe("sem_interacao");
-    expect(chamadas.filter((c) => c.url.endsWith("/systemone"))).toHaveLength(0);
-    expect(r.decisao.nivel).toBe(1);
+  it("conversa só com o bot: sem demanda, sem chamar o modelo, nível 0, encerra sem responder", async () => {
+    const { r, chamadas, ferramentas } = await rodar("AT8", {});
+    expect(r.classificacao.motivo).toBe("sem_demanda");
+    expect(chamadas).toHaveLength(0);
+    expect(r.decisao).toMatchObject({ nivel: 0, nivelFinal: 0, ferramenta: "encerrar_conversa" });
+    expect(ferramentas).toContain("encerrar_conversa");
+    expect(ferramentas).not.toContain("responder_cliente");
+    expect(ferramentas).not.toContain("solicitar_aprovacao");
+    expect(r.resposta).toMatchObject({ texto: "", enviada: false, paraAprovacao: false });
   });
 });
 

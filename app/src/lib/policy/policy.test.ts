@@ -401,8 +401,21 @@ describe("confiança do classificador", () => {
 // ---------- Fora da tabela e validação ----------
 
 describe("fora da tabela", () => {
-  it.each<Motivo>(["sem_interacao", "outro"])("%s: nível 1", (motivo) => {
-    expect(decidirNivel(entrada(motivo)).nivel).toBe(1);
+  it("outro: nível 1", () => {
+    expect(decidirNivel(entrada("outro")).nivel).toBe(1);
+  });
+});
+
+describe("sem demanda", () => {
+  it("cliente não escreveu nada: nível 0, encerra sem ação, citando a política", () => {
+    const r = decidirNivel(entrada("sem_demanda"));
+    expect(r).toMatchObject({ nivel: 0, acao: "encerrar_sem_acao", ferramenta: "encerrar_conversa" });
+    expect(r.justificativa).toContain("sem_interacao.acoes_permitidas");
+  });
+  it("não entra no sorteio da auditoria", () => {
+    const cenario = { ...CENARIO_VIGENTE, auditoriaAmostraPct: 100 };
+    expect(decidirNivel(entrada("sem_demanda", {}, { cenario, chaveAmostra: "AT1" })).auditoriaPosterior).toBeUndefined();
+    expect(decidirNivel(entrada("elogio", {}, { cenario, chaveAmostra: "AT1" })).auditoriaPosterior).toBe(true);
   });
 });
 

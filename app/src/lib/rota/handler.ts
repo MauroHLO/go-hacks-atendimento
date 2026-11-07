@@ -2,7 +2,8 @@
 // Fica fora de app/api/agent/route.ts porque o Next valida os nomes exportados pelo arquivo de rota.
 // Ordem: origem -> tamanho -> JSON e zod -> limites -> pipeline. Qualquer exceção: 200 no formato do
 // pipeline, nível 2, falha "interno". Nenhum texto de conversa nem de erro vai para log ou resposta.
-// Única mudança de comportamento: o pipeline e a contingência são injetados (./contrato.ts).
+// Mudanças: o pipeline e a contingência são injetados (./contrato.ts) e a entrada é uma conversa da fila
+// (conversation_id) com mensagem fictícia opcional.
 
 import { z } from "zod";
 import {
@@ -21,7 +22,6 @@ import {
   LimitadorJanela,
   MINUTO_MS,
 } from "../limites";
-import type { Canal, StatusEntrega } from "../policy";
 
 export { RAZAO_FALHA } from "./contrato";
 
@@ -32,28 +32,14 @@ export const LIMITE_IP_DIA = 100;
 export const LIMITE_DIARIO_GLOBAL_PADRAO = 300; // sobrescrito por LIMITE_DIARIO_GLOBAL
 export const MENSAGEM_LIMITE = "limite da demonstração atingido";
 
-const STATUS = ["aguardando_separacao", "em_transito", "entregue", "extraviado", "devolvido", "cancelado"] as const;
-const CANAIS = ["whatsapp", "email", "reclame_aqui"] as const;
-// Falha de compilação se os tipos da policy ganharem valores que não estão aqui.
-const _statusCompleto: Record<StatusEntrega, true> = Object.fromEntries(STATUS.map((s) => [s, true])) as Record<
-  (typeof STATUS)[number],
-  true
->;
-const _canaisCompletos: Record<Canal, true> = Object.fromEntries(CANAIS.map((c) => [c, true])) as Record<
-  (typeof CANAIS)[number],
-  true
->;
-void _statusCompleto;
-void _canaisCompletos;
-
 export const CorpoAgente = z.object({
-  mensagem: z.string().trim().min(1).max(LIMITE_MENSAGEM),
-  contexto: z.object({
-    statusEntrega: z.enum(STATUS),
-    canal: z.enum(CANAIS),
-    valor: z.number().finite().min(0).max(10_000),
-    seq: z.number().int().min(1).max(20),
-  }),
+  conversation_id: z.string().regex(/^AT\d{1,9}$/),
+  mensagem: z
+    .string()
+    .trim()
+    .max(LIMITE_MENSAGEM)
+    .nullish()
+    .transform((m) => (m ? m : null)),
 });
 export type CorpoAgente = z.infer<typeof CorpoAgente>;
 
@@ -165,7 +151,7 @@ export function criarHandler(deps: DepsRota): (req: Request) => Promise<Response
   // Só exemplos prontos têm gravação; qualquer erro aqui desliga a contingência, sem derrubar a rota.
   async function gravada(c: CorpoAgente, motivo: MotivoContingencia) {
     try {
-      return await contingencia(c.mensagem, c.contexto, motivo);
+      return await contingencia(c, motivo);
     } catch {
       return null;
     }
@@ -218,7 +204,7 @@ export function criarHandler(deps: DepsRota): (req: Request) => Promise<Response
         { limitador: deps.limites.global, chave: "global", nome: "diario" },
       ]);
       if (!limite.ok) {
-        // Exemplo pronto: reproduz a gravação sem consumir cota nem chamar o Groq.
+        // Reproduz o resultado gravado sem consumir cota nem chamar o proxy.
         const replay = await gravada(corpo.data, limite.nome as NomeLimite);
         if (replay) {
           registrar({ nivel: replay.nivel, falha: `gravada_${limite.nome}`, ms: ms(), chamadas: 0, tentativasRedacao: 0 });
@@ -231,7 +217,7 @@ export function criarHandler(deps: DepsRota): (req: Request) => Promise<Response
         );
       }
 
-      const resultado: ResultadoPipeline = await processar({ mensagem: corpo.data.mensagem, contexto: corpo.data.contexto });
+      const resultado: ResultadoPipeline = await processar(corpo.data);
       // Falha do provedor do modelo, ou classificação inválida mesmo após nova tentativa (json_invalido).
       const motivoFalha: MotivoContingencia | null =
         resultado.falha && FALHAS_COM_CONTINGENCIA.has(resultado.falha.tipo)

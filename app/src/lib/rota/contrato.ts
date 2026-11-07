@@ -1,9 +1,8 @@
-// Contrato entre a rota e o pipeline do agente (docs/decisoes.md, seção 2).
-// No projeto de referência a rota importava o pipeline antigo (lib/agent) e a contingência da demo.
-// Aqui o pipeline é injetado: a rota só depende deste formato mínimo, e o novo lib/agent (Jev)
-// vai implementá-lo. Até lá, quem montar a rota precisa passar `processar`.
+// Contrato entre a rota e o pipeline do agente (docs/decisoes.md, seções 2 e 7).
+// A rota só depende deste formato mínimo; lib/agent/servico.ts o implementa com o orquestrador,
+// e app/api/agent/route.ts injeta os dois.
 
-import type { Canal, Nivel, StatusEntrega } from "../policy";
+import type { Nivel } from "../policy";
 
 export const RAZAO_FALHA = "falha interna: revisão humana";
 
@@ -17,16 +16,10 @@ export type TipoFalha =
   | "indisponivel"
   | "interno";
 
-export interface ContextoRota {
-  statusEntrega: StatusEntrega;
-  canal: Canal;
-  valor: number;
-  seq: number;
-}
-
+// Conversa da fila e, opcionalmente, uma mensagem fictícia ligada ao pedido dela.
 export interface EntradaRota {
-  mensagem: string;
-  contexto: ContextoRota;
+  conversation_id: string;
+  mensagem: string | null;
 }
 
 // Campos que a rota lê; o pipeline pode devolver mais (vão na resposta como estão).
@@ -55,8 +48,8 @@ export function resultadoFalha(tipo: TipoFalha): ResultadoPipeline {
   };
 }
 
-// Contingência: resposta gravada para exemplos prontos quando há limite ou falha do provedor.
-// Sem exemplos gravados neste projeto ainda; a rota funciona sem ela.
+// Contingência: resultado gravado (data/processed/fila_resultado.json) quando há limite ou falha do provedor.
+// A tela avisa que o resultado é gravado.
 export type MotivoContingencia = "ip_minuto" | "ip_dia" | "diario" | Exclude<TipoFalha, "interno">;
 export const FALHAS_COM_CONTINGENCIA: ReadonlySet<string> = new Set<MotivoContingencia>([
   "timeout",
@@ -66,10 +59,6 @@ export const FALHAS_COM_CONTINGENCIA: ReadonlySet<string> = new Set<MotivoContin
   "json_invalido",
   "requisicao_recusada",
 ]);
-export type ResultadoGravado = ResultadoPipeline & { contingencia: { modelo: string } };
-export type Contingencia = (
-  mensagem: string,
-  contexto: ContextoRota,
-  motivo: MotivoContingencia,
-) => Promise<ResultadoGravado | null>;
+export type ResultadoGravado = ResultadoPipeline & { contingencia: { modelo: string; motivo: MotivoContingencia; aviso: string } };
+export type Contingencia = (entrada: EntradaRota, motivo: MotivoContingencia) => Promise<ResultadoGravado | null>;
 export const semContingencia: Contingencia = async () => null;

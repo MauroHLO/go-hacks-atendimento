@@ -27,7 +27,7 @@
 - `lib/agent/sinais.ts` (detecção de menção de saúde e ameaça), com os testes, sem alteração. Serve de entrada `mencaoSaude` do motor.
 - `lib/rota/handler.ts` e testes, com o comportamento HTTP intacto (origem, 10 KB, zod, limites por IP e global, logs sem texto, exceção vira nível 2). **Mudança necessária:** na referência a rota importava o pipeline antigo (`lib/agent`), a contingência da demo e os tipos da policy antiga. Como a policy foi reescrita e o pipeline antigo saiu, a rota passou a receber o pipeline injetado (`processar`) e a contingência opcional, com o contrato mínimo em `lib/rota/contrato.ts`. O status de entrega no corpo aceito passou a ser o dos dados deste desafio (`aguardando_separacao`, `em_transito`, `entregue`, `extraviado`, `devolvido`, `cancelado`). Nos testes, o cliente Groq falso virou um pipeline falso; as asserções de HTTP, limites e privacidade continuam as mesmas, e foi acrescentado um teste da contingência injetada.
 
-**Removido** (específico do projeto anterior): `lib/faq`, `lib/acoes`, `lib/demo` (exemplos, gravações e contingência), `lib/impacto` (números de outra base; fica um stub que vai ler `data/processed/metricas.json`), o pipeline de `lib/agent` (cliente Groq, esquema, prompts, checagem), os componentes da página, a rota `api/agent`, os scripts `smoke` e `avaliar-classificador` e a dependência `groq-sdk`. O LLM agora é o AI Proxy da GoGroup (Jev + chat completions) e o pipeline será reescrito para ele; a rota `api/agent` volta quando houver pipeline para injetar. A página é provisória.
+**Removido** (específico do projeto anterior): `lib/faq`, `lib/acoes`, `lib/demo` (exemplos, gravações e contingência), `lib/impacto` (números de outra base; fica um stub que vai ler `data/processed/metricas.json`), o pipeline de `lib/agent` (cliente Groq, esquema, prompts, checagem), os componentes da página, a rota `api/agent`, os scripts `smoke` e `avaliar-classificador` e a dependência `groq-sdk`. O LLM agora é o AI Proxy da Gogroup (Jev + chat completions) e o pipeline será reescrito para ele; a rota `api/agent` volta quando houver pipeline para injetar. A página é provisória.
 
 **Reescrito: `lib/policy`.** A policy antiga tinha outra tabela (saúde/ameaça/recontato como escalonadores, limite único de R$ 200, +1 nível por confiança). A nova segue a tabela de autonomia do time:
 
@@ -48,7 +48,7 @@
 - *Cobrança duplicada* não confirmada no gateway, ou já estornada, ou sem essa informação: nível 1 com `verificar_pagamento`.
 - *Fato ausente* necessário para decidir: nível 1 (o motor não supõe).
 - *Pagamento pendente*: nível 0 com `verificar_pagamento` e `informar_status`. *Elogio*: nível 0 com `agradecer`. (Decisão do time; antes estavam no nível 1.)
-- *Motivos fora da tabela* (`sem_interacao`, `outro`): nível 1 até o time definir. Pendente de decisão: só nas conversas só de bot (`sem_interacao`) seriam 330 na amostra.
+- *Motivos fora da tabela* (`sem_interacao`, `outro`): nível 1 até o time definir. Pendente de decisão: só nas conversas só de bot (`sem_interacao`) seriam 330 na amostra. Decidido na seção 7: `sem_demanda`, nível 0.
 
 ## 3. Contexto único, evidências e ferramentas simuladas
 
@@ -180,19 +180,19 @@ Tabela completa (todos os cenários × p, mais atrito, fraudes e auditados) em `
 - *Perda de reenvio por atraso* (medida): 0,45 × valor do pedido (`parametros.md`) quando o agente reenviou por atraso no nível 0 e o pedido original foi entregue depois (posição final de 02/11). Supõe que o cliente escolhe o reenvio; se escolher reembolso e o original chegar, a perda seria o valor do pedido.
 - *Saldo comparável*: a política (vigente ou nova) manda reenviar depois de 7 dias úteis também no nível 1, e quem aprova não sabe se o original vai chegar. O saldo comparável desconta essa perda em qualquer nível, para não atribuir à autonomia um custo que é da política. O saldo líquido continua descontando só o que o agente executa sozinho (mais conservador).
 
-| Cenário (cumulativo) | p | ação N0 | % autônomas | conversas/mês | horas/mês | custo evitado | perda | auditoria | saldo líquido | saldo comparável |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 vigente | 0,05 | 51,1% | 51,1% | 2.033 | 366,4 | 11.158,40 | 459,17 | 0 | 10.686 | 3.114 |
-| 2 base ajustada (limite 300, auditoria, estorno sem teto, fotos bloqueadas) | 0,05 | 51,8% | 51,8% | 2.060 | 371,2 | 11.308,80 | 526,11 | 1.104 | 9.666 | 2.094 |
-| 3 + cancelamento antes da separação | 0,05 | 53,6% | 53,6% | 2.131 | 384,1 | 11.686,40 | 526,11 | 1.144 | 10.003 | 2.431 |
-| 4 + atraso comprovado | 0,05 | 58,4% | 58,4% | 2.324 | 419,4 | 12.745,60 | 6.735,27 | 1.264 | 4.734 | 3.370 |
-| 5 + troca de fragrância | 0,05 | 60,5% | 60,5% | 2.405 | 435,0 | 13.216,00 | 6.735,27 | 1.344 | 5.124 | 3.761 |
-| 6 + Reclame Aqui separa ação e resposta | 0,05 | 68,9% | 60,5% | 2.405 | 435,0 | 13.216,00 | 8.171,71 | 1.552 | 3.479 | 3.479 |
-| **7 + freio R$ 3.000/dia (padrão)** | 0,02 | 68,6% | 60,3% | 2.399 | 434,0 | 13.184,00 | 7.211,83 | 1.544 | 4.415 | 3.784 |
-| **7 + freio R$ 3.000/dia (padrão)** | 0,05 | 68,5% | 60,2% | 2.395 | 433,1 | 13.158,40 | 7.540,78 | 1.544 | 4.061 | 3.430 |
-| **7 + freio R$ 3.000/dia (padrão)** | 0,10 | 66,4% | 58,3% | 2.320 | 417,3 | 12.732,80 | 7.416,24 | 1.512 | 3.792 | 3.161 |
+| Cenário (cumulativo) | p | ações executadas sozinho (N0) | sem nenhuma pessoa (todas) | sem nenhuma pessoa (sem as sem demanda) | conversas/mês | horas/mês | custo evitado | perda | auditoria | saldo líquido | saldo comparável |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 vigente | 0,05 | 62,2% | 62,2% | 57,5% | 2.033 | 366,4 | 11.158,40 | 459,17 | 0 | 10.686 | 3.114 |
+| 2 base ajustada (limite 300, auditoria, estorno sem teto, fotos bloqueadas) | 0,05 | 62,8% | 62,8% | 58,2% | 2.060 | 371,2 | 11.308,80 | 526,11 | 1.104 | 9.666 | 2.094 |
+| 3 + cancelamento antes da separação | 0,05 | 64,6% | 64,6% | 60,2% | 2.131 | 384,1 | 11.686,40 | 526,11 | 1.144 | 10.003 | 2.431 |
+| 4 + atraso comprovado | 0,05 | 69,5% | 69,5% | 65,7% | 2.324 | 419,4 | 12.745,60 | 6.735,27 | 1.264 | 4.734 | 3.370 |
+| 5 + troca de fragrância | 0,05 | 71,5% | 71,5% | 68,0% | 2.405 | 435,0 | 13.216,00 | 6.735,27 | 1.344 | 5.124 | 3.761 |
+| 6 + Reclame Aqui separa ação e resposta | 0,05 | 79,9% | 71,5% | 68,0% | 2.405 | 435,0 | 13.216,00 | 8.171,71 | 1.552 | 3.479 | 3.479 |
+| **7 + freio R$ 3.000/dia (padrão)** | 0,02 | 79,7% | 71,3% | 67,8% | 2.399 | 434,0 | 13.184,00 | 7.211,83 | 1.544 | 4.415 | 3.784 |
+| **7 + freio R$ 3.000/dia (padrão)** | 0,05 | 79,6% | 71,2% | 67,7% | 2.395 | 433,1 | 13.158,40 | 7.540,78 | 1.544 | 4.061 | 3.430 |
+| **7 + freio R$ 3.000/dia (padrão)** | 0,10 | 77,4% | 69,4% | 65,6% | 2.320 | 417,3 | 12.732,80 | 7.416,24 | 1.512 | 3.792 | 3.161 |
 
-Valores por mês, escalados (×4 ÷ 3); atualizados depois da correção da seção 6 (dias desde o recebimento contados até a reclamação). Todos os cenários têm saldo líquido e saldo comparável positivos nos três valores de p (tabela completa em `data/processed/simulacao_autonomia.csv`).
+Valores por mês, escalados (×4 ÷ 3); atualizados depois da correção da seção 6 (dias desde o recebimento contados até a reclamação) e da regra de conversa sem demanda da seção 7 (as 330 conversas sem mensagem do cliente passam ao nível 0 em todos os cenários, sem hora nem custo evitado; por isso as duas colunas de "sem nenhuma pessoa"). Todos os cenários têm saldo líquido e saldo comparável positivos nos três valores de p (tabela completa em `data/processed/simulacao_autonomia.csv`).
 
 **Ganho de cada regra somada** (p = 0,05; diferença para o cenário anterior):
 
@@ -207,11 +207,11 @@ Valores por mês, escalados (×4 ÷ 3); atualizados depois da correção da seç
 
 **Leitura.**
 
-- O princípio é o que move a autonomia: as conversas sem nenhuma pessoa vão de 51,1% (vigente) para 60,2% no padrão (+362 conversas e +66,7 horas por mês), e as ações no nível 0 para 68,5%. As alavancas da seção 4 juntas somavam +0,7 ponto.
+- O princípio é o que move a autonomia: sem contar as conversas sem demanda, as conversas sem nenhuma pessoa vão de 57,5% (vigente) para 67,7% no padrão (+362 conversas e +66,7 horas por mês), e as ações executadas sozinho para 79,6%. Antes da regra de conversa sem demanda (seção 7) os mesmos números eram 51,1% → 60,2% sobre todas as conversas: as 330 sem demanda entravam no denominador e no nível 1. As alavancas da seção 4 juntas somavam +0,7 ponto.
 - **Atraso: achado medido.** Dos 178 reenvios por atraso no nível 0 do padrão (todos por atraso acima de 7 dias úteis; nenhum por extravio já confirmado no momento da decisão), em **115 (65%) o pedido original foi entregue depois**. Isso custa R$ 7.572/mês na política como está (vigente incluído, quando a pessoa aprova o mesmo reenvio). Não é custo da autonomia: no saldo comparável, a regra de atraso no nível 0 rende +R$ 939/mês. Mas sugere rever a política de atraso, por exemplo reenviar no nível 0 só com extravio confirmado pela transportadora (resposta do chamado) e, no atraso sem extravio, abrir o chamado e esperar a resposta antes de reenviar. Precisa da mesma medição antes de mudar.
 - **Reclame Aqui separado** não libera horas (a resposta pública continua com uma pessoa), mas tira 257 ações da fila de espera (o reenvio ou o estorno sai na hora). O custo medido (+R$ 1.436/mês de perda) vem do reenvio por atraso, que agora sai no nível 0 também no Reclame Aqui; no saldo comparável o efeito é −R$ 281/mês (auditoria e perda pela fórmula).
 - **Freio de R$ 3.000/dia.** Gasto sem teto no padrão: R$ 38.348/mês; por dia, p90 R$ 2.741 e máximo R$ 3.248 (escalados). O freio atuou em 4 dias (10 casos da amostra), custa −10 conversas/mês e −R$ 49,60/mês no saldo comparável. Fica ligado como rede de segurança: limita o pior dia sem mexer no dia típico.
-- **O que ainda está no nível 1 da ação** (padrão, p = 0,05, amostra): conversas só de bot sem regra (330), "outro" (242), cancelamento depois da separação (95), troca fora das condições (77), dúvida sem ficha ou sem pedido (71), cobrança duplicada já estornada ou não confirmada (28), custo esperado acima de R$ 6 (33), rastreio de pedido entregue sem regra (13), limite do atendente (11), freio (10). As duas primeiras linhas (572 casos, 19% da amostra) dependem do classificador e de uma regra para conversa sem interação, não de valor em R$.
+- **O que ainda está no nível 1 da ação** (padrão, p = 0,05, amostra): conversas só de bot sem regra (330; resolvido na seção 7: nível 0 sem economia), "outro" (242), cancelamento depois da separação (95), troca fora das condições (77), dúvida sem ficha ou sem pedido (71), cobrança duplicada já estornada ou não confirmada (28), custo esperado acima de R$ 6 (33), rastreio de pedido entregue sem regra (13), limite do atendente (11), freio (10). As duas primeiras linhas (572 casos, 19% da amostra) dependem do classificador e de uma regra para conversa sem interação, não de valor em R$.
 - **Limitações** (além das da seção 4): o reenvio por atraso supõe que o cliente escolhe o reenvio; cancelamento antes da separação e troca com conferência do CD não têm perda modelada; "entregue depois" usa a posição final de 02/11.
 
 ## 6. Agente de ponta a ponta (Jev, redação checada, orquestrador, analista)
@@ -226,7 +226,7 @@ Valores por mês, escalados (×4 ÷ 3); atualizados depois da correção da seç
 
 **Classificador (`lib/agent/classificador.ts`).** Uma chamada ao Jev por conversa, só com as mensagens do cliente e o assunto, **mascarados** (`lib/pii`). Perguntas: `motivo` (choice com a taxonomia de `lib/policy` e uma descrição curta de cada motivo, em `taxonomia.ts`), `urgencia` (score baixa/média/alta; vale o nível mais provável) e seis `noul` (reação adversa, menção de saúde, ameaça de Reclame Aqui ou Procon, cliente irritado, pede ou envia dado sensível, mais de um motivo; sim quando >= 0,5). Regras do código sobre a saída:
 
-- sem mensagem do cliente → `sem_interacao`, sem chamar o Jev;
+- sem mensagem do cliente → `sem_demanda` (antes `sem_interacao`; seção 7), sem chamar o Jev;
 - reação adversa >= 0,5 prevalece sobre o motivo escolhido (sempre nível 2);
 - menção de saúde = Jev ou o detector por palavra-chave;
 - motivo fora da taxonomia → `outro` com confiança 0;
@@ -292,11 +292,12 @@ Ações por ferramenta: ler_conversa 65, consultar_cliente 65, ver_anexos 65, co
 | Troca | 9 | 11,1% |
 
 - A tag é ruidosa: "Troca", "Outros" e "Reclamação produto" misturam assuntos (o Jev lê "Troca" como dúvida, avaria, brinde; "Reclamação produto" como avaria, atraso). "Cancelamento" lido como atraso é provavelmente o cliente que quer cancelar por causa do atraso (multi-motivo); "Rastreio" lido como atraso depende de o prazo já ter passado. Por isso a concordância não é acurácia: os desencontros precisam de revisão manual.
-- **Confiança não separa acerto de erro**: 40 dos 49 desencontros têm confiança >= 0,9 (concordantes: 61 de 71). O limiar de 0,7 protege pouco contra erro de motivo; a proteção real está nas regras do motor (fatos de sistema, evidência, limites).
-- *As 572 "sem_interacao" ou "outro" da simulação*: 330 não têm mensagem do cliente (só o bot falou): nada a classificar, continuam `sem_interacao`. Das 242 com mensagem, o Jev dá motivo específico a 235 (atraso 60, avaria 39, rastreio 34, item_faltante 18, duvida_produto 14, cupom 11, brinde 11, troca_fragrancia 10, reacao_adversa 8, cobranca_duplicada 8, cancelamento 8, endereco 7, outro 7, elogio 3, erro_personalizacao 2, pagamento_pendente 2), com confiança >= 0,9 em 197.
+- **Revisão manual dos 20 desencontros de maior confiança** (tabela abaixo). Mauro revisou à mão, com apoio de IA, lendo as mensagens e o status do pedido: **o Jev acertou os 20** (`AT114627` tem dois motivos: atraso/extravio e cancelamento). Nesta revisão, os desencontros de alta confiança são erros da tag humana; os 59% de concordância medem o ruído da tag, não a acurácia do Jev. **Acurácia mínima na amostra de 120: 76%** (71 concordâncias + 20 revisados com o Jev certo = 91 de 120); os outros 29 desencontros não foram revisados. 40 dos 49 desencontros têm confiança >= 0,9; a revisão indica que a confiança alta acompanha acerto, não erro, mas o limiar de 0,7 não foi testado nos 29 restantes, e a segurança continua nas regras do motor (fatos de sistema, evidência, limites).
+- **Achado de segurança**: `AT107397` é uma reação adversa ("rosto vermelho e ardendo" depois do sérum) registrada como "Avaria" pelo atendente. Pela tag, o caso seguiria como avaria, sem cosmetovigilância; o Jev o lê como `reacao_adversa` (1,00), o que leva o caso ao nível 2 com orientação de suspensão e registro em 24 h.
+- *As 572 "sem_interacao" ou "outro" da simulação*: 330 não têm mensagem do cliente (só o bot falou): nada a classificar; viraram `sem_demanda` na seção 7 (o JSON da avaliação, gerado antes, ainda traz o nome antigo em `motivo_simulacao`). Das 242 com mensagem, o Jev dá motivo específico a 235 (atraso 60, avaria 39, rastreio 34, item_faltante 18, duvida_produto 14, cupom 11, brinde 11, troca_fragrancia 10, reacao_adversa 8, cobranca_duplicada 8, cancelamento 8, endereco 7, outro 7, elogio 3, erro_personalizacao 2, pagamento_pendente 2), com confiança >= 0,9 em 197.
 - *Simulação com essa reclassificação* (cenário 8 = política do padrão, motivo e confiança do Jev nas 242 "outro"; `simulacao_autonomia.*`): conversas autônomas **65,4%** (padrão: 60,2%), 2.603 conversas e 470,4 horas por mês, saldo líquido de R$ 4.776/mês com p = 0,05 e positivo nos três p. O nível 2 sobe para 1,2% porque o Jev achou reações adversas que estavam em "outro".
 
-*20 desencontros para revisão manual* (os de maior confiança; sem texto do cliente):
+*20 desencontros revisados à mão* (os de maior confiança; sem texto do cliente). Resultado da revisão: o Jev acertou os 20; `AT114627` tem dois motivos (atraso/extravio e cancelamento); `AT107397` é reação adversa registrada como avaria.
 
 | conversa | tag do atendente | motivo do Jev | confiança |
 | --- | --- | --- | --- |
@@ -321,10 +322,55 @@ Ações por ferramenta: ler_conversa 65, consultar_cliente 65, ver_anexos 65, co
 | AT116143 | Reclamação produto | avaria | 1,00 |
 | AT108759 | Reclamação produto | atraso | 1,00 |
 
-**Casos de demonstração (`npm run casos-demo`) → `data/processed/casos_demo.json`.** A fila não tem anexos; os três casos vêm do histórico, escolhidos por critério fixo (a primeira conversa, em ordem cronológica, que atende ao critério; fora do Reclame Aqui) e rodam pelo orquestrador real na data da conversa, com o índice de hash só até aquele momento:
+(Tabela acima: rodada da seção 6. O lote foi refeito na seção 7.)
 
-1. *Avaria sem sinal*: `AT104667` (whatsapp, tag Avaria): Jev `item_faltante` (1,00); sinais: nenhum; nível 0 → `reenviar_produto`; resposta enviada: "Fizemos o reenvio sem custo do produto Creme de Pentear Cachos Definidos 1kg referente ao pedido GBH366247."
-2. *Foto repetida de outro cliente*: `AT108179` (whatsapp, tag Avaria): Jev `avaria` (0,91); sinais: hash_em_outro_pedido_ou_cliente, produto_da_foto_diferente_do_pedido; nível 2 → `sinalizar_suspeita`; resposta enviada: "Recebemos sua solicitação e ela está em análise. Retornamos em até 24 horas com a solução."
-3. *Reação adversa*: `AT106482` (whatsapp, tag Reclamação produto): Jev `reacao_adversa` (1,00); sinais: nenhum; nível 2 → `registrar_cosmetovigilancia`; resposta para aprovação: "Sinto muito que você esteja com coceira. Pare de usar o Magnésio Dimalato e procure atendimento médico se precisar. Uma pessoa da nossa equipe de qualidade vai cuidar do caso do pedido GBH374297."
+**Casos de demonstração (`npm run casos-demo`, refeitos na seção 7 com o mesmo resultado de nível e ação; as respostas abaixo são as da nova rodada) → `data/processed/casos_demo.json`.** A fila não tem anexos; os três casos vêm do histórico, escolhidos por critério fixo (a primeira conversa, em ordem cronológica, que atende ao critério; fora do Reclame Aqui) e rodam pelo orquestrador real na data da conversa, com o índice de hash só até aquele momento:
 
-**Limitações.** A tag do atendente é a referência disponível, mas é ruidosa; a avaliação precisa da revisão manual dos desencontros. O custo do chat não é informado pelo proxy. O limite de requisições do proxy (HTTP 429) é o principal risco operacional. `alterar_endereco` registra a alteração sem extrair o endereço. A rota `api/agent` (com limites, de `lib/rota`) ainda não está ligada ao orquestrador; o contrato dela é por mensagem, e o orquestrador é por conversa.
+1. *Avaria sem sinal*: `AT104667` (whatsapp, tag Avaria): Jev `item_faltante` (1,00); sinais: nenhum; nível 0 → `reenviar_produto`; resposta enviada: "Fizemos o reenvio do produto Creme de Pentear Cachos Definidos 1kg, sem custo, referente ao pedido GBH366247."
+2. *Foto repetida de outro cliente*: `AT108179` (whatsapp, tag Avaria): Jev `avaria` (0,93); sinais: hash_em_outro_pedido_ou_cliente, produto_da_foto_diferente_do_pedido; nível 2 → `sinalizar_suspeita`; resposta enviada: "Recebemos sua solicitação e ela está em análise. Retornamos em até 24 horas com a solução."
+3. *Reação adversa*: `AT106482` (whatsapp, tag Reclamação produto): Jev `reacao_adversa` (1,00); sinais: nenhum; nível 2 → `registrar_cosmetovigilancia`; resposta para aprovação: "Sinto muito que você esteja passando por isso. Pare de usar o produto e procure atendimento médico se precisar. Uma pessoa da equipe de qualidade vai cuidar do seu caso."
+
+**Limitações.** A tag do atendente é a referência disponível, mas é ruidosa; 29 desencontros da amostra continuam sem revisão manual. O custo do chat não é informado pelo proxy. O limite de requisições do proxy (HTTP 429) é o principal risco operacional. `alterar_endereco` registra a alteração sem extrair o endereço. A rota `api/agent` foi ligada ao orquestrador na seção 7.
+
+## 7. Conversa sem demanda, rota ligada ao orquestrador e grafia
+
+**Conversa sem demanda.** Conversa sem nenhuma mensagem do cliente (só o bot falou) → motivo `sem_demanda`, **nível 0**, `encerrar_conversa`, sem resposta ao cliente e sem chamar o modelo. Fonte: `politicas.csv › categorias › sem_interacao` ("Conversa em que o cliente não escreveu nada"; ação permitida: `encerrar_sem_acao`). Como a única ação permitida é encerrar, não há o que uma pessoa decidir, e a regra vale em todos os cenários (não é alavanca). Também não entra no sorteio da auditoria. Na simulação, a definição passou a ser a ausência de mensagem do cliente (antes era a tag vazia; são as mesmas 330 conversas da amostra).
+
+- **Zero hora economizada.** O bot já encerrava essas conversas: elas contam como "sem nenhuma pessoa", mas não somam conversas/mês liberadas, horas nem custo evitado.
+- **Por isso, duas medidas.** "Conversas sem nenhuma pessoa" com todas as conversas no denominador e sem as conversas sem demanda (numerador e denominador). A segunda é a que mede o ganho real.
+
+| p = 0,05 (mês = amostra × 4 ÷ 3) | vigente | nova política (padrão) |
+| --- | --- | --- |
+| conversas sem nenhuma pessoa, todas no denominador | 62,2% | 71,2% |
+| conversas sem nenhuma pessoa, sem as sem demanda | 57,5% | 67,7% |
+| ações executadas sozinho (nível 0 da ação) | 62,2% | 79,6% |
+| horas liberadas por mês | 366,4 | 433,1 |
+| conversas liberadas por mês (com demanda) | 2.033 | 2.395 |
+
+*Conversas sem nenhuma pessoa* × *ações executadas sozinho*: a diferença é a resposta pública do Reclame Aqui. Na nova política, a ação do Reclame Aqui (reenvio, estorno) sai no nível 0, mas a resposta pública passa por uma pessoa; a ação conta como executada sozinho, e a conversa não conta como sem nenhuma pessoa.
+
+**Rota `POST /api/agent` ligada ao orquestrador** (`app/src/app/api/agent/route.ts` → `lib/rota/handler.ts` → `lib/agent/servico.ts` → `processarConversa`):
+
+- *Entrada*: `{ conversation_id, mensagem? }`. Sem mensagem, processa a conversa da fila. Com mensagem fictícia (até 2.000 caracteres), cria a conversa `TESTE-<id>` ligada ao pedido e ao cliente da conversa escolhida, só com o texto digitado (sem as mensagens e anexos originais), e esse texto vai mascarado ao Jev como qualquer outro.
+- *Saída*: o mesmo resumo gravado em `fila_resultado.json` (`lib/agent/resumo.ts`, movido de `scripts/`), agora com as probabilidades do Jev e os sinais `noul`.
+- *Concorrência máxima 2*: um semáforo por instância; as demais requisições esperam na ordem de chegada. Motivo: o 429 apareceu com concorrência 5 (seção 6).
+- *Nova tentativa no 429*: o classificador já repetia; agora a redação também repete uma vez (429, 5xx ou rede, depois de 1,5 s), na rota e nos scripts `processar-fila` e `casos-demo`.
+- *Contingência*: se o Jev falha (429, timeout, indisponível, sem configuração) ou o limite de requisições estoura, a rota devolve o resultado gravado da conversa no lote da fila, com `contingencia.aviso` para a tela ("Resultado gravado no lote da fila (motivo)"; com mensagem fictícia, avisa que ela não foi processada).
+- *Mantido de `lib/rota`*: mesma origem, corpo até 10 KB, 10 requisições/minuto e 100/dia por IP, 300/dia no total, log só com métricas. A chave do AI Proxy só existe no servidor.
+- `app/src/dados/processados/` recebe, por `npm run copiar-dados`, os arquivos de `data/processed` que a rota e a interface usam (`fila_resultado`, `casos_demo`, `simulacao_autonomia`, `avaliacao_jev`, `metricas`): só estrutura e respostas já checadas, sem texto do cliente.
+
+**Lote da fila e casos de demo refeitos** (as 5 conversas da fila sem demanda e o resumo com probabilidades), com a nova tentativa no 429 também na redação:
+
+| Métrica | seção 6 | seção 7 |
+| --- | --- | --- |
+| ação no nível 0 / 1 / 2 | 83,1% / 15,4% / 1,5% | 90,8% / 7,7% / 1,5% |
+| sem demanda (nível 0, sem resposta) | — (nível 1) | 5 |
+| respostas enviadas sem pessoa / para aprovação | 33 / 32 | 33 / 27 |
+| redação aprovada na 2ª tentativa / texto de reserva | 11 / 1 | 15 / 1 |
+| classificação inválida / confiança < 0,7 | 0 / 2 | 0 / 2 |
+| tempo médio por conversa / lote inteiro | 3,4 s / 49 s | 3,2 s / 43 s |
+| custo de IA (Jev) | US$ 0,0026 | US$ 0,0026 |
+
+Os incidentes e avisos do analista não mudaram (182 + 88 avisos hoje). Os três casos de demo mantêm nível e ação.
+
+**Grafia.** "Gogroup" (brandbook): corrigido em código, docs e na página; regra nas Convenções do CLAUDE.md. Nomes de arquivo e dados da organização ficam como vieram.

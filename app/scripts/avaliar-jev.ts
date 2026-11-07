@@ -1,7 +1,7 @@
 // Avaliação do Jev contra a tag do atendente (docs/decisoes.md, seção 6).
 // Uso (em app/): npm run avaliar-jev   (lê data/raw localmente e chama o AI Proxy de verdade)
 // - amostra estratificada de 120 conversas com mensagem do cliente (semente 20261107), por tag_agente;
-// - as 572 conversas que a simulação deixou em "sem_interacao" (330, sem mensagem do cliente: o Jev não
+// - as 572 conversas que a simulação deixou em "sem_demanda" (330, sem mensagem do cliente: o Jev não
 //   tem o que ler) ou "outro" (242: tag Outros ou Reclamação produto sem saúde nem personalização).
 // Grava data/processed/avaliacao_jev.json (concordância, matriz de confusão, confiança, 20 desencontros e o
 // motivo reclassificado das 572), sem texto do cliente.
@@ -51,7 +51,7 @@ const amostra: Linha[] = tags.flatMap((t) => embaralhar(porTag.get(t)!).slice(0,
 
 const alvo572 = conversas.filter((c) => {
   const m = motivoSimulado(c);
-  return m === "sem_interacao" || m === "outro";
+  return m === "sem_demanda" || m === "outro";
 });
 
 // ---------- Jev ----------

@@ -347,6 +347,10 @@ export async function processarConversa(conversationId: string, deps: DepsOrques
       case "agradecer":
         r = chamar("agradecer", { conversation_id: conversationId });
         break;
+      case "encerrar_conversa":
+        // Sem demanda: nada a executar além de encerrar (passo 7), sem resposta ao cliente.
+        r = { ok: true };
+        break;
       default:
         r = { ok: true };
     }
@@ -380,8 +384,11 @@ export async function processarConversa(conversationId: string, deps: DepsOrques
   // 6. Redigir.
   let redacao: ResultadoRedacao | null = null;
   let texto: string;
+  const semDemanda = motivo === "sem_demanda" && nivelFinal === 0;
   if (decisao.acao === "falha_classificador") {
     texto = TEXTO_RESERVA;
+  } else if (semDemanda) {
+    texto = ""; // o cliente não escreveu nada: não há o que responder
   } else if (decisao.mensagemCliente) {
     texto = decisao.mensagemCliente; // caso sinalizado: só "em análise", sem modelo
   } else {
@@ -404,7 +411,9 @@ export async function processarConversa(conversationId: string, deps: DepsOrques
   // 7. Responder (ou rascunho) e encerrar.
   const podeEnviar = !decisao.aprovacaoResposta && (nivelFinal === 0 || (decisao.mensagemCliente === MENSAGEM_EM_ANALISE && decisao.nivel === 2));
   let enviada = false;
-  if (podeEnviar) {
+  if (semDemanda) {
+    chamar("encerrar_conversa", { conversation_id: conversationId, motivo: decisao.acao });
+  } else if (podeEnviar) {
     enviada = chamar("responder_cliente", { conversation_id: conversationId, texto }).ok;
   } else {
     pedirAprovacao("responder_cliente", 0, decisao.aprovacaoResposta ? "Reclame Aqui: resposta pública precisa de aprovação." : "Rascunho de resposta para aprovação junto com o caso.");
@@ -426,7 +435,7 @@ export async function processarConversa(conversationId: string, deps: DepsOrques
     resposta: {
       texto,
       enviada,
-      paraAprovacao: !enviada,
+      paraAprovacao: !enviada && !semDemanda,
       reserva: redacao?.reserva ?? texto === TEXTO_RESERVA,
       tentativas: redacao?.tentativas ?? 0,
       falhasChecagem: redacao?.falhas ?? [],

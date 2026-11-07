@@ -37,7 +37,33 @@
         "motivo": "item_faltante",
         "motivo_jev": "item_faltante",
         "confianca": 1,
+        "probabilidades": {
+          "rastreio": 0,
+          "atraso": 0,
+          "avaria": 0,
+          "item_faltante": 1,
+          "brinde": 0,
+          "erro_personalizacao": 0,
+          "cobranca_duplicada": 0,
+          "endereco": 0,
+          "cancelamento": 0,
+          "troca_fragrancia": 0,
+          "duvida_produto": 0,
+          "cupom": 0,
+          "reacao_adversa": 0,
+          "pagamento_pendente": 0,
+          "elogio": 0,
+          "outro": 0
+        },
         "urgencia": "alta",
+        "sinais_texto": {
+          "reacao_adversa": 0.02,
+          "mencao_saude": 0.02,
+          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "cliente_irritado": 0.15,
+          "pede_ou_envia_dado_sensivel": 0.91,
+          "mais_de_um_motivo": 0.06
+        },
         "flags": {
           "reacao_adversa": false,
           "mencao_saude": false,
@@ -46,6 +72,7 @@
           "pede_ou_envia_dado_sensivel": true,
           "mais_de_um_motivo": false
         },
+        "tentativas": 1,
         "mencao_saude": false
       },
       "sinais": [],
@@ -177,7 +204,7 @@
         }
       ],
       "resposta": {
-        "texto": "Fizemos o reenvio sem custo do produto Creme de Pentear Cachos Definidos 1kg referente ao pedido GBH366247.",
+        "texto": "Fizemos o reenvio do produto Creme de Pentear Cachos Definidos 1kg, sem custo, referente ao pedido GBH366247.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -185,17 +212,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3316,
+        "ms": 3203,
         "jev": {
-          "ms": 742,
+          "ms": 626,
           "tokensEntrada": 1014,
           "tokensSaida": 320,
           "custoUsd": 0.000042588
         },
         "chat": {
-          "ms": 2549,
+          "ms": 2556,
           "tokensEntrada": 372,
-          "tokensSaida": 35,
+          "tokensSaida": 37,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042588,
@@ -236,8 +263,34 @@
         "falha": null,
         "motivo": "avaria",
         "motivo_jev": "avaria",
-        "confianca": 0.91,
+        "confianca": 0.93,
+        "probabilidades": {
+          "rastreio": 0,
+          "atraso": 0,
+          "avaria": 0.93,
+          "item_faltante": 0,
+          "brinde": 0,
+          "erro_personalizacao": 0,
+          "cobranca_duplicada": 0,
+          "endereco": 0,
+          "cancelamento": 0,
+          "troca_fragrancia": 0,
+          "duvida_produto": 0,
+          "cupom": 0,
+          "reacao_adversa": 0.01,
+          "pagamento_pendente": 0,
+          "elogio": 0,
+          "outro": 0.06
+        },
         "urgencia": "alta",
+        "sinais_texto": {
+          "reacao_adversa": 0.04,
+          "mencao_saude": 0.02,
+          "ameaca_reclame_aqui_ou_procon": 0.03,
+          "cliente_irritado": 0.33,
+          "pede_ou_envia_dado_sensivel": 0.12,
+          "mais_de_um_motivo": 0.07
+        },
         "flags": {
           "reacao_adversa": false,
           "mencao_saude": false,
@@ -246,6 +299,7 @@
           "pede_ou_envia_dado_sensivel": false,
           "mais_de_um_motivo": false
         },
+        "tentativas": 1,
         "mencao_saude": false
       },
       "sinais": [
@@ -382,9 +436,9 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 465,
+        "ms": 432,
         "jev": {
-          "ms": 463,
+          "ms": 430,
           "tokensEntrada": 1013,
           "tokensSaida": 318,
           "custoUsd": 0.000042546
@@ -434,7 +488,33 @@
         "motivo": "reacao_adversa",
         "motivo_jev": "reacao_adversa",
         "confianca": 1,
+        "probabilidades": {
+          "rastreio": 0,
+          "atraso": 0,
+          "avaria": 0,
+          "item_faltante": 0,
+          "brinde": 0,
+          "erro_personalizacao": 0,
+          "cobranca_duplicada": 0,
+          "endereco": 0,
+          "cancelamento": 0,
+          "troca_fragrancia": 0,
+          "duvida_produto": 0,
+          "cupom": 0,
+          "reacao_adversa": 1,
+          "pagamento_pendente": 0,
+          "elogio": 0,
+          "outro": 0
+        },
         "urgencia": "alta",
+        "sinais_texto": {
+          "reacao_adversa": 0.97,
+          "mencao_saude": 0.95,
+          "ameaca_reclame_aqui_ou_procon": 0.03,
+          "cliente_irritado": 0.68,
+          "pede_ou_envia_dado_sensivel": 0.54,
+          "mais_de_um_motivo": 0.15
+        },
         "flags": {
           "reacao_adversa": true,
           "mencao_saude": true,
@@ -443,6 +523,7 @@
           "pede_ou_envia_dado_sensivel": true,
           "mais_de_um_motivo": false
         },
+        "tentativas": 1,
         "mencao_saude": true
       },
       "sinais": [],
@@ -574,7 +655,7 @@
         }
       ],
       "resposta": {
-        "texto": "Sinto muito que você esteja com coceira. Pare de usar o Magnésio Dimalato e procure atendimento médico se precisar. Uma pessoa da nossa equipe de qualidade vai cuidar do caso do pedido GBH374297.",
+        "texto": "Sinto muito que você esteja passando por isso. Pare de usar o produto e procure atendimento médico se precisar. Uma pessoa da equipe de qualidade vai cuidar do seu caso.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -582,17 +663,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2757,
+        "ms": 2594,
         "jev": {
-          "ms": 438,
+          "ms": 405,
           "tokensEntrada": 1015,
           "tokensSaida": 320,
           "custoUsd": 0.00004263
         },
         "chat": {
-          "ms": 2309,
+          "ms": 2180,
           "tokensEntrada": 397,
-          "tokensSaida": 50,
+          "tokensSaida": 38,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004263,

@@ -16,8 +16,8 @@ export default function Home() {
     <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
       <header className="space-y-3 border-b-2 border-marca pb-4">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <Image src="/gogroup-logo.png" alt="GoGroup" width={98} height={28} />
-          <p className="text-sm text-zinc-700">GoHacks Talent 2026, Desafio 1. Não é um produto oficial da GoGroup.</p>
+          <Image src="/gogroup-logo.png" alt="Gogroup" width={98} height={28} />
+          <p className="text-sm text-zinc-700">GoHacks Talent 2026, Desafio 1. Não é um produto oficial da Gogroup.</p>
         </div>
         <h1 className="text-2xl font-semibold tracking-tight text-marca sm:text-3xl">Agente de atendimento: Gocase e GoBeauté</h1>
         <p className="text-lg text-zinc-900">O modelo entende e redige; o código decide o que se resolve sozinho e o que precisa de uma pessoa.</p>

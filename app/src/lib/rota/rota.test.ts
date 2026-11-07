@@ -21,7 +21,7 @@ import {
 const ORIGEM = "http://localhost:3000";
 const TRECHO = "frase-unica-da-rota-qwz";
 const MENSAGEM = `Oi, onde está meu pedido? ${TRECHO}`;
-const CONTEXTO = { statusEntrega: "em_transito", canal: "whatsapp", valor: 89.9, seq: 1 };
+const CONVERSA = "AT100001";
 
 // Pipeline falso: o pipeline real (lib/agent) é injetado e testado à parte.
 function processarFalso(): Processar {
@@ -56,7 +56,7 @@ function montar(extra: Partial<DepsRota> = {}) {
 }
 
 function requisicao(
-  corpo: unknown = { mensagem: MENSAGEM, contexto: CONTEXTO },
+  corpo: unknown = { conversation_id: CONVERSA, mensagem: MENSAGEM },
   opcoes: { headers?: Record<string, string>; bruto?: string | ReadableStream<Uint8Array> } = {},
 ): Request {
   const headers = { origin: ORIGEM, host: "localhost:3000", "content-type": "application/json", "x-real-ip": "10.0.0.1", ...opcoes.headers };
@@ -96,9 +96,18 @@ describe("sucesso", () => {
     expect(JSON.parse(logs[0])).toEqual({ nivel: 0, falha: null, ms: 0, chamadas: 2, tentativasRedacao: 1 });
   });
 
+  it("só a conversa, sem mensagem fictícia: o pipeline recebe mensagem null", async () => {
+    let recebido: unknown;
+    const { handler } = montar({ processar: async (e) => ((recebido = e), processarFalso()(e)) });
+    for (const corpo of [{ conversation_id: CONVERSA }, { conversation_id: CONVERSA, mensagem: "   " }, { conversation_id: CONVERSA, mensagem: null }]) {
+      expect((await handler(requisicao(corpo))).status).toBe(200);
+      expect(recebido).toEqual({ conversation_id: CONVERSA, mensagem: null });
+    }
+  });
+
   it("mensagem com espaços nas pontas é aceita (trim)", async () => {
     const { handler } = montar();
-    const res = await handler(requisicao({ mensagem: "   onde está meu pedido?   ", contexto: CONTEXTO }));
+    const res = await handler(requisicao({ conversation_id: CONVERSA, mensagem: "   onde está meu pedido?   " }));
     expect(res.status).toBe(200);
   });
 });
@@ -150,30 +159,23 @@ describe("tamanho", () => {
 
   it("mensagem de 2.001 caracteres → 400", async () => {
     const { handler } = montar();
-    const res = await handler(requisicao({ mensagem: "a".repeat(2001), contexto: CONTEXTO }));
+    const res = await handler(requisicao({ conversation_id: CONVERSA, mensagem: "a".repeat(2001) }));
     expect(res.status).toBe(400);
   });
 
   it("mensagem de 2.000 caracteres passa", async () => {
     const { handler } = montar();
-    const res = await handler(requisicao({ mensagem: "a".repeat(2000), contexto: CONTEXTO }));
+    const res = await handler(requisicao({ conversation_id: CONVERSA, mensagem: "a".repeat(2000) }));
     expect(res.status).toBe(200);
   });
 });
 
 describe("validação", () => {
   const casos: [string, unknown][] = [
-    ["mensagem vazia", { mensagem: "   ", contexto: CONTEXTO }],
-    ["mensagem ausente", { contexto: CONTEXTO }],
-    ["contexto ausente", { mensagem: "oi" }],
-    ["status inválido", { mensagem: "oi", contexto: { ...CONTEXTO, statusEntrega: "perdido" } }],
-    ["canal inválido", { mensagem: "oi", contexto: { ...CONTEXTO, canal: "telefone" } }],
-    ["seq 0", { mensagem: "oi", contexto: { ...CONTEXTO, seq: 0 } }],
-    ["seq 1,5", { mensagem: "oi", contexto: { ...CONTEXTO, seq: 1.5 } }],
-    ["seq 21", { mensagem: "oi", contexto: { ...CONTEXTO, seq: 21 } }],
-    ["valor negativo", { mensagem: "oi", contexto: { ...CONTEXTO, valor: -1 } }],
-    ["valor acima de 10.000", { mensagem: "oi", contexto: { ...CONTEXTO, valor: 10_001 } }],
-    ["valor como texto", { mensagem: "oi", contexto: { ...CONTEXTO, valor: "100" } }],
+    ["conversa ausente", { mensagem: "oi" }],
+    ["conversa fora do formato", { conversation_id: "../etc", mensagem: "oi" }],
+    ["conversa como número", { conversation_id: 100001, mensagem: "oi" }],
+    ["mensagem como número", { conversation_id: CONVERSA, mensagem: 5 }],
     ["corpo não é objeto", [1, 2, 3]],
   ];
   it.each(casos)("%s → 400 genérico", async (_nome, corpo) => {
@@ -272,7 +274,7 @@ describe("falhas", () => {
   });
 
   it("falha do modelo com contingência injetada: devolve a resposta gravada", async () => {
-    const gravada: ResultadoGravado = { ...resultadoFalha("timeout"), nivel: 0, falha: null, contingencia: { modelo: "gravado" } };
+    const gravada: ResultadoGravado = { ...resultadoFalha("timeout"), nivel: 0, falha: null, contingencia: { modelo: "gravado", motivo: "rate_limit", aviso: "Resultado gravado" } };
     const { handler, logs } = montar({ processar: async () => resultadoFalha("rate_limit"), contingencia: async () => gravada });
     const { json } = await corpoDe(await handler(requisicao()));
     expect(json).toMatchObject({ nivel: 0, modelo: "gravado" });
@@ -294,7 +296,7 @@ describe("privacidade dos logs e das respostas", () => {
     ["sucesso", {}, () => requisicao()],
     ["falha do modelo", { processar: async () => resultadoFalha("timeout") }, () => requisicao()],
     ["exceção na rota", { processar: async () => { throw new Error(`rota: ${TRECHO}`); } }, () => requisicao()],
-    ["entrada inválida", {}, () => requisicao({ mensagem: MENSAGEM, contexto: { ...CONTEXTO, seq: 0 } })],
+    ["entrada inválida", {}, () => requisicao({ conversation_id: "X", mensagem: MENSAGEM })],
     ["origem", {}, () => requisicao(undefined, { headers: { origin: "https://x.example.com" } })],
   ];
 

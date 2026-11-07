@@ -10,6 +10,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { configDoAmbiente, criarClienteProxy } from "../src/lib/agent/cliente";
+import { comNovaTentativa } from "../src/lib/agent/servico";
 import { novoEstado, processarConversa } from "../src/lib/agent/orquestrador";
 import { detectarSinais } from "../src/lib/agent/sinais";
 import { fatosParaPolitica, montarContexto } from "../src/lib/contexto";
@@ -29,7 +30,7 @@ import {
   porConversaMsg,
   type Linha,
 } from "./dados-brutos";
-import { resumo } from "./resumo";
+import { resumo } from "../src/lib/agent/resumo";
 
 void custoBrinde;
 const ordenadas = [...conversas].sort((a, b) => instante(String(a.data_abertura)) - instante(String(b.data_abertura)));
@@ -84,7 +85,7 @@ const CRITERIOS: { tipo: string; descricao: string; escolhe: (c: Linha) => boole
 ];
 
 async function main() {
-  const ia = criarClienteProxy(configDoAmbiente());
+  const ia = comNovaTentativa(criarClienteProxy(configDoAmbiente())); // 429 também na redação
   const casos = [];
   for (const crit of CRITERIOS) {
     const c = ordenadas.find(crit.escolhe);

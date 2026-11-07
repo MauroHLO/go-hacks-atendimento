@@ -1,6 +1,6 @@
 // Classificador (docs/decisoes.md, seção 6): Jev sobre as mensagens do cliente MASCARADAS (lib/pii).
 // O Jev classifica; o código decide. Regras do código sobre a saída:
-// - sem mensagem do cliente: "sem_interacao", sem chamar o Jev;
+// - sem mensagem do cliente: "sem_demanda", sem chamar o Jev;
 // - reação adversa com probabilidade >= 0,5 prevalece sobre o motivo escolhido (segurança: sempre nível 2);
 // - menção de saúde = Jev (>= 0,5) OU detector por palavra-chave (lib/agent/sinais);
 // - falha ou timeout de 10 s: classificação inválida → o orquestrador manda para nível 2 ("falha_classificador").
@@ -74,7 +74,7 @@ function invalida(falha: TipoFalha | null, semMensagem: boolean, ms = 0): Classi
     falha,
     falhaStatus: null,
     tentativas: 0,
-    motivo: semMensagem ? "sem_interacao" : "outro",
+    motivo: semMensagem ? "sem_demanda" : "outro",
     motivoJev: null,
     confianca: semMensagem ? 1 : 0,
     probabilidades: {},
@@ -127,7 +127,7 @@ export async function classificar(cliente: ClienteIA, e: EntradaClassificador, o
   const flags = Object.fromEntries(Object.entries(sinais).map(([k, v]) => [k, v >= LIMIAR_SINAL])) as Record<SinalTexto, boolean>;
 
   const escolhido = motivoResp.choice;
-  const conhecido = (MOTIVOS as readonly string[]).includes(escolhido) && escolhido !== "sem_interacao";
+  const conhecido = (MOTIVOS as readonly string[]).includes(escolhido) && escolhido !== "sem_demanda";
   let motivo: Motivo = conhecido ? (escolhido as Motivo) : "outro";
   let confianca = conhecido ? motivoResp.confidence : 0;
   if (flags.reacao_adversa && motivo !== "reacao_adversa") {

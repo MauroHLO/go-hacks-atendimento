@@ -264,6 +264,10 @@ export const REGRAS = {
     origem: "politicas.csv › categorias › pagamento_pendente.regra",
     texto: "Pix compensa em até 30 minutos; boleto em até 2 dias úteis.",
   },
+  sem_demanda: {
+    origem: "politicas.csv › categorias › sem_interacao.regra e sem_interacao.acoes_permitidas",
+    texto: "Conversa em que o cliente não escreveu nada (só o bot falou): encerrar sem ação.",
+  },
   elogio: {
     origem: "politicas.csv › categorias › elogio.acoes_permitidas",
     texto: "agradecer.",

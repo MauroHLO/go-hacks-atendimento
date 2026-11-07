@@ -1,6 +1,6 @@
 # Contexto
 
-Hackathon GoHacks Talent 2026 (GoGroup), Desafio 1: Atendimento ao Cliente (Gocase e GoBeauté). Submissão até 07/11/2026 às 16h30: nome, problema, solução, uso de IA, impacto esperado, slides em PDF, link do GitHub e, opcional, app publicado na Vercel e vídeo.
+Hackathon GoHacks Talent 2026 (Gogroup), Desafio 1: Atendimento ao Cliente (Gocase e GoBeauté). Submissão até 07/11/2026 às 16h30: nome, problema, solução, uso de IA, impacto esperado, slides em PDF, link do GitHub e, opcional, app publicado na Vercel e vídeo.
 
 Este projeto reaproveita e adapta o projeto anterior do autor, em `../_referencia` (gogroup-atendimento). Antes de criar um módulo, verifique se existe equivalente lá e adapte; registre o reaproveitamento em `docs/decisoes.md`.
 
@@ -32,7 +32,7 @@ Métricas centrais: "precisa de humano ou não" e "contatos evitáveis (hipótes
 - O LLM não decide ação nem nível. Ele classifica e redige; o código decide.
 - Políticas só vêm de `data/raw/atendimento/politicas.csv`, `ferramentas.csv` e `parametros.md`. Nunca inventar regra. Mudança de política só como alavanca do `CenarioPolitica`, medida pela simulação (`npm run simular`) e registrada em `docs/decisoes.md`.
 - Reação adversa a cosmético ou suplemento: sempre nível 2, orientar suspensão do uso e registrar cosmetovigilância em até 24 h (supervisor). Troca não substitui o registro.
-- LLM: AI Proxy da GoGroup (formato OpenAI). Variáveis `AI_PROXY_BASE_URL`, `AI_PROXY_API_KEY`, `AI_PROXY_MODEL`, só em `.env.local` e nas variáveis da Vercel, nunca no código. Classificação pelo Jev (`POST /v1/systemone`: choice, score e noul com probabilidades); redação por `POST /v1/chat/completions`. Confiança do Jev abaixo de 0,7 eleva o caso para nível 1. A rota pública tem limite de requisições e de tamanho de entrada.
+- LLM: AI Proxy da Gogroup (formato OpenAI). Variáveis `AI_PROXY_BASE_URL`, `AI_PROXY_API_KEY`, `AI_PROXY_MODEL`, só em `.env.local` e nas variáveis da Vercel, nunca no código. Classificação pelo Jev (`POST /v1/systemone`: choice, score e noul com probabilidades); redação por `POST /v1/chat/completions`. Confiança do Jev abaixo de 0,7 eleva o caso para nível 1. A rota pública tem limite de requisições e de tamanho de entrada.
 - Todo número citado em README, relatório ou slides sai de um script em `analysis/` e é reproduzível. O histórico é amostra de 1 em 4 clientes: escalar ×4 e dizer isso.
 - Exemplos da demo e testes são fictícios, escritos por nós.
 
@@ -57,7 +57,8 @@ Métricas centrais: "precisa de humano ou não" e "contatos evitáveis (hipótes
 - Português em código, comentários e docs.
 - Commits pequenos, estilo `tipo: descrição` (feat, fix, docs, chore, test). A cada commit, acrescentar uma linha em `docs/acoes.md`.
 - Mudou regra de política: atualizar testes e `docs/decisoes.md` juntos.
+- Grafia da marca (brandbook): "Gogroup", com G maiúsculo e o resto minúsculo. Nunca "GoGroup", "goGroup" ou "Go group". Exceção: nomes de arquivo e dados da organização, que ficam como vieram.
 
 # Estado atual
 
-Prontos: análise (`analysis/analise_atendimento.py`), exportação para o app (`analysis/exportar_app.py`), `lib/policy`, `lib/contexto`, `lib/evidencias`, `lib/ferramentas` (simuladas, com log de ações). Próximo passo: `lib/agent` com o AI Proxy (Jev + chat completions) e a rota `api/agent`.
+Prontos: análise (`analysis/analise_atendimento.py`), exportação para o app (`analysis/exportar_app.py`), `lib/policy`, `lib/contexto`, `lib/evidencias`, `lib/ferramentas` (simuladas, com log de ações), `lib/agent` (Jev, redação checada, orquestrador, analista) e a rota `POST /api/agent` ligada ao orquestrador (`lib/agent/servico.ts`, concorrência 2, contingência gravada). Os arquivos de `data/processed` que o app usa vão para `app/src/dados/processados/` por `npm run copiar-dados`. Próximo passo: interface.

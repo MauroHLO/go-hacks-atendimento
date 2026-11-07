@@ -11,7 +11,8 @@
 //
 // Limitações (repetidas no JSON de saída):
 // - o motivo vem da tag_agente (rótulo humano posto ao encerrar), não do classificador; confiança 1,0;
-// - conversa sem tag = só bot: nível 1 (sem_interacao);
+// - conversa sem mensagem do cliente = sem_demanda: nível 0, encerra, ZERO hora e ZERO R$ economizados
+//   (o bot já atendia); autonomia mostrada com e sem essas conversas no denominador;
 // - o pedido é reconstruído na data da última mensagem do cliente (lib/contexto/pedidoNaData);
 // - reenvios do cliente contados no OMS nos 365 dias anteriores (o CRM é posição de 02/11);
 // - a lista de fotos bloqueadas é preenchida supondo que o supervisor confirma toda foto sinalizada por
@@ -99,7 +100,7 @@ function preparar(c: Linha, reclass?: { motivo: Motivo; confianca: number }): Ca
   const fatos = fatosParaPolitica(ficha, { reenvios: "oms" }) ?? FATOS_SEM_PEDIDO;
   const efetivadas = ficha.resumo.cobrancasEfetivadas.valor;
   const saude = detectarSinais(texto).saude;
-  const motivo = reclass?.motivo ?? motivoDaTag(c.tag_agente as string | null, pedido, texto, efetivadas.length, saude);
+  const motivo: Motivo = doCliente.length === 0 ? "sem_demanda" : reclass?.motivo ?? motivoDaTag(c.tag_agente as string | null, pedido, texto, efetivadas.length, saude);
 
   let sinais: SinalEvidencia[] = [];
   if (MOTIVOS_EVIDENCIA.has(motivo) && ficha.pedido.valor) {
@@ -175,7 +176,10 @@ interface Resultado {
   pct_nivel2: number;
   aprovacao_resposta: number; // Reclame Aqui: resposta pública aprovada por pessoa
   autonomas: number; // ação no nível 0 e sem aprovação de resposta: nenhuma pessoa toca
-  pct_autonomas: number;
+  pct_autonomas: number; // denominador: todas as conversas (inclui as sem demanda)
+  sem_demanda: number; // conversas sem mensagem do cliente: nível 0, zero hora economizada
+  autonomas_com_demanda: number;
+  pct_autonomas_com_demanda: number; // numerador e denominador sem as conversas sem demanda
   conversas_mes_liberadas: number;
   horas_mes_liberadas: number;
   custo_atendimento_evitado_mes_rs: number;
@@ -233,11 +237,13 @@ function simular(nome: string, base: CenarioPolitica, p0: number, lista: Caso[] 
   const niveis = [0, 0, 0];
   const porMotivo: Record<string, number[]> = {};
   const causas: Record<string, number> = {};
+  let semDemanda = 0, autonomasComDemanda = 0;
   let aprovResp = 0, autonomas = 0, horas = 0, evitado = 0, perda = 0, recl = 0, recl0 = 0;
   let reenvAtraso = 0, reenvAtrasoDup = 0, perdaAtraso = 0, reenvExtravio = 0, reenvExtravioDup = 0, perdaAtrasoPolitica = 0;
   let fortes = 0, fraudes = 0, perdaEvitada = 0, atrito = 0, auditados = 0, semTeto = 0, gastoSemTeto = 0, freados = 0;
 
   for (const c of lista) {
+    if (c.motivo === "sem_demanda") semDemanda++;
     const hoje = dia(c.agora);
     const d = decidirNivel({
       motivo: c.motivo,
@@ -291,8 +297,12 @@ function simular(nome: string, base: CenarioPolitica, p0: number, lista: Caso[] 
       // Liberada de verdade só quando nenhuma pessoa toca (nem aprova a resposta pública).
       if (!d.aprovacaoResposta) {
         autonomas++;
-        horas += c.minutos / 60;
-        evitado += CUSTO_CANAL[c.canal] ?? 0;
+        // Sem demanda: o bot já encerrava; nenhuma hora nem custo de atendimento economizado.
+        if (c.motivo !== "sem_demanda") {
+          autonomasComDemanda++;
+          horas += c.minutos / 60;
+          evitado += CUSTO_CANAL[c.canal] ?? 0;
+        }
       }
     }
     if (MOTIVOS_EVIDENCIA.has(c.motivo)) {
@@ -333,7 +343,10 @@ function simular(nome: string, base: CenarioPolitica, p0: number, lista: Caso[] 
     aprovacao_resposta: aprovResp,
     autonomas,
     pct_autonomas: pct(autonomas),
-    conversas_mes_liberadas: Math.round(autonomas * ESCALA_MES),
+    sem_demanda: semDemanda,
+    autonomas_com_demanda: autonomasComDemanda,
+    pct_autonomas_com_demanda: Math.round((autonomasComDemanda / (n - semDemanda)) * 1000) / 10,
+    conversas_mes_liberadas: Math.round(autonomasComDemanda * ESCALA_MES),
     horas_mes_liberadas: Math.round(horas * ESCALA_MES * 10) / 10,
     custo_atendimento_evitado_mes_rs: m(evitado),
     reclamacoes_evidencia: recl,
@@ -427,6 +440,7 @@ const ganhoIncremental = em005.slice(1).map((r, i) => {
     delta_acao_nivel0: dif("nivel0"),
     delta_autonomas: dif("autonomas"),
     delta_pct_autonomas: dif("pct_autonomas"),
+    delta_pct_autonomas_com_demanda: dif("pct_autonomas_com_demanda"),
     delta_conversas_mes: dif("conversas_mes_liberadas"),
     delta_horas_mes: dif("horas_mes_liberadas"),
     delta_perda_mes_rs: dif("perda_total_mes_rs"),
@@ -441,6 +455,7 @@ const avaliacao = [...CENARIOS.map((c) => c.nome), ...(casosJev ? [NOME_JEV] : [
   return {
     nome,
     pct_autonomas_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_autonomas,
+    pct_autonomas_com_demanda_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_autonomas_com_demanda,
     pct_acao_nivel0_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_nivel0,
     saldo_minimo_mes_rs: Math.min(...rs.map((r) => r.saldo_liquido_mes_rs)),
     saldo_comparavel_minimo_mes_rs: Math.min(...rs.map((r) => r.saldo_comparavel_mes_rs)),
@@ -481,7 +496,11 @@ writeFileSync(
       definicoes: {
         nivel_acao: "nível da ação que o agente executa (decidirNivel.nivelAcao)",
         aprovacao_resposta: "Reclame Aqui: a resposta pública precisa de aprovação, mesmo com a ação no nível 0",
-        autonomas: "ação no nível 0 e sem aprovação de resposta: nenhuma pessoa toca na conversa",
+        autonomas: "ação no nível 0 e sem aprovação de resposta: nenhuma pessoa toca na conversa (conversas sem nenhuma pessoa)",
+        pct_autonomas: "autônomas ÷ todas as conversas, incluindo as sem demanda",
+        pct_autonomas_com_demanda: "autônomas com demanda ÷ conversas com demanda (exclui do numerador e do denominador as conversas em que o cliente não escreveu)",
+        sem_demanda: "conversa sem nenhuma mensagem do cliente: nível 0, encerrar_conversa, zero hora e zero R$ economizados",
+        conversas_mes_liberadas: "autônomas com demanda × 4 ÷ 3",
         custo_atendimento_evitado: "custo por conversa do canal (parametros.md) das conversas autônomas",
         perda_esperada_evidencia: "soma de p × 0,45 × valor do pedido das reclamações com evidência resolvidas no nível 0",
         perda_reenvio_atraso: "0,45 × valor do pedido nos reenvios por atraso no nível 0 cujo pedido original foi entregue depois (medido)",
@@ -494,7 +513,7 @@ writeFileSync(
       },
       limitacoes: [
         "motivo = tag_agente mapeada (rótulo humano), não a saída do classificador; confiança 1,0",
-        "conversa sem tag (só bot) = nível 1",
+        "conversa sem mensagem do cliente = sem_demanda (nível 0), sem hora nem custo economizado",
         "pedido reconstruído na data da última mensagem do cliente",
         "reenvios do cliente contados no OMS nos 365 dias anteriores",
         "lista de fotos bloqueadas supõe que o supervisor confirma toda foto repetida sinalizada (limite superior)",
@@ -518,19 +537,26 @@ writeFileSync(
 // Tabela no terminal
 const t = (v: number | string, w: number) => String(v).padStart(w);
 console.log(
-  `\n${"cenário".padEnd(32)}${t("p0", 5)}${t("açãoN0", 8)}${t("%N1", 6)}${t("%N2", 5)}${t("%auto", 7)}${t("conv/mês", 9)}${t("h/mês", 7)}${t("evitado", 9)}${t("perda", 7)}${t("audit.", 7)}${t("saldo", 8)}${t("s.comp", 8)}${t("freados", 8)}`,
+  `\n${"cenário".padEnd(32)}${t("p0", 5)}${t("açãoN0", 8)}${t("%N1", 6)}${t("%N2", 5)}${t("%auto", 7)}${t("%c/dem", 7)}${t("conv/mês", 9)}${t("h/mês", 7)}${t("evitado", 9)}${t("perda", 7)}${t("audit.", 7)}${t("saldo", 8)}${t("s.comp", 8)}${t("freados", 8)}`,
 );
 for (const r of resultados) {
   console.log(
-    `${r.cenario.padEnd(32)}${t(r.p_sem_sinal, 5)}${t(r.pct_nivel0, 8)}${t(r.pct_nivel1, 6)}${t(r.pct_nivel2, 5)}${t(r.pct_autonomas, 7)}${t(r.conversas_mes_liberadas, 9)}${t(r.horas_mes_liberadas, 7)}${t(r.custo_atendimento_evitado_mes_rs.toFixed(0), 9)}${t(r.perda_total_mes_rs.toFixed(0), 7)}${t(r.auditoria_mes_rs.toFixed(0), 7)}${t(r.saldo_liquido_mes_rs.toFixed(0), 8)}${t(r.saldo_comparavel_mes_rs.toFixed(0), 8)}${t(r.casos_freados, 8)}`,
+    `${r.cenario.padEnd(32)}${t(r.p_sem_sinal, 5)}${t(r.pct_nivel0, 8)}${t(r.pct_nivel1, 6)}${t(r.pct_nivel2, 5)}${t(r.pct_autonomas, 7)}${t(r.pct_autonomas_com_demanda, 7)}${t(r.conversas_mes_liberadas, 9)}${t(r.horas_mes_liberadas, 7)}${t(r.custo_atendimento_evitado_mes_rs.toFixed(0), 9)}${t(r.perda_total_mes_rs.toFixed(0), 7)}${t(r.auditoria_mes_rs.toFixed(0), 7)}${t(r.saldo_liquido_mes_rs.toFixed(0), 8)}${t(r.saldo_comparavel_mes_rs.toFixed(0), 8)}${t(r.casos_freados, 8)}`,
   );
 }
 console.log("\nGanho de cada regra somada (p = 0,05):");
 console.table(ganhoIncremental);
 console.log("Causas do nível 1 da ação (padrão, p = 0,05):", causasNivel1[c7.nome]);
-const p7 = em005.at(-1)!;
+const p7 = em005.find((r) => r.cenario === c7.nome)!; // padrão (cenário 7), não o 8
 console.log(
   `Sem teto no padrão: ${p7.acoes_sem_teto} ações na amostra, R$ ${p7.gasto_sem_teto_mes_rs}/mês; dia p90 R$ ${p7.gasto_sem_teto_dia_p90_rs}, máx R$ ${p7.gasto_sem_teto_dia_max_rs}; freio atuou em ${p7.dias_com_freio} dias (${p7.casos_freados} casos).`,
 );
 console.log(`Reenvios por atraso no nível 0: ${p7.reenvios_atraso_nivel0}; original entregue depois: ${p7.reenvios_atraso_original_entregue_depois} (R$ ${p7.perda_reenvio_atraso_mes_rs}/mês); por extravio: ${p7.reenvios_extravio} (entregue depois: ${p7.reenvios_extravio_original_entregue_depois}).`);
+const v1 = em005[0];
+console.log(`\nNÚMEROS FINAIS (p = 0,05; mês = amostra × 4 ÷ 3). Sem demanda: ${p7.sem_demanda} conversas na amostra.`);
+console.log(`  conversas sem nenhuma pessoa, todas no denominador:  vigente ${v1.pct_autonomas}% → nova política ${p7.pct_autonomas}%`);
+console.log(`  conversas sem nenhuma pessoa, sem as "sem demanda":  vigente ${v1.pct_autonomas_com_demanda}% → nova política ${p7.pct_autonomas_com_demanda}%`);
+console.log(`  ações executadas sozinho (nível 0 da ação):          vigente ${v1.pct_nivel0}% → nova política ${p7.pct_nivel0}%`);
+console.log(`  horas/mês liberadas:                                 vigente ${v1.horas_mes_liberadas} → nova política ${p7.horas_mes_liberadas}`);
+console.log(`  conversas/mês liberadas (com demanda):               vigente ${v1.conversas_mes_liberadas} → nova política ${p7.conversas_mes_liberadas}`);
 console.log(`\nGravado em ${OUT}/simulacao_autonomia.{json,csv}`);
