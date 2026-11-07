@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* Tema claro fixo: cores e contraste verificados só nele. */
+:root {
+  --background: #fafafa;
+  --foreground: #18181b;
+  /* Azul da logo (#1a5da8). Contraste AA: branco sobre ele e ele sobre o fundo claro. */
+  --marca: #1a5da8;
+  /* Séries: cor só em marcas (barra, chip); texto sempre escuro. Fundos tingidos dão AA com texto escuro. */
+  --nivel-0: #1baf7a;
+  --nivel-1: #eda100;
+  --nivel-2: #e34948;
+  --nivel-0-claro: #e3f6ef;
+  --nivel-1-claro: #fdf3dc;
+  --nivel-2-claro: #fce8e7;
+  --serie-azul: #2a78d6;
+  --serie-laranja: #eb6834;
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-marca: var(--marca);
+  --color-nivel-0: var(--nivel-0);
+  --color-nivel-1: var(--nivel-1);
+  --color-nivel-2: var(--nivel-2);
+  --color-nivel-0-claro: var(--nivel-0-claro);
+  --color-nivel-1-claro: var(--nivel-1-claro);
+  --color-nivel-2-claro: var(--nivel-2-claro);
+  --color-serie-azul: var(--serie-azul);
+  --color-serie-laranja: var(--serie-laranja);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Legenda dos gráficos: hachurado = hipótese. */
+.hachurado {
+  background-image: repeating-linear-gradient(45deg, #71717a 0 3px, #ffffff 3px 6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
