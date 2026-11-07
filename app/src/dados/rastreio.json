@@ -1,0 +1,1577 @@
+[
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH457517",
+  "data_hora_evento": "2026-10-14 03:06",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "CA852407863BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH457517",
+  "data_hora_evento": "2026-10-14 19:57",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "CA852407863BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH457517",
+  "data_hora_evento": "2026-10-18 02:21",
+  "status": "chegada_unidade_destino",
+  "local": "unidade DF",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "CA852407863BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH457517",
+  "data_hora_evento": "2026-10-20 08:48",
+  "status": "saiu_para_entrega",
+  "local": "unidade DF",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "CA852407863BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH457517",
+  "data_hora_evento": "2026-10-20 13:35",
+  "status": "entregue",
+  "local": "destino DF",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "CA852407863BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH469163",
+  "data_hora_evento": "2026-10-22 18:52",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "CA445323394BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH469163",
+  "data_hora_evento": "2026-10-23 11:01",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "CA445323394BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH469163",
+  "data_hora_evento": "2026-10-24 22:26",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "CA445323394BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH469163",
+  "data_hora_evento": "2026-10-26 07:44",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "CA445323394BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH469163",
+  "data_hora_evento": "2026-10-26 13:21",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "CA445323394BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH470309",
+  "data_hora_evento": "2026-10-23 17:47",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "CA733467326BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH470309",
+  "data_hora_evento": "2026-10-24 22:01",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "CA733467326BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH470309",
+  "data_hora_evento": "2026-10-26 18:51",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "CA733467326BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH470309",
+  "data_hora_evento": "2026-10-28 08:45",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "CA733467326BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH470309",
+  "data_hora_evento": "2026-10-28 14:28",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "CA733467326BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH473091",
+  "data_hora_evento": "2026-10-24 22:11",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "CA668137631BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH473091",
+  "data_hora_evento": "2026-10-25 11:51",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "CA668137631BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH473091",
+  "data_hora_evento": "2026-10-27 16:51",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "CA668137631BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH473091",
+  "data_hora_evento": "2026-10-28 06:57",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "CA668137631BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH473091",
+  "data_hora_evento": "2026-10-28 13:21",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "CA668137631BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH480248",
+  "data_hora_evento": "2026-10-27 16:22",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "CA270678264BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH480248",
+  "data_hora_evento": "2026-10-28 18:49",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "CA270678264BR"
+ },
+ {
+  "portal": "Correio Ágil",
+  "pedido_ref": "GBH480248",
+  "data_hora_evento": "2026-11-01 10:25",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "CA270678264BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH450703",
+  "data_hora_evento": "2026-10-08 04:48",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-13",
+  "codigo_rastreio": "EJ581957753BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH450703",
+  "data_hora_evento": "2026-10-09 08:10",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-13",
+  "codigo_rastreio": "EJ581957753BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH450703",
+  "data_hora_evento": "2026-10-12 00:13",
+  "status": "chegada_unidade_destino",
+  "local": "unidade MG",
+  "previsao_entrega": "2026-10-13",
+  "codigo_rastreio": "EJ581957753BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH450703",
+  "data_hora_evento": "2026-10-13 15:19",
+  "status": "saiu_para_entrega",
+  "local": "unidade MG",
+  "previsao_entrega": "2026-10-13",
+  "codigo_rastreio": "EJ581957753BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH450703",
+  "data_hora_evento": "2026-10-13 17:21",
+  "status": "entregue",
+  "local": "destino MG",
+  "previsao_entrega": "2026-10-13",
+  "codigo_rastreio": "EJ581957753BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH453855",
+  "data_hora_evento": "2026-10-10 17:01",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ984206670BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH453855",
+  "data_hora_evento": "2026-10-11 15:40",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ984206670BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH453855",
+  "data_hora_evento": "2026-10-16 23:58",
+  "status": "chegada_unidade_destino",
+  "local": "unidade BA",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ984206670BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH453855",
+  "data_hora_evento": "2026-10-23 14:14",
+  "status": "saiu_para_entrega",
+  "local": "unidade BA",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ984206670BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH453855",
+  "data_hora_evento": "2026-10-23 17:33",
+  "status": "entregue",
+  "local": "destino BA",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ984206670BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH454865",
+  "data_hora_evento": "2026-10-14 04:59",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-19",
+  "codigo_rastreio": "EJ875667937BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH454865",
+  "data_hora_evento": "2026-10-15 00:42",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-19",
+  "codigo_rastreio": "EJ875667937BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH454865",
+  "data_hora_evento": "2026-10-24 04:35",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-10-19",
+  "codigo_rastreio": "EJ875667937BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH463088",
+  "data_hora_evento": "2026-10-20 02:43",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-23",
+  "codigo_rastreio": "EJ197105379BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH463088",
+  "data_hora_evento": "2026-10-21 04:52",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-23",
+  "codigo_rastreio": "EJ197105379BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH463088",
+  "data_hora_evento": "2026-11-01 14:58",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-10-23",
+  "codigo_rastreio": "EJ197105379BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469698",
+  "data_hora_evento": "2026-10-21 17:02",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ155909234BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469698",
+  "data_hora_evento": "2026-10-22 19:22",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ155909234BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469939",
+  "data_hora_evento": "2026-10-22 08:52",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ317523422BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469939",
+  "data_hora_evento": "2026-10-23 00:50",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ317523422BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469939",
+  "data_hora_evento": "2026-10-25 03:26",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ317523422BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469939",
+  "data_hora_evento": "2026-10-27 08:48",
+  "status": "saiu_para_entrega",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ317523422BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH469939",
+  "data_hora_evento": "2026-10-27 11:28",
+  "status": "entregue",
+  "local": "destino PE",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ317523422BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH470187",
+  "data_hora_evento": "2026-10-22 00:07",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ995956996BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH470187",
+  "data_hora_evento": "2026-10-22 15:49",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ995956996BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH470187",
+  "data_hora_evento": "2026-10-26 01:00",
+  "status": "chegada_unidade_destino",
+  "local": "unidade AL",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ995956996BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH470187",
+  "data_hora_evento": "2026-10-27 07:09",
+  "status": "saiu_para_entrega",
+  "local": "unidade AL",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ995956996BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH470187",
+  "data_hora_evento": "2026-10-27 10:28",
+  "status": "entregue",
+  "local": "destino AL",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ995956996BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH472635",
+  "data_hora_evento": "2026-10-24 03:47",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ103408476BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH472635",
+  "data_hora_evento": "2026-10-24 14:57",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ103408476BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH472635",
+  "data_hora_evento": "2026-10-29 09:23",
+  "status": "chegada_unidade_destino",
+  "local": "unidade BA",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ103408476BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH473217",
+  "data_hora_evento": "2026-10-24 16:29",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ148178761BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH473217",
+  "data_hora_evento": "2026-10-25 11:24",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ148178761BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH474054",
+  "data_hora_evento": "2026-10-24 00:47",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ863845520BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH474054",
+  "data_hora_evento": "2026-10-24 13:01",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ863845520BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH474054",
+  "data_hora_evento": "2026-11-01 09:28",
+  "status": "chegada_unidade_destino",
+  "local": "unidade CE",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ863845520BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH475904",
+  "data_hora_evento": "2026-10-27 20:06",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ658260115BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH475904",
+  "data_hora_evento": "2026-10-28 17:14",
+  "status": "entregue",
+  "local": "destino ES",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ658260115BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH475904",
+  "data_hora_evento": "2026-10-28 20:29",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ658260115BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH475904",
+  "data_hora_evento": "2026-10-28 20:29",
+  "status": "saiu_para_entrega",
+  "local": "unidade ES",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "EJ658260115BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH476745",
+  "data_hora_evento": "2026-10-27 00:43",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "EJ318571539BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH476745",
+  "data_hora_evento": "2026-10-28 06:35",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "EJ318571539BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH489005",
+  "data_hora_evento": "2026-10-30 21:26",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-11-06",
+  "codigo_rastreio": "EJ198951743BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GBH489005",
+  "data_hora_evento": "2026-10-31 09:46",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-06",
+  "codigo_rastreio": "EJ198951743BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH551605",
+  "data_hora_evento": "2026-10-10 07:10",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ043403835BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH551605",
+  "data_hora_evento": "2026-10-11 11:21",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ043403835BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH551605",
+  "data_hora_evento": "2026-10-24 06:37",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ043403835BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH551964",
+  "data_hora_evento": "2026-10-10 15:48",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ188558608BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH551964",
+  "data_hora_evento": "2026-10-11 20:55",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ188558608BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH551964",
+  "data_hora_evento": "2026-10-29 04:38",
+  "status": "chegada_unidade_destino",
+  "local": "unidade CE",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "EJ188558608BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH556292",
+  "data_hora_evento": "2026-10-21 21:31",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ230687095BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH556292",
+  "data_hora_evento": "2026-10-22 09:37",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ230687095BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH556292",
+  "data_hora_evento": "2026-10-25 07:25",
+  "status": "chegada_unidade_destino",
+  "local": "unidade CE",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ230687095BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH556292",
+  "data_hora_evento": "2026-10-27 12:47",
+  "status": "saiu_para_entrega",
+  "local": "unidade CE",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ230687095BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH556292",
+  "data_hora_evento": "2026-10-27 18:28",
+  "status": "entregue",
+  "local": "destino CE",
+  "previsao_entrega": "2026-10-27",
+  "codigo_rastreio": "EJ230687095BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH559560",
+  "data_hora_evento": "2026-10-28 14:05",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "EJ772196400BR"
+ },
+ {
+  "portal": "Expressa Já",
+  "pedido_ref": "GCH559560",
+  "data_hora_evento": "2026-10-29 18:04",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "EJ772196400BR"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH460826",
+  "data_hora_evento": "2026-10-16 07:16",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "RPS484330290"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH460826",
+  "data_hora_evento": "2026-10-17 08:25",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "RPS484330290"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH460826",
+  "data_hora_evento": "2026-10-20 13:32",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "RPS484330290"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH460826",
+  "data_hora_evento": "2026-10-21 08:41",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "RPS484330290"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH460826",
+  "data_hora_evento": "2026-10-21 13:28",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "RPS484330290"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH472693",
+  "data_hora_evento": "2026-10-24 04:10",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "RPS383382153"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH472693",
+  "data_hora_evento": "2026-10-24 23:45",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "RPS383382153"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH472693",
+  "data_hora_evento": "2026-10-26 04:25",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SC",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "RPS383382153"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH472693",
+  "data_hora_evento": "2026-10-27 10:23",
+  "status": "saiu_para_entrega",
+  "local": "unidade SC",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "RPS383382153"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH472693",
+  "data_hora_evento": "2026-10-27 13:14",
+  "status": "entregue",
+  "local": "destino SC",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "RPS383382153"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH477520",
+  "data_hora_evento": "2026-10-26 15:30",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS206610052"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH477520",
+  "data_hora_evento": "2026-10-27 15:09",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS206610052"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH477520",
+  "data_hora_evento": "2026-10-28 21:53",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PR",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS206610052"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH477520",
+  "data_hora_evento": "2026-10-29 08:04",
+  "status": "saiu_para_entrega",
+  "local": "unidade PR",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS206610052"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH477520",
+  "data_hora_evento": "2026-10-29 14:21",
+  "status": "entregue",
+  "local": "destino PR",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS206610052"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH479612",
+  "data_hora_evento": "2026-10-27 23:08",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS820070130"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH479612",
+  "data_hora_evento": "2026-10-28 09:26",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS820070130"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH479612",
+  "data_hora_evento": "2026-10-28 21:11",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SC",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS820070130"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH479612",
+  "data_hora_evento": "2026-10-29 08:57",
+  "status": "saiu_para_entrega",
+  "local": "unidade SC",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS820070130"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH479612",
+  "data_hora_evento": "2026-10-29 11:21",
+  "status": "entregue",
+  "local": "destino SC",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "RPS820070130"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH485960",
+  "data_hora_evento": "2026-10-30 05:32",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-11-05",
+  "codigo_rastreio": "RPS901131686"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GBH485960",
+  "data_hora_evento": "2026-10-30 22:09",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-05",
+  "codigo_rastreio": "RPS901131686"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553176",
+  "data_hora_evento": "2026-10-14 07:37",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "RPS843106212"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553176",
+  "data_hora_evento": "2026-10-15 11:00",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "RPS843106212"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553176",
+  "data_hora_evento": "2026-10-16 04:42",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SC",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "RPS843106212"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553176",
+  "data_hora_evento": "2026-10-16 09:43",
+  "status": "saiu_para_entrega",
+  "local": "unidade SC",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "RPS843106212"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553176",
+  "data_hora_evento": "2026-10-16 16:21",
+  "status": "entregue",
+  "local": "destino SC",
+  "previsao_entrega": "2026-10-16",
+  "codigo_rastreio": "RPS843106212"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553818",
+  "data_hora_evento": "2026-10-15 14:38",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "RPS207115027"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553818",
+  "data_hora_evento": "2026-10-16 11:54",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "RPS207115027"
+ },
+ {
+  "portal": "Rápido Sul",
+  "pedido_ref": "GCH553818",
+  "data_hora_evento": "2026-10-24 04:32",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PR",
+  "previsao_entrega": "2026-10-20",
+  "codigo_rastreio": "RPS207115027"
+ },
+ {
+  "portal": "TransNorte",
+  "pedido_ref": "GCH558661",
+  "data_hora_evento": "2026-10-23 18:09",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "TN5250639751"
+ },
+ {
+  "portal": "TransNorte",
+  "pedido_ref": "GCH558661",
+  "data_hora_evento": "2026-10-24 06:59",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "TN5250639751"
+ },
+ {
+  "portal": "TransNorte",
+  "pedido_ref": "GCH558661",
+  "data_hora_evento": "2026-10-28 21:37",
+  "status": "chegada_unidade_destino",
+  "local": "unidade MT",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "TN5250639751"
+ },
+ {
+  "portal": "TransNorte",
+  "pedido_ref": "GCH559342",
+  "data_hora_evento": "2026-10-27 01:41",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-11-03",
+  "codigo_rastreio": "TN5142030277"
+ },
+ {
+  "portal": "TransNorte",
+  "pedido_ref": "GCH559342",
+  "data_hora_evento": "2026-10-27 14:48",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-03",
+  "codigo_rastreio": "TN5142030277"
+ },
+ {
+  "portal": "TransNorte",
+  "pedido_ref": "GCH559342",
+  "data_hora_evento": "2026-11-01 20:22",
+  "status": "chegada_unidade_destino",
+  "local": "unidade RN",
+  "previsao_entrega": "2026-11-03",
+  "codigo_rastreio": "TN5142030277"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH450552",
+  "data_hora_evento": "2026-10-07 04:11",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-08",
+  "codigo_rastreio": "VL84901934603"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH450552",
+  "data_hora_evento": "2026-10-08 02:18",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-08",
+  "codigo_rastreio": "VL84901934603"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH450552",
+  "data_hora_evento": "2026-10-08 10:59",
+  "status": "chegada_unidade_destino",
+  "local": "unidade RJ",
+  "previsao_entrega": "2026-10-08",
+  "codigo_rastreio": "VL84901934603"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH450552",
+  "data_hora_evento": "2026-10-08 15:05",
+  "status": "saiu_para_entrega",
+  "local": "unidade RJ",
+  "previsao_entrega": "2026-10-08",
+  "codigo_rastreio": "VL84901934603"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH450552",
+  "data_hora_evento": "2026-10-08 18:14",
+  "status": "entregue",
+  "local": "destino RJ",
+  "previsao_entrega": "2026-10-08",
+  "codigo_rastreio": "VL84901934603"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH462762",
+  "data_hora_evento": "2026-10-19 23:52",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL76093562564"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH462762",
+  "data_hora_evento": "2026-10-20 23:44",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL76093562564"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH462762",
+  "data_hora_evento": "2026-10-21 07:44",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL76093562564"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH462762",
+  "data_hora_evento": "2026-10-21 07:44",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL76093562564"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH462762",
+  "data_hora_evento": "2026-10-21 11:14",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL76093562564"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH464417",
+  "data_hora_evento": "2026-10-20 22:19",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL91949160503"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH464417",
+  "data_hora_evento": "2026-10-21 14:14",
+  "status": "entregue",
+  "local": "destino RJ",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL91949160503"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH464417",
+  "data_hora_evento": "2026-10-21 21:41",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL91949160503"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH464417",
+  "data_hora_evento": "2026-10-21 21:41",
+  "status": "saiu_para_entrega",
+  "local": "unidade RJ",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL91949160503"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH466038",
+  "data_hora_evento": "2026-10-19 15:25",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL55563553731"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH466038",
+  "data_hora_evento": "2026-10-20 02:27",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL55563553731"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH466038",
+  "data_hora_evento": "2026-10-27 14:41",
+  "status": "chegada_unidade_destino",
+  "local": "unidade BA",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL55563553731"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH466364",
+  "data_hora_evento": "2026-10-19 13:03",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL01224101763"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH466364",
+  "data_hora_evento": "2026-10-20 03:25",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL01224101763"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH466364",
+  "data_hora_evento": "2026-10-30 20:39",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-21",
+  "codigo_rastreio": "VL01224101763"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH468365",
+  "data_hora_evento": "2026-10-21 08:49",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-22",
+  "codigo_rastreio": "VL42646472664"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH468365",
+  "data_hora_evento": "2026-10-22 11:31",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-22",
+  "codigo_rastreio": "VL42646472664"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH468365",
+  "data_hora_evento": "2026-10-22 12:46",
+  "status": "chegada_unidade_destino",
+  "local": "unidade MG",
+  "previsao_entrega": "2026-10-22",
+  "codigo_rastreio": "VL42646472664"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH468365",
+  "data_hora_evento": "2026-10-22 12:46",
+  "status": "saiu_para_entrega",
+  "local": "unidade MG",
+  "previsao_entrega": "2026-10-22",
+  "codigo_rastreio": "VL42646472664"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH468365",
+  "data_hora_evento": "2026-10-22 13:14",
+  "status": "entregue",
+  "local": "destino MG",
+  "previsao_entrega": "2026-10-22",
+  "codigo_rastreio": "VL42646472664"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH470288",
+  "data_hora_evento": "2026-10-22 21:50",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL00990341755"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH470288",
+  "data_hora_evento": "2026-10-23 19:53",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL00990341755"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH470288",
+  "data_hora_evento": "2026-10-26 16:05",
+  "status": "chegada_unidade_destino",
+  "local": "unidade DF",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL00990341755"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH470288",
+  "data_hora_evento": "2026-10-28 11:51",
+  "status": "saiu_para_entrega",
+  "local": "unidade DF",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL00990341755"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH470288",
+  "data_hora_evento": "2026-10-28 17:28",
+  "status": "entregue",
+  "local": "destino DF",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL00990341755"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH471000",
+  "data_hora_evento": "2026-10-23 15:08",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL43378588381"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH471000",
+  "data_hora_evento": "2026-10-24 18:11",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL43378588381"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH471000",
+  "data_hora_evento": "2026-10-25 13:25",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL43378588381"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH471000",
+  "data_hora_evento": "2026-10-26 04:15",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL43378588381"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH471000",
+  "data_hora_evento": "2026-10-26 09:14",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-26",
+  "codigo_rastreio": "VL43378588381"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH477555",
+  "data_hora_evento": "2026-10-27 05:41",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL01949368558"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH477555",
+  "data_hora_evento": "2026-10-28 08:42",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL01949368558"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH477555",
+  "data_hora_evento": "2026-10-28 09:39",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL01949368558"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH477555",
+  "data_hora_evento": "2026-10-28 09:39",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL01949368558"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH477555",
+  "data_hora_evento": "2026-10-28 10:14",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL01949368558"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481046",
+  "data_hora_evento": "2026-10-28 14:38",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "VL06286219612"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481046",
+  "data_hora_evento": "2026-10-29 15:00",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "VL06286219612"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481046",
+  "data_hora_evento": "2026-10-29 22:51",
+  "status": "chegada_unidade_destino",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "VL06286219612"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481046",
+  "data_hora_evento": "2026-10-30 06:55",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "VL06286219612"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481046",
+  "data_hora_evento": "2026-10-30 10:33",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-29",
+  "codigo_rastreio": "VL06286219612"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481890",
+  "data_hora_evento": "2026-10-28 12:04",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL68604354021"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481890",
+  "data_hora_evento": "2026-10-29 10:28",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL68604354021"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH481890",
+  "data_hora_evento": "2026-11-02 00:25",
+  "status": "chegada_unidade_destino",
+  "local": "unidade PE",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL68604354021"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH487889",
+  "data_hora_evento": "2026-10-30 21:42",
+  "status": "coletado",
+  "local": "CD2",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL49146088585"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GBH487889",
+  "data_hora_evento": "2026-10-31 20:35",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL49146088585"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH556833",
+  "data_hora_evento": "2026-10-23 08:31",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL62316263472"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH556833",
+  "data_hora_evento": "2026-10-24 11:03",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL62316263472"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH556833",
+  "data_hora_evento": "2026-10-29 13:37",
+  "status": "chegada_unidade_destino",
+  "local": "unidade GO",
+  "previsao_entrega": "2026-10-28",
+  "codigo_rastreio": "VL62316263472"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH559202",
+  "data_hora_evento": "2026-10-28 21:02",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "VL19926743127"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH559202",
+  "data_hora_evento": "2026-10-29 12:07",
+  "status": "entregue",
+  "local": "destino SP",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "VL19926743127"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH559202",
+  "data_hora_evento": "2026-10-29 22:54",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "VL19926743127"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH559202",
+  "data_hora_evento": "2026-10-29 22:54",
+  "status": "saiu_para_entrega",
+  "local": "unidade SP",
+  "previsao_entrega": "2026-10-30",
+  "codigo_rastreio": "VL19926743127"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH560446",
+  "data_hora_evento": "2026-10-27 20:36",
+  "status": "coletado",
+  "local": "CD1",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL50411311144"
+ },
+ {
+  "portal": "ViaLog",
+  "pedido_ref": "GCH560446",
+  "data_hora_evento": "2026-10-28 20:58",
+  "status": "em_transferencia",
+  "local": "centro de distribuição da transportadora",
+  "previsao_entrega": "2026-11-04",
+  "codigo_rastreio": "VL50411311144"
+ }
+]

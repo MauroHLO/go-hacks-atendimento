@@ -49,3 +49,39 @@
 - *Fato ausente* necessário para decidir: nível 1 (o motor não supõe).
 - *Pagamento pendente*: nível 0 com `verificar_pagamento` e `informar_status`. *Elogio*: nível 0 com `agradecer`. (Decisão do time; antes estavam no nível 1.)
 - *Motivos fora da tabela* (`sem_interacao`, `outro`): nível 1 até o time definir. Pendente de decisão: só nas conversas só de bot (`sem_interacao`) seriam 330 na amostra.
+
+## 3. Contexto único, evidências e ferramentas simuladas
+
+**Exportação para o app (`analysis/exportar_app.py` → `app/src/dados/*.json`).** Só o necessário para as 65 conversas da fila de 02/11 08:00 (58 pedidos, 61 clientes): conversas (assunto mascarado), mensagens, pedido, itens, eventos de rastreio, pagamentos, estornos, chamados, trocas e reenvios do cliente (em todos os pedidos dele), cliente, anexos dos pedidos e clientes da fila, índice `hash_perceptual → [anexo, pedido, cliente]` sobre **todos** os 382 anexos, catálogo de produtos (ficha para `responder_duvida` e comparação com a foto), cupons e uso de cupons dos clientes da fila, `politicas.csv` e `ferramentas.csv`.
+
+- **Exceção à regra de texto livre.** As mensagens da fila entram no repositório porque o agente precisa lê-las e porque os dados são sintéticos e fornecidos pela organização. Entram com CPF, telefone, e-mail e cartão mascarados pelas mesmas expressões de `lib/pii` (portadas para o script). O script também procura sequências parecidas com documento ou telefone sem formatação e lista o que sobrar: na exportação atual, 4 mensagens foram mascaradas e nenhuma sequência suspeita sobrou. Primeiros nomes nas saudações ("Olá, Bruna!") não são cobertos pela regra de mascaramento e ficam.
+- **Removido na exportação:** nome, CPF, telefone, e-mail, nascimento, cidade, UF e CEP do cliente; CEP e cidade de entrega do pedido; `end_to_end_pix` do pagamento; `texto_personalizacao` das trocas. O `texto_personalizacao` dos itens fica, porque é o que se compara com a foto e se reimprime.
+- A fila não tem anexos próprios (as fotos chegam durante o evento por `ver_anexos`). Por isso o índice de hash cobre todos os anexos do histórico: é com ele que uma foto nova é comparada.
+
+**`lib/dados`.** Tipos e carga dos JSON. Datas sem fuso, tratadas como UTC ingênuo; "agora" = 2026-11-02 08:00 (`parametros.md`). `baseVazia()` monta bases fictícias para os testes.
+
+**`lib/contexto`: `montarContexto(conversation_id)`.** Ficha com a origem de cada campo (ERP de pedidos, Portal da transportadora, Gateway de pagamentos, OMS de trocas e reenvios, CRM, Catálogo, Central de atendimento, ou "Calculado (de onde)").
+
+- *Dias úteis de atraso* = dias úteis de `data_prometida` (ERP) até a entrega, ou até hoje se não entregue, com os feriados de `politicas.csv` (os de `parametros.md`, mais 25/12 e 01/01). Entrega antes do prometido = 0.
+- *Rastreio parado* = dias úteis desde o último evento do portal até hoje, só para pedido ainda não entregue.
+- *Dias desde o recebimento* = dias corridos completos entre a entrega e agora.
+- *Cobranças efetivadas* = capturada, paga ou estornada (mesma regra da análise); *já estornada* = alguma estornada ou com `valor_estornado` > 0, ou estorno `concluido`.
+- *Reenvios anteriores* = trocas, reenvios e novas produções do cliente com solicitação antes de agora; *trocas no pedido* = tipo `troca` no pedido; *chamados abertos* = status diferente de `encerrado`.
+- `fatosParaPolitica(ficha)` converte a ficha nos `FatosPedido` do motor.
+
+**`lib/evidencias`: `calcularSinais`.** Cada sinal vem com uma evidência curta e verificável (anexo, data, hash, pedido), sem acusação.
+
+- *Fortes:* mesma imagem (hash) em outro pedido ou de outro cliente (a mesma foto reenviada no mesmo pedido não conta); EXIF de captura anterior à data de entrega; produto da foto diferente do pedido.
+- *Produto diferente*, em ordem: (1) etiqueta com o número de outro pedido; (2) nome de produto do catálogo citado na descrição que não está no pedido; (3) categoria genérica (capinha, copo, garrafa, necessaire, bolsa, Connect Card, mala) que não existe no pedido; (4) mesma categoria, mas a foto mostra estampa e o pedido é personalizado por nome ou iniciais (personalização por foto pode parecer estampa, então não conta). Caixa ou embalagem sem produto identificável não gera sinal.
+- *Fracos:* software no EXIF; cliente com 2 ou mais trocas/reenvios em 12 meses (CRM).
+- *Elegibilidade:* sem foto; reclamação mais de 7 dias corridos após a entrega.
+- *Conferência com os dados reais* (fora do repositório, sobre os 382 anexos do histórico): 17 anexos com hash em outro pedido/cliente, 11 com EXIF antes da entrega, 10 com software de edição e 82 fora do prazo, os mesmos números de `analysis/analise_atendimento.py`; 9 com produto diferente do pedido (ex.: "foto mostra necessaire, o pedido tem Connect Card").
+
+**`lib/ferramentas`.** Uma função por ferramenta, com o nome de `ferramentas.csv` (26), e o registro `FERRAMENTAS` para chamar por nome. Nenhuma ação tem efeito real.
+
+- Toda chamada passa pela mesma checagem: o papel do simulador (padrão `atendente`) precisa estar em `papeis_permitidos`; `valor_max_sem_aprovacao_rs` (R$ 200 reenvio/reimpressão/troca, R$ 100 reembolso; o valor exato passa); `somente_antes_da_separacao` (cancelar, alterar endereço); `max_por_dia` (300 notificações, contadas por pedido no dia). Acima do limite, a ação é recusada com "precisa aprovação de supervisor", a menos que traga um `aprovacao_id` aprovado para a mesma ação, o mesmo pedido e valor igual ou maior.
+- `solicitar_aprovacao` cria a aprovação pendente; quem decide é `Simulador.decidirAprovacao`, usando `podeAprovar` da policy (só supervisor, nunca a própria ação). `aprovar_acao` não está na lista pedida, por isso fica como método do simulador.
+- `sinalizar_suspeita` exige evidências, não envia nada ao cliente e suspende reenvio, reimpressão, troca e reembolso daquele pedido (`ferramentas.csv`).
+- `responder_cliente` e `notificar_clientes` recusam texto com CPF, cartão, telefone ou e-mail. `alterar_endereco` não grava o endereço no log.
+- O log segue as colunas de `acoes_executadas_sistemas.csv`, com `executado_por = "agente"` e referências simuladas (`OMS-SIM-…`, `EST-SIM-…`, `CHM-SIM-…`, `APR-SIM-…`, `SUS-SIM-…`). Consultas também entram no log, como `consultar_pedido` no log real, para medir os sistemas acessados. Ações recusadas não entram no log.
+- Sistema de cada ação, como no log real: OMS (reenvio, troca), Sistema de produção Gocase (reimpressão), Gateway (reembolso, verificar pagamento), ERP (consulta, cancelamento, endereço), Plataforma de cupons, Portal da transportadora do pedido (status, chamado), Central de atendimento (mensagens, suspeita, aprovação, incidente, notificação) e Canal do time (acionar pessoa).

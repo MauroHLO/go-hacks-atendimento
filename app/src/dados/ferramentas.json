@@ -1,0 +1,486 @@
+[
+ {
+  "ferramenta": "ler_conversa",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Lê as mensagens de uma conversa (histórico, fila ou chegando).",
+  "parametros": [
+   "conversation_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "consultar_pedido",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Retorna o pedido na posição do tique atual (status, separação, entrega, lote, transportadora).",
+  "parametros": [
+   "order_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "consultar_cliente",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Retorna o resumo do cliente (pedidos, receita, trocas e contatos em 12 meses).",
+  "parametros": [
+   "customer_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "consultar_politicas",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Retorna politicas.json ou a regra de uma categoria.",
+  "parametros": [
+   "categoria"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "buscar_conversas",
+  "papeis_permitidos": [
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Busca conversas por filtros (período, canal, marca, transportadora, UF, SKU, lote, texto).",
+  "parametros": [
+   "inicio",
+   "fim",
+   "canal",
+   "marca",
+   "transportadora",
+   "uf",
+   "sku",
+   "lote",
+   "texto"
+  ],
+  "limites": {
+   "max_resultados": 500
+  }
+ },
+ {
+  "ferramenta": "consultar_metricas",
+  "papeis_permitidos": [
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Agregados por dia, categoria classificada, transportadora, UF, SKU e lote.",
+  "parametros": [
+   "agrupar_por*",
+   "inicio",
+   "fim"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "classificar_conversa",
+  "papeis_permitidos": [
+   "atendente",
+   "analista"
+  ],
+  "descricao": "Registra a categoria (e a secundária, se houver) de uma conversa.",
+  "parametros": [
+   "conversation_id*",
+   "categoria*",
+   "categoria_secundaria"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "responder_cliente",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Envia mensagem ao cliente na conversa. Não deve repetir CPF, cartão ou telefone.",
+  "parametros": [
+   "conversation_id*",
+   "texto*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "solicitar_foto",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Pede ao cliente foto do produto, da embalagem ou da personalização.",
+  "parametros": [
+   "conversation_id*",
+   "do_que"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "informar_status",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Responde com status, transportadora e previsão do pedido.",
+  "parametros": [
+   "conversation_id*",
+   "order_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "abrir_chamado_transportadora",
+  "papeis_permitidos": [
+   "atendente",
+   "analista"
+  ],
+  "descricao": "Abre chamado com a transportadora para rastreio parado ou atraso.",
+  "parametros": [
+   "order_id*",
+   "motivo*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "reenviar_produto",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Reenvia o pedido ou o item faltante sem custo.",
+  "parametros": [
+   "order_id*",
+   "valor*",
+   "motivo*",
+   "aprovacao_id"
+  ],
+  "limites": {
+   "valor_max_sem_aprovacao_rs": 200.0
+  }
+ },
+ {
+  "ferramenta": "reimprimir_personalizacao",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Manda produzir de novo um item Gocase personalizado, sem custo.",
+  "parametros": [
+   "order_id*",
+   "valor*",
+   "personalizacao_correta",
+   "aprovacao_id"
+  ],
+  "limites": {
+   "valor_max_sem_aprovacao_rs": 200.0
+  }
+ },
+ {
+  "ferramenta": "trocar_produto",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Troca o produto (ex.: outra fragrância). 1 troca por pedido.",
+  "parametros": [
+   "order_id*",
+   "sku_novo",
+   "valor*",
+   "aprovacao_id"
+  ],
+  "limites": {
+   "valor_max_sem_aprovacao_rs": 200.0
+  }
+ },
+ {
+  "ferramenta": "reembolsar",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Estorna valor ao cliente (duplicidade, arrependimento, atraso).",
+  "parametros": [
+   "order_id*",
+   "valor*",
+   "motivo*",
+   "aprovacao_id"
+  ],
+  "limites": {
+   "valor_max_sem_aprovacao_rs": 100.0
+  }
+ },
+ {
+  "ferramenta": "cancelar_pedido",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Cancela pedido ainda não separado (estorno integral automático).",
+  "parametros": [
+   "order_id*",
+   "motivo"
+  ],
+  "limites": {
+   "somente_antes_da_separacao": true
+  }
+ },
+ {
+  "ferramenta": "alterar_endereco",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Altera o endereço de entrega (só antes da separação).",
+  "parametros": [
+   "order_id*",
+   "novo_endereco*"
+  ],
+  "limites": {
+   "somente_antes_da_separacao": true
+  }
+ },
+ {
+  "ferramenta": "verificar_pagamento",
+  "papeis_permitidos": [
+   "atendente",
+   "analista"
+  ],
+  "descricao": "Consulta a situação do pagamento no gateway.",
+  "parametros": [
+   "order_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "validar_cupom",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Verifica regras e validade de um cupom.",
+  "parametros": [
+   "codigo*",
+   "order_id"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "responder_duvida",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Responde dúvida de produto com base na ficha do produto.",
+  "parametros": [
+   "conversation_id*",
+   "sku"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "orientar_suspensao_uso",
+  "papeis_permitidos": [
+   "atendente",
+   "supervisor"
+  ],
+  "descricao": "Orienta o cliente a suspender o uso do produto e procurar atendimento médico se necessário.",
+  "parametros": [
+   "conversation_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "negar_por_politica",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Explica ao cliente que o pedido está fora da política, citando a regra.",
+  "parametros": [
+   "conversation_id*",
+   "regra*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "agradecer",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Responde a um elogio.",
+  "parametros": [
+   "conversation_id*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "encerrar_conversa",
+  "papeis_permitidos": [
+   "atendente"
+  ],
+  "descricao": "Encerra a conversa (inclusive sem ação, quando só o bot falou).",
+  "parametros": [
+   "conversation_id*",
+   "motivo"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "solicitar_aprovacao",
+  "papeis_permitidos": [
+   "atendente",
+   "analista"
+  ],
+  "descricao": "Pede ao supervisor aprovação para ação acima do limite do papel.",
+  "parametros": [
+   "acao*",
+   "order_id",
+   "valor*",
+   "justificativa*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "abrir_incidente",
+  "papeis_permitidos": [
+   "analista"
+  ],
+  "descricao": "Abre incidente de causa raiz (transportadora/UF, máquina, lote, turno, gateway) com o escopo afetado.",
+  "parametros": [
+   "tipo*",
+   "escopo*",
+   "evidencias*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "notificar_clientes",
+  "papeis_permitidos": [
+   "analista"
+  ],
+  "descricao": "Envia aviso proativo a uma lista de pedidos antes de o cliente procurar o atendimento.",
+  "parametros": [
+   "order_ids*",
+   "tipo_aviso*",
+   "texto*"
+  ],
+  "limites": {
+   "max_por_dia": 300
+  }
+ },
+ {
+  "ferramenta": "aprovar_acao",
+  "papeis_permitidos": [
+   "supervisor"
+  ],
+  "descricao": "Aprova a ação pendente de outro papel. O supervisor não aprova ação própria.",
+  "parametros": [
+   "aprovacao_id*",
+   "comentario"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "rejeitar_acao",
+  "papeis_permitidos": [
+   "supervisor"
+  ],
+  "descricao": "Rejeita a ação pendente com justificativa.",
+  "parametros": [
+   "aprovacao_id*",
+   "justificativa*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "registrar_cosmetovigilancia",
+  "papeis_permitidos": [
+   "supervisor"
+  ],
+  "descricao": "Registra o relato de reação adversa (produto, lote, descrição, fotos) e aciona a responsável técnica.",
+  "parametros": [
+   "conversation_id*",
+   "sku*",
+   "lote",
+   "descricao*",
+   "fotos"
+  ],
+  "limites": {
+   "prazo_horas_desde_o_relato": 24
+  }
+ },
+ {
+  "ferramenta": "ver_anexos",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Devolve os anexos (fotos e prints) de uma conversa ou de um pedido, com metadados (data de captura, câmera, software) e a descrição visual da imagem gerada pela plataforma.",
+  "parametros": [
+   "conversation_id",
+   "order_id",
+   "hash_perceptual"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "sinalizar_suspeita",
+  "papeis_permitidos": [
+   "atendente",
+   "analista"
+  ],
+  "descricao": "Marca a reclamação como suspeita e a coloca na fila do supervisor com as evidências. Suspende reenvio, troca e reembolso do pedido até a decisão. Não envia nada ao cliente.",
+  "parametros": [
+   "conversation_id*",
+   "sinais",
+   "evidencias*"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "decidir_suspeita",
+  "papeis_permitidos": [
+   "supervisor"
+  ],
+  "descricao": "Decide uma reclamação sinalizada: procedente libera a ação da política; improcedente encerra com resposta neutra ao cliente (sem acusação) e registra o caso.",
+  "parametros": [
+   "conversation_id*",
+   "decisao*",
+   "justificativa*"
+  ],
+  "limites": {
+   "nao_decide_o_que_ele_mesmo_sinalizou": true
+  }
+ },
+ {
+  "ferramenta": "acionar_pessoa",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Levanta a mão: chama uma pessoa da empresa (supervisão, logística, qualidade, produção, jurídico, comercial) pelo canal do time, com o contexto e o que se espera dela.",
+  "parametros": [
+   "area*",
+   "assunto*",
+   "contexto*",
+   "urgencia"
+  ],
+  "limites": {}
+ },
+ {
+  "ferramenta": "responder_colaborador",
+  "papeis_permitidos": [
+   "atendente",
+   "analista",
+   "supervisor"
+  ],
+  "descricao": "Responde a um pedido feito por um colaborador no canal do time (Slack). O ambiente entrega esses pedidos ao longo da semana.",
+  "parametros": [
+   "pedido_id*",
+   "resposta*"
+  ],
+  "limites": {}
+ }
+]

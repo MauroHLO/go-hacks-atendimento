@@ -1,0 +1,835 @@
+[
+ {
+  "conversation_id": "AT116160",
+  "message_id": "MS0013117",
+  "autor": "cliente",
+  "timestamp": "2026-10-29 13:53:49",
+  "texto": "[Pedido sem atualização] Já entrei em contato 1 vezes sem solução. O rastreio diz 'aguardando transferência' na Expressa Já desde 26/10, isso não anda. Obrigada! Pedido GBH473217. Compra feita em 22/10, produto: Protetor Solar Facial FPS 50 Toque Seco 50g."
+ },
+ {
+  "conversation_id": "AT116160",
+  "message_id": "MS0013118",
+  "autor": "agente",
+  "timestamp": "2026-11-01 13:33:40",
+  "texto": "Olá, Bruna! Seu pedido está com a Expressa Já e dentro do prazo, que vai até 29/10. O rastreio às vezes demora a atualizar mesmo. Camila | Time Kokeshi"
+ },
+ {
+  "conversation_id": "AT116171",
+  "message_id": "MS0013127",
+  "autor": "cliente",
+  "timestamp": "2026-10-29 15:02:16",
+  "texto": "[Pedido sem atualização] O código de rastreio não funciona no site da ViaLog. Tô ansioso kkk. Obrigada! Pedido GBH481046. Compra feita em 26/10, produto: Creme Área dos Olhos 15g."
+ },
+ {
+  "conversation_id": "AT116171",
+  "message_id": "MS0013128",
+  "autor": "agente",
+  "timestamp": "2026-10-31 08:32:45",
+  "texto": "Gabriel, seu pedido já foi despachado e segue em trânsito com a ViaLog. Previsão: até 29/10. Renata | Time Kokeshi"
+ },
+ {
+  "conversation_id": "AT116473",
+  "message_id": "MS0013472",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 15:11:54",
+  "texto": "[Pedido atrasado e sem resposta] Já entrei em contato 1 vezes sem solução. Meu pedido GBH476745 era pra ter chegado até 30/10 e até agora nada. O rastreio diz 'aguardando transferência' na Expressa Já desde 29/10, isso não anda. Preciso pra um presente! Quero uma solução. Compra feita em 24/10, produto: Sabonete Vegetal Andiroba (3 un)."
+ },
+ {
+  "conversation_id": "AT116473",
+  "message_id": "MS0013473",
+  "autor": "agente",
+  "timestamp": "2026-11-01 08:11:32",
+  "texto": "Peço desculpas, Tainá! Confirmei o atraso com a Expressa Já e já abri um chamado. Acompanho de perto e te dou retorno. Bruna | Time Auá"
+ },
+ {
+  "conversation_id": "AT116480",
+  "message_id": "MS0013479",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 15:58:30",
+  "texto": "Prezados, bom dia. Vcs conseguem me passar o código de rastreio? n recebi por e-mail. Aguardo. mds. Pedido GCH559342. Atenciosamente, Lorena Machado"
+ },
+ {
+  "conversation_id": "AT116480",
+  "message_id": "MS0013480",
+  "autor": "bot",
+  "timestamp": "2026-10-31 15:59:20",
+  "texto": "Recebemos seu e-mail! O time Gocase responde em até 24 horas. Protocolo #9685774."
+ },
+ {
+  "conversation_id": "AT116486",
+  "message_id": "MS0013487",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 18:27:33",
+  "texto": "[Atraso na entrega] Já tentei pelo WhatsApp e por e-mail e ninguém resolve. O prazo venceu faz 2 dias e o óleo finalizador não chegou. Era presente de aniversário e agora não chega a tempo. Vou abrir reclamação no Reclame Aqui. Pedido GBH474054. Compra feita em 22/10, produto: Óleo Capilar Finalizador 60ml."
+ },
+ {
+  "conversation_id": "AT116486",
+  "message_id": "MS0013488",
+  "autor": "agente",
+  "timestamp": "2026-11-01 13:30:53",
+  "texto": "Sinto muito pela demora, Manuela. Seu pedido está com a Expressa Já e passou do prazo. Abri uma solicitação prioritária com a transportadora e te retorno em até 48h. Rafael, atendimento Ápice."
+ },
+ {
+  "conversation_id": "AT116501",
+  "message_id": "MS0013504",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 20:04:06",
+  "texto": "[Brinde não enviado] Recebi o pedido GBH473091 mas não veio o brinde da promoção (Necessaire GoBeauté). Quero que enviem o que faltou."
+ },
+ {
+  "conversation_id": "AT116507",
+  "message_id": "MS0013506",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 21:27:59",
+  "texto": "[Pedido atrasado e sem resposta] O rastreio continua 'em trânsito' desde 27/10 e o prazo já venceu dia 27/10. Já perdi a data que eu precisava. Vou abrir reclaamação no Reclame Aqui. 😩 Pedido GBH469698. Compra feita em 20/10, produto: Condicionador Reconstrução 1L. Pode me ligar no [TELEFONE]"
+ },
+ {
+  "conversation_id": "AT116513",
+  "message_id": "MS0013507",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 21:49:59",
+  "texto": "[Pedido sem atualização] Aparece 'objeto em transferência' desde 27/10, vai chegar quando? Pedido GBH481890. Compra feita em 26/10, produto: Kit Reconstrução Shampoo + Condicionador 300ml."
+ },
+ {
+  "conversation_id": "AT116513",
+  "message_id": "MS0013508",
+  "autor": "agente",
+  "timestamp": "2026-11-01 09:46:13",
+  "texto": "Valéria, seu pedido já foi despachado e segue em trânsito com a ViaLog. Previsão: até 04/11. Aqui é a Priscila."
+ },
+ {
+  "conversation_id": "AT116520",
+  "message_id": "MS0013516",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 22:40:46",
+  "texto": "[Devolução] Recebi o kit de miniaturas mas não gostei, quero devolver. Pedido GBH469163."
+ },
+ {
+  "conversation_id": "AT116521",
+  "message_id": "MS0013517",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 22:45:20",
+  "texto": "[Rastreio parado] O rastreio diz 'aguardando transferência' na Expressa Já desde 28/10, isso não anda. Só pra ter uma ideia mesmo. Pedido GCH559560. Compra feita em 24/10, produto: Connect Card Magsafe Personalizado Iniciais."
+ },
+ {
+  "conversation_id": "AT116524",
+  "message_id": "MS0013518",
+  "autor": "cliente",
+  "timestamp": "2026-10-31 23:24:16",
+  "texto": "[Personalização errada] Já tentei pelo WhatsApp e por e-mail e ninguém resolve. Amei a personalização que dura uma lavagem, super resistente 👏 Pedido GCH556292."
+ },
+ {
+  "conversation_id": "AT116538",
+  "message_id": "MS0013540",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 08:09:07",
+  "texto": "[Atraso na entrega] Meu peedido está atrasado, o prazo era 19/10. Preciso pra um presente! Se não chegar até terça quero o dinheiro de volta. Pedido GBH454865. Compra feita em 09/10, produto: Deo Colônia Citrus Fresh 100ml."
+ },
+ {
+  "conversation_id": "AT116556",
+  "message_id": "MS0013560",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 10:02:21",
+  "texto": "[Produto avariado] O pote da máscara de nutrição chegou amassado e a tampa solta, espalhou produto na caixa. Tenho as fotos. Pedido GBH477520."
+ },
+ {
+  "conversation_id": "AT116559",
+  "message_id": "MS0013566",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 10:26:10",
+  "texto": "[Pedido atrasado e sem resposta] O rastreio continua 'em trânsito' desde 26/10 e o prazo já venceu dia 21/10. Preciso pra um presente! Pedido GBH466364. Compra feita em 18/10, produto: Perfume Masculino Amadeirado Cedro 100ml + Brinde Necessaire GoBeauté."
+ },
+ {
+  "conversation_id": "AT116560",
+  "message_id": "MS0013567",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 10:35:14",
+  "texto": "[Pedido incompleto] A promoção dizia que vinha a necessaire de brinde e não veio nada. Já é a segunda vez que acontece comigo. Quero que enviem o que faltou. Pedido GBH470187. Pode me ligar no [TELEFONE]"
+ },
+ {
+  "conversation_id": "AT116563",
+  "message_id": "MS0013568",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 10:45:40",
+  "texto": "Olá, equipe Ápice, tudo bem? Faltou o complemento no endereço (apto 168), consegue incluir? Pedido GBH492667. Priscila"
+ },
+ {
+  "conversation_id": "AT116563",
+  "message_id": "MS0013569",
+  "autor": "bot",
+  "timestamp": "2026-11-01 10:46:47",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #8955679. Equipe Ápice"
+ },
+ {
+  "conversation_id": "AT116568",
+  "message_id": "MS0013576",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 11:02:29",
+  "texto": "[Produto causou alergia] Depois q comecei o greens fiquei com o rosto inchado. Quero trocar por outro. Pedido GBH471000."
+ },
+ {
+  "conversation_id": "AT116573",
+  "message_id": "MS0013577",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 11:03:41",
+  "texto": "[Brinde não enviado] Já entrei em contato 1 vezes sem solução. Cadê o brinde?? veio só a água micelar. Conferi a nota fiscal e está lá. Pedido GBH468365."
+ },
+ {
+  "conversation_id": "AT116589",
+  "message_id": "MS0013586",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 11:50:52",
+  "texto": "[Produto não entregue] Comprei dia 22/10 com prazo até 30/10 e o pedido ainda não chegou. Quero uma solução. Pedido GCH558661. Compra feita em 22/10, produto: Garrafa Mini 350ml Lilás."
+ },
+ {
+  "conversation_id": "AT116595",
+  "message_id": "MS0013596",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 13:08:58",
+  "texto": "Prezados, bom dia. Cadê o brinde?? veio só o multivitamínico. A caixa veio lacrada, então o erro foi aí na separação. Como resolvem? Pedido GBH470309. Obrigado, Lucas"
+ },
+ {
+  "conversation_id": "AT116595",
+  "message_id": "MS0013597",
+  "autor": "bot",
+  "timestamp": "2026-11-01 13:11:19",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #1641098. Equipe Rituária"
+ },
+ {
+  "conversation_id": "AT116597",
+  "message_id": "MS0013598",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 14:05:28",
+  "texto": "Boa tarde! A garrafa Fresh de 950ml mantém gelado por quanto tempo? Aproveitando, o cupom BEMVINDA10 não funcionou na minha última compra. Att, Maria Eduarda Martins"
+ },
+ {
+  "conversation_id": "AT116597",
+  "message_id": "MS0013599",
+  "autor": "bot",
+  "timestamp": "2026-11-01 14:07:54",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #7271192. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116603",
+  "message_id": "MS0013609",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 14:52:38",
+  "texto": "Queria saber onde está meu pedido GBH487889. Obrigada, Natália"
+ },
+ {
+  "conversation_id": "AT116603",
+  "message_id": "MS0013610",
+  "autor": "bot",
+  "timestamp": "2026-11-01 14:54:48",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #1356698. Equipe Ápice"
+ },
+ {
+  "conversation_id": "AT116606",
+  "message_id": "MS0013612",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 15:58:18",
+  "texto": "Olá, equipe Auá! O cupom INFLU10 não está funcionando. Atenciosamente, Jefferson Freitas"
+ },
+ {
+  "conversation_id": "AT116606",
+  "message_id": "MS0013613",
+  "autor": "bot",
+  "timestamp": "2026-11-01 15:59:55",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #1246510. Equipe Auá"
+ },
+ {
+  "conversation_id": "AT116612",
+  "message_id": "MS0013614",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 16:18:28",
+  "texto": "Prezados, bom dia. Meu pedido GCH553818 era pra ter chegado até 20/10 e até agora nada. Quero uma solução.?? Att, Aline Vieira"
+ },
+ {
+  "conversation_id": "AT116612",
+  "message_id": "MS0013615",
+  "autor": "bot",
+  "timestamp": "2026-11-01 16:19:31",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #2359870. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116614",
+  "message_id": "MS0013616",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 16:28:27",
+  "texto": "[Brinde não enviado] Cadê o brinde?? veio só a ampola de brilho. A caixa veio lacrada, então o erro foi aí na separação. Como resolvem? Pedido GBH472693."
+ },
+ {
+  "conversation_id": "AT116616",
+  "message_id": "MS0013617",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 16:53:36",
+  "texto": "Olá! O prazo de entrega do meu pedido venceu dia 28/10 e não recebi. Já perdi a data que eu precisava. Isso é um desrespeito. Atenciosamente, Cecília Rodrigues"
+ },
+ {
+  "conversation_id": "AT116616",
+  "message_id": "MS0013618",
+  "autor": "bot",
+  "timestamp": "2026-11-01 16:55:05",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #1286971. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116624",
+  "message_id": "MS0013625",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 17:26:54",
+  "texto": "[Brinde não enviado] A promoção dizia que vinha a necessaire de brinde e não veio nada. A caixa veio lacrada, então o erro foi aí na separação. Como resolvem? Pedido GBH475904."
+ },
+ {
+  "conversation_id": "AT116628",
+  "message_id": "MS0013633",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 17:52:10",
+  "texto": "Olá, equipe Kokeshi! Pela 3ª vez: Comprei acima de R$ 129 pra ganhar a necessaire de brinde e não veio na caixa. Vão mandar o que faltou? Ah, e tb a caixa veio toda amassada, com o produto danificado?? Att, Nathan Dias"
+ },
+ {
+  "conversation_id": "AT116628",
+  "message_id": "MS0013634",
+  "autor": "bot",
+  "timestamp": "2026-11-01 17:54:30",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #4899831. Equipe Kokeshi"
+ },
+ {
+  "conversation_id": "AT116637",
+  "message_id": "MS0013640",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 18:13:45",
+  "texto": "Prezados, bom dia. O boleto foi pago anteontem e ainda não aprovou. Pedido GBH493566. Obrigado, Hugo"
+ },
+ {
+  "conversation_id": "AT116637",
+  "message_id": "MS0013641",
+  "autor": "bot",
+  "timestamp": "2026-11-01 18:15:17",
+  "texto": "Recebemos seu e-mail! O time Auá responde em até 24 horas. Protocolo #4379437."
+ },
+ {
+  "conversation_id": "AT116638",
+  "message_id": "MS0013642",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 18:16:54",
+  "texto": "Boa tarde! Meu pedido GBH480248 saiu do CD dia 27/10 e não andou mais, ta tudo certo? Tô ansioso kkk. Rodrigo"
+ },
+ {
+  "conversation_id": "AT116638",
+  "message_id": "MS0013643",
+  "autor": "bot",
+  "timestamp": "2026-11-01 18:19:16",
+  "texto": "Recebemos seu e-mail! O time Yenzah responde em até 24 horas. Protocolo #8662173."
+ },
+ {
+  "conversation_id": "AT116646",
+  "message_id": "MS0013650",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 18:29:49",
+  "texto": "Olá, equipe Kokeshi, tudo bem? Vocês prometeram entregar até 26/10 e nada até hoje. Ninguém me dá uma posição. Até quando vou ter que esperar? Davi"
+ },
+ {
+  "conversation_id": "AT116646",
+  "message_id": "MS0013651",
+  "autor": "bot",
+  "timestamp": "2026-11-01 18:31:28",
+  "texto": "Recebemos seu e-mail! O time Kokeshi responde em até 24 horas. Protocolo #7799661."
+ },
+ {
+  "conversation_id": "AT116647",
+  "message_id": "MS0013652",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 18:31:26",
+  "texto": "[Brinde não enviado] Amei receber metade do pedido, super prático 🙃 Pedido GBH479612."
+ },
+ {
+  "conversation_id": "AT116657",
+  "message_id": "MS0013661",
+  "autor": "bot",
+  "timestamp": "2026-11-01 19:12:25",
+  "texto": "Olá! Sou a Gi, assistente virtual da Kokeshi 💜 Como posso te ajudar hoje?"
+ },
+ {
+  "conversation_id": "AT116657",
+  "message_id": "MS0013662",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 19:14:02",
+  "texto": "O kit Rotina Glow serve pra pele oleosa?"
+ },
+ {
+  "conversation_id": "AT116657",
+  "message_id": "MS0013663",
+  "autor": "agente",
+  "timestamp": "2026-11-01 19:21:05",
+  "texto": "Oi, Camila! Vou verificar e já te retorno."
+ },
+ {
+  "conversation_id": "AT116657",
+  "message_id": "MS0013664",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:36:35",
+  "texto": "?? alguém aí"
+ },
+ {
+  "conversation_id": "AT116664",
+  "message_id": "MS0013666",
+  "autor": "bot",
+  "timestamp": "2026-11-01 19:38:52",
+  "texto": "Olá! Sou a Gi, assistente virtual da Yenzah 💜 Como posso te ajudar hoje?"
+ },
+ {
+  "conversation_id": "AT116665",
+  "message_id": "MS0013667",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 19:50:28",
+  "texto": "Olá, equipe Gocase, tudo bem? Falei com vocês dia 23/10 e até agora nada. Meu pedido GCH551964 era pra ter chegado até 16/10 e até agora nada. Meu pedido está parado no centro de distribuição da Expressa Já em Caucaia desde 15/10. Já perdi a data que eu precisava. Aguardo retorno urgente. Obrigado, Yuri"
+ },
+ {
+  "conversation_id": "AT116665",
+  "message_id": "MS0013668",
+  "autor": "bot",
+  "timestamp": "2026-11-01 19:52:33",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #7191627. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116666",
+  "message_id": "MS0013669",
+  "autor": "bot",
+  "timestamp": "2026-11-01 19:56:45",
+  "texto": "Olá! Sou a Gi, assistente virtual da Gocase 💜 Como posso te ajudar hoje?"
+ },
+ {
+  "conversation_id": "AT116666",
+  "message_id": "MS0013670",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 19:59:08",
+  "texto": "Boa noite! Pela 2ª vez: A capinha veio toda riscada. Quero o reenvio."
+ },
+ {
+  "conversation_id": "AT116667",
+  "message_id": "MS0013671",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:02:04",
+  "texto": "Oi! Aqui é a assistente virtual da Barbour's. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116668",
+  "message_id": "MS0013672",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:03:24",
+  "texto": "[Pagamento não reconhecido] Paguei o pix e o pedido continua 'aguardando pagamento'. Pedido GBH493520."
+ },
+ {
+  "conversation_id": "AT116669",
+  "message_id": "MS0013673",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:06:11",
+  "texto": "Oi! Aqui é a assistente virtual da Rituária. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116669",
+  "message_id": "MS0013674",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:07:51",
+  "texto": "Boa noite!"
+ },
+ {
+  "conversation_id": "AT116669",
+  "message_id": "MS0013675",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:09:46",
+  "texto": "Quando começa a Black Friday? vai ter desconto na vitamina D? Pode me ligar no [TELEFONE]"
+ },
+ {
+  "conversation_id": "AT116671",
+  "message_id": "MS0013676",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:20:42",
+  "texto": "[Atraso na entrega] Já tentei pelo WhatsApp e por e-mail e ninguém resolve. Meu pedido GBH463088 era pra ter chegado até 23/10 e até agora nada. Até quando vou ter que esperar? Compra feita em 16/10, produto: Máscara de Cílios Volume."
+ },
+ {
+  "conversation_id": "AT116673",
+  "message_id": "MS0013677",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:21:30",
+  "texto": "Oi! Aqui é a assistente virtual da Auá. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116673",
+  "message_id": "MS0013678",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:24:10",
+  "texto": "oi gente"
+ },
+ {
+  "conversation_id": "AT116673",
+  "message_id": "MS0013679",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:25:30",
+  "texto": "o hidratante de cupuaçu é vegano???"
+ },
+ {
+  "conversation_id": "AT116675",
+  "message_id": "MS0013680",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:21:32",
+  "texto": "Olá! Sou a assistente virtual da Gocase 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116677",
+  "message_id": "MS0013681",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:24:52",
+  "texto": "Olá! Sou a assistente virtual da Kokeshi 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116677",
+  "message_id": "MS0013682",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:25:35",
+  "texto": "Paguei o boleto e cobraram no cartão também. Isso é golpe?"
+ },
+ {
+  "conversation_id": "AT116677",
+  "message_id": "MS0013683",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:26:35",
+  "texto": "é o GBH491723"
+ },
+ {
+  "conversation_id": "AT116679",
+  "message_id": "MS0013684",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:33:15",
+  "texto": "Oi! Aqui é a assistente virtual da Auá. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116679",
+  "message_id": "MS0013685",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:34:05",
+  "texto": "achei a fragrância muito doce, queria trocar. Posso trocar? mds"
+ },
+ {
+  "conversation_id": "AT116680",
+  "message_id": "MS0013686",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 20:38:31",
+  "texto": "Olá! A garrafa Fresh vaza se deixar deitado na bolsa? Pedido GCH562861. Att, Raquel Freitas"
+ },
+ {
+  "conversation_id": "AT116680",
+  "message_id": "MS0013687",
+  "autor": "bot",
+  "timestamp": "2026-11-01 20:39:13",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #9511612. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116681",
+  "message_id": "MS0013688",
+  "autor": "bot",
+  "timestamp": "2026-11-01 21:25:23",
+  "texto": "Oi! Aqui é a assistente virtual da Gocase. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116682",
+  "message_id": "MS0013689",
+  "autor": "bot",
+  "timestamp": "2026-11-01 21:41:29",
+  "texto": "Olá! Sou a assistente virtual da Auá 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116682",
+  "message_id": "MS0013690",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 21:42:13",
+  "texto": "Já é a 2ª vez que entro em contato"
+ },
+ {
+  "conversation_id": "AT116682",
+  "message_id": "MS0013691",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 21:43:02",
+  "texto": "Faltou a necessaire de brinde no meu pedido GBH464417, a compra foi de R$ 139,80. Já é a segunda vez que acontece comigo. Quero que enviem o que faltou"
+ },
+ {
+  "conversation_id": "AT116684",
+  "message_id": "MS0013692",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 21:44:29",
+  "texto": "Prezados, bom dia. O leave-in tem cheiro forte? Pedido GBH462762. Att, Cíntia Nunes"
+ },
+ {
+  "conversation_id": "AT116684",
+  "message_id": "MS0013693",
+  "autor": "bot",
+  "timestamp": "2026-11-01 21:46:18",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #6943622. Equipe Ápice"
+ },
+ {
+  "conversation_id": "AT116686",
+  "message_id": "MS0013694",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 21:50:46",
+  "texto": "[Pedido incompleto] Comprei 2 unidades da ampola de brilho e chegou só 1. Pedido GBH470288."
+ },
+ {
+  "conversation_id": "AT116688",
+  "message_id": "MS0013695",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 21:56:08",
+  "texto": "Boa tarde! Recebi o pedido GBH469939 mas não veio o brinde da promoção (Necessaire GoBeauté). Quero que enviem o que faltou. Atenciosamente, João Nascimento"
+ },
+ {
+  "conversation_id": "AT116688",
+  "message_id": "MS0013696",
+  "autor": "bot",
+  "timestamp": "2026-11-01 21:57:13",
+  "texto": "Recebemos seu e-mail! O time Auá responde em até 24 horas. Protocolo #8946015."
+ },
+ {
+  "conversation_id": "AT116689",
+  "message_id": "MS0013697",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 22:11:17",
+  "texto": "Prezados, bom dia. O pedido não sai de pagamento pendente mas o dinheiro já saiu da minha conta. O que eu faço? Atenciosamente, Diego Ramos"
+ },
+ {
+  "conversation_id": "AT116689",
+  "message_id": "MS0013698",
+  "autor": "bot",
+  "timestamp": "2026-11-01 22:12:32",
+  "texto": "Recebemos seu e-mail! O time Gocase responde em até 24 horas. Protocolo #3239911."
+ },
+ {
+  "conversation_id": "AT116690",
+  "message_id": "MS0013699",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 22:27:04",
+  "texto": "muito personalizada msm, com o nome de outra pessa 🙄 Atenciosamente, Caio Cavalcanti"
+ },
+ {
+  "conversation_id": "AT116690",
+  "message_id": "MS0013700",
+  "autor": "bot",
+  "timestamp": "2026-11-01 22:28:14",
+  "texto": "Recebemos seu e-mail! O time Gocase responde em até 24 horas. Protocolo #5798206."
+ },
+ {
+  "conversation_id": "AT116692",
+  "message_id": "MS0013701",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 22:32:41",
+  "texto": "Oi, tudo bem? O frete grátis não apareceu msm acma do valor mínimo. Hugo"
+ },
+ {
+  "conversation_id": "AT116692",
+  "message_id": "MS0013702",
+  "autor": "bot",
+  "timestamp": "2026-11-01 22:33:40",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #2301480. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116693",
+  "message_id": "MS0013703",
+  "autor": "bot",
+  "timestamp": "2026-11-01 22:58:57",
+  "texto": "Olá! Sou a assistente virtual da Gocase 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116693",
+  "message_id": "MS0013704",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 23:01:26",
+  "texto": "Usei o cupom VOLTA15 mas não descontou no total"
+ },
+ {
+  "conversation_id": "AT116693",
+  "message_id": "MS0013705",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 23:02:26",
+  "texto": "pedido GCH563132"
+ },
+ {
+  "conversation_id": "AT116695",
+  "message_id": "MS0013706",
+  "autor": "bot",
+  "timestamp": "2026-11-01 23:26:43",
+  "texto": "Olá! Sou a assistente virtual da Rituária 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116695",
+  "message_id": "MS0013707",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 23:30:08",
+  "texto": "olá, meu pedido GBH472635 era pra ter chegado até 29/10 e até agora nada. Paguei frete e não chega. Quero saber o que aconteceu 😡"
+ },
+ {
+  "conversation_id": "AT116697",
+  "message_id": "MS0013708",
+  "autor": "cliente",
+  "timestamp": "2026-11-01 23:28:37",
+  "texto": "[Pedido sem atualização] Meu pedido GBH485960 saiu do CD dia 29/10 e não andou mais, ta tudo certo? Moro em Contagem, costuma demorar muito pra chgar aqui? Obrigada! Aproveitando, o shampoo low poo pode usar todo dia? Compra feita em 28/10, produto: Shampoo Low Poo 300ml."
+ },
+ {
+  "conversation_id": "AT116699",
+  "message_id": "MS0013709",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 00:04:00",
+  "texto": "Recebi o pedido GBH477555 mas não veio o brinde da promoção (Necessaire GoBeauté). Já é a segunda vez que acontece comigo. Vão mandar o que faltou? Att, Vinícius Machado"
+ },
+ {
+  "conversation_id": "AT116699",
+  "message_id": "MS0013710",
+  "autor": "bot",
+  "timestamp": "2026-11-02 00:04:52",
+  "texto": "Recebemos seu e-mail! O time Lescent responde em até 24 horas. Protocolo #5560620."
+ },
+ {
+  "conversation_id": "AT116700",
+  "message_id": "MS0013711",
+  "autor": "bot",
+  "timestamp": "2026-11-02 06:00:25",
+  "texto": "Olá! Sou a assistente virtual da Lescent 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116700",
+  "message_id": "MS0013712",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:00:55",
+  "texto": "falei com voêcs dia 27/10 e até agora nada"
+ },
+ {
+  "conversation_id": "AT116700",
+  "message_id": "MS0013713",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:02:59",
+  "texto": "O body mist de baunilhha chegou vazando, molhou a caixa toda. Como resolvem?"
+ },
+ {
+  "conversation_id": "AT116701",
+  "message_id": "MS0013714",
+  "autor": "bot",
+  "timestamp": "2026-11-02 06:08:37",
+  "texto": "Olá! Sou a assistente virtual da Ápice 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116701",
+  "message_id": "MS0013715",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:09:53",
+  "texto": "Bom dia"
+ },
+ {
+  "conversation_id": "AT116701",
+  "message_id": "MS0013716",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:11:01",
+  "texto": "Tem cupom de primeira compra? E mais uma coisa, o óleo finalizador pode usar todo dia?"
+ },
+ {
+  "conversation_id": "AT116702",
+  "message_id": "MS0013717",
+  "autor": "bot",
+  "timestamp": "2026-11-02 06:10:59",
+  "texto": "Oi! Aqui é a assistente virtual da Rituária. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116702",
+  "message_id": "MS0013718",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:14:17",
+  "texto": "Bom dia"
+ },
+ {
+  "conversation_id": "AT116702",
+  "message_id": "MS0013719",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:14:34",
+  "texto": "O rastreio diz 'aguardando transferência' na Expressa Já desde 31/10, isso não anda"
+ },
+ {
+  "conversation_id": "AT116702",
+  "message_id": "MS0013720",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:15:44",
+  "texto": "GBH489005"
+ },
+ {
+  "conversation_id": "AT116703",
+  "message_id": "MS0013721",
+  "autor": "bot",
+  "timestamp": "2026-11-02 06:19:53",
+  "texto": "Olá! Sou a assistente virtual da Gocase 💜 Nosso time atende das 8h às 20h. Deixe sua mensagem que respondemos assim que voltarmos!"
+ },
+ {
+  "conversation_id": "AT116703",
+  "message_id": "MS0013722",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:20:18",
+  "texto": "oie, vcs prometeram entregar até 16/10 e nada até hj. Meu pedido tá parado no centro de distribuição da Expressa Já em Maracanaú (CE) desde 25/10. O rastreio n mostra nada de novo há dias. Se n chegar até sexta quro o dinheiro de volta. aff"
+ },
+ {
+  "conversation_id": "AT116705",
+  "message_id": "MS0013723",
+  "autor": "bot",
+  "timestamp": "2026-11-02 06:23:34",
+  "texto": "Oi! Aqui é a assistente virtual da Barbour's. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ },
+ {
+  "conversation_id": "AT116705",
+  "message_id": "MS0013724",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:26:55",
+  "texto": "Bom dia"
+ },
+ {
+  "conversation_id": "AT116705",
+  "message_id": "MS0013725",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:27:38",
+  "texto": "De novo aqui. Quero devolver o pedido e ter o dinheiro de volta"
+ },
+ {
+  "conversation_id": "AT116705",
+  "message_id": "MS0013726",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:28:08",
+  "texto": "meu cpf é [CPF]"
+ },
+ {
+  "conversation_id": "AT116707",
+  "message_id": "MS0013727",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 06:59:21",
+  "texto": "Boa tarde! Falei com vocês ontem e até agora nada. Vocês prometeram entregar até 30/10 e nada até hoje. Pedido GCH558661. Att, Tainá Rocha"
+ },
+ {
+  "conversation_id": "AT116707",
+  "message_id": "MS0013728",
+  "autor": "bot",
+  "timestamp": "2026-11-02 07:00:49",
+  "texto": "Olá! Esta é uma resposta automática: sua mensagem foi recebida e será respondida em até 24 horas. Protocolo #1868597. Equipe Gocase"
+ },
+ {
+  "conversation_id": "AT116709",
+  "message_id": "MS0013729",
+  "autor": "cliente",
+  "timestamp": "2026-11-02 07:17:15",
+  "texto": "Olá! Já é a 2ª vez que entro em contato. A tampa abriu no transporte e vazou metade do co-wash. Nem consegui usar. Obrigada, Beatriz"
+ },
+ {
+  "conversation_id": "AT116709",
+  "message_id": "MS0013730",
+  "autor": "bot",
+  "timestamp": "2026-11-02 07:18:32",
+  "texto": "Recebemos seu e-mail! O time Yenzah responde em até 24 horas. Protocolo #2938744."
+ },
+ {
+  "conversation_id": "AT116711",
+  "message_id": "MS0013731",
+  "autor": "bot",
+  "timestamp": "2026-11-02 07:27:08",
+  "texto": "Oi! Aqui é a assistente virtual da Auá. Agora estamos fora do horário de atendimento (8h às 20h), mas sua mensagem fica registrada 😊"
+ }
+]

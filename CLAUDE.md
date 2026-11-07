@@ -27,11 +27,12 @@ Métricas centrais: "precisa de humano ou não" e "contatos evitáveis (hipótes
 # Regras que não podem ser quebradas
 
 - `data/raw/` nunca vai para o Git. Em `data/processed/` vão agregados e tabelas por item que contenham só identificadores fictícios e campos estruturados, nunca texto livre de cliente. Rodar `git status` antes de todo commit.
+- Exceção: `app/src/dados/` (gerado por `analysis/exportar_app.py`) leva as mensagens das 65 conversas da fila com CPF, telefone, e-mail e cartão mascarados, porque o agente precisa lê-las e os dados são sintéticos, fornecidos pela organização. Cliente sem nome, CPF, telefone, e-mail e endereço; pedido sem CEP e cidade. Nada além do necessário para a fila.
 - Mascarar CPF, telefone, e-mail e cartão antes de enviar texto ao LLM. Nunca repetir CPF, cartão ou telefone nas respostas. Nunca pedir CPF, cartão ou senha.
 - O LLM não decide ação nem nível. Ele classifica e redige; o código decide.
 - Políticas só vêm de `data/raw/atendimento/politicas.csv`, `ferramentas.csv` e `parametros.md`. Nunca inventar regra.
 - Reação adversa a cosmético ou suplemento: sempre nível 2, orientar suspensão do uso e registrar cosmetovigilância em até 24 h (supervisor). Troca não substitui o registro.
-- - LLM: AI Proxy da GoGroup (formato OpenAI). Variáveis `AI_PROXY_BASE_URL`, `AI_PROXY_API_KEY`, `AI_PROXY_MODEL`, só em `.env.local` e nas variáveis da Vercel, nunca no código. Classificação pelo Jev (`POST /v1/systemone`: choice, score e noul com probabilidades); redação por `POST /v1/chat/completions`. Confiança do Jev abaixo de 0,7 eleva o caso para nível 1. A rota pública tem limite de requisições e de tamanho de entrada.
+- LLM: AI Proxy da GoGroup (formato OpenAI). Variáveis `AI_PROXY_BASE_URL`, `AI_PROXY_API_KEY`, `AI_PROXY_MODEL`, só em `.env.local` e nas variáveis da Vercel, nunca no código. Classificação pelo Jev (`POST /v1/systemone`: choice, score e noul com probabilidades); redação por `POST /v1/chat/completions`. Confiança do Jev abaixo de 0,7 eleva o caso para nível 1. A rota pública tem limite de requisições e de tamanho de entrada.
 - Todo número citado em README, relatório ou slides sai de um script em `analysis/` e é reproduzível. O histórico é amostra de 1 em 4 clientes: escalar ×4 e dizer isso.
 - Exemplos da demo e testes são fictícios, escritos por nós.
 
@@ -42,7 +43,8 @@ Métricas centrais: "precisa de humano ou não" e "contatos evitáveis (hipótes
 
 # Estrutura
     analysis/            scripts que geram números e agregados
-    app/src/lib/         contexto, agent, evidencias, policy, pii, limites, rota, impacto
+    app/src/lib/         dados, contexto, agent, evidencias, policy, ferramentas, pii, limites, rota, impacto
+    app/src/dados/       JSON da fila para o app (gerado por analysis/exportar_app.py)
     app/src/app/         interface: fila priorizada, ficha do caso, painel de causa-raiz e impacto
     data/raw/            dados originais (fora do Git)
     data/processed/      agregados versionados
@@ -58,4 +60,4 @@ Métricas centrais: "precisa de humano ou não" e "contatos evitáveis (hipótes
 
 # Estado atual
 
-Estrutura criada. Próximo passo: `analysis/analise_atendimento.py`.
+Prontos: análise (`analysis/analise_atendimento.py`), exportação para o app (`analysis/exportar_app.py`), `lib/policy`, `lib/contexto`, `lib/evidencias`, `lib/ferramentas` (simuladas, com log de ações). Próximo passo: `lib/agent` com o AI Proxy (Jev + chat completions) e a rota `api/agent`.

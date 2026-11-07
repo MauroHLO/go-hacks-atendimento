@@ -1,0 +1,551 @@
+[
+ {
+  "customer_id": "CH107459",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 426.24,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH142972",
+  "segmento": "fiel",
+  "n_pedidos": 4,
+  "receita_acumulada": 603.46,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH157276",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 108.8,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH188629",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 551.98,
+  "n_trocas_12m": 2,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH191766",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 530.89,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH197342",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 344.2,
+  "n_trocas_12m": 3,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH197813",
+  "segmento": "fiel",
+  "n_pedidos": 6,
+  "receita_acumulada": 600.95,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH209547",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 749.87,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH229655",
+  "segmento": "fiel",
+  "n_pedidos": 10,
+  "receita_acumulada": 1441.13,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH254949",
+  "segmento": "fiel",
+  "n_pedidos": 6,
+  "receita_acumulada": 559.49,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH266726",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 162.7,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH276087",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 368.07,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH279546",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 585.6,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH284463",
+  "segmento": "fiel",
+  "n_pedidos": 4,
+  "receita_acumulada": 563.21,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH288773",
+  "segmento": "vip",
+  "n_pedidos": 9,
+  "receita_acumulada": 1551.55,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH320162",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 254.31,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH320403",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 251.24,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH325788",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 398.69,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH334021",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 387.85,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH337898",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 503.06,
+  "n_trocas_12m": 2,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH340868",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 832.93,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH347205",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 196.9,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH389325",
+  "segmento": "fiel",
+  "n_pedidos": 6,
+  "receita_acumulada": 746.72,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH392143",
+  "segmento": "fiel",
+  "n_pedidos": 10,
+  "receita_acumulada": 1006.39,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH396698",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 661.59,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH402235",
+  "segmento": "fiel",
+  "n_pedidos": 4,
+  "receita_acumulada": 476.4,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH420695",
+  "segmento": "fiel",
+  "n_pedidos": 11,
+  "receita_acumulada": 1427.24,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH476362",
+  "segmento": "fiel",
+  "n_pedidos": 10,
+  "receita_acumulada": 950.97,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH485066",
+  "segmento": "fiel",
+  "n_pedidos": 17,
+  "receita_acumulada": 1427.56,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH493487",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 72.8,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH512475",
+  "segmento": "fiel",
+  "n_pedidos": 8,
+  "receita_acumulada": 737.32,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH515490",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 114.82,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH520328",
+  "segmento": "fiel",
+  "n_pedidos": 7,
+  "receita_acumulada": 640.13,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH523472",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 276.22,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH547166",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 77.8,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH547552",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 94.81,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH550343",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 79.8,
+  "n_trocas_12m": 2,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH560483",
+  "segmento": "fiel",
+  "n_pedidos": 7,
+  "receita_acumulada": 858.0,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH564202",
+  "segmento": "fiel",
+  "n_pedidos": 7,
+  "receita_acumulada": 850.97,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH588866",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 282.52,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH589344",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 88.8,
+  "n_trocas_12m": 2,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH603906",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 251.7,
+  "n_trocas_12m": 2,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH604400",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 278.19,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH620178",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 194.41,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH631375",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 486.5,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH657131",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 162.93,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH691825",
+  "segmento": "fiel",
+  "n_pedidos": 10,
+  "receita_acumulada": 1081.32,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH695289",
+  "segmento": "fiel",
+  "n_pedidos": 6,
+  "receita_acumulada": 951.94,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH703863",
+  "segmento": "fiel",
+  "n_pedidos": 6,
+  "receita_acumulada": 551.26,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH705363",
+  "segmento": "fiel",
+  "n_pedidos": 4,
+  "receita_acumulada": 641.09,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH733022",
+  "segmento": "recorrente",
+  "n_pedidos": 3,
+  "receita_acumulada": 553.49,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH750973",
+  "segmento": "fiel",
+  "n_pedidos": 8,
+  "receita_acumulada": 709.68,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "não",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH761018",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 336.71,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH791587",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 600.57,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH811700",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 357.04,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH856123",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 489.71,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH903414",
+  "segmento": "novo",
+  "n_pedidos": 1,
+  "receita_acumulada": 118.8,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH927088",
+  "segmento": "recorrente",
+  "n_pedidos": 2,
+  "receita_acumulada": 245.0,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH929304",
+  "segmento": "vip",
+  "n_pedidos": 9,
+  "receita_acumulada": 1510.86,
+  "n_trocas_12m": 1,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ },
+ {
+  "customer_id": "CH945478",
+  "segmento": "fiel",
+  "n_pedidos": 5,
+  "receita_acumulada": 490.82,
+  "n_trocas_12m": 0,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "não"
+ },
+ {
+  "customer_id": "CH951208",
+  "segmento": "novo",
+  "n_pedidos": 0,
+  "receita_acumulada": 0.0,
+  "n_trocas_12m": 2,
+  "aceita_comunicacao_whatsapp": "sim",
+  "aceita_comunicacao_email": "sim"
+ }
+]
