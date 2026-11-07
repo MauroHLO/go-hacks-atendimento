@@ -5,6 +5,10 @@
 //
 // Uso (em app/): npm run simular
 //
+// Cenários cumulativos (seções 4 e 5 de docs/decisoes.md): vigente → base ajustada → + cancelamento antes da
+// separação → + atraso comprovado → + troca de fragrância → + Reclame Aqui separa ação e resposta → + freio
+// de R$ 3.000/dia (= CENARIO_PADRAO).
+//
 // Limitações (repetidas no JSON de saída):
 // - o motivo vem da tag_agente (rótulo humano posto ao encerrar), não do classificador; confiança 1,0;
 // - conversa sem tag = só bot: nível 1 (sem_interacao);
@@ -21,6 +25,7 @@ import { fatosParaPolitica, montarContexto, STATUS_COBRANCA_EFETIVADA } from "..
 import { baseVazia, dia, instante, type Anexo, type Base, type OcorrenciaHash } from "../src/lib/dados";
 import { calcularSinais } from "../src/lib/evidencias";
 import {
+  CENARIO_PADRAO,
   CENARIO_VIGENTE,
   classificarSinais,
   CUSTO_AUDITORIA_RS,
@@ -147,6 +152,7 @@ interface Caso {
   valorAcao: number;
   mencaoSaude: boolean;
   minutos: number;
+  entregueDepois: boolean; // o pedido foi entregue depois do momento da decisão (posição final de 02/11)
 }
 
 const RE_BRINDE = /brinde|mimo|necessaire/i;
@@ -246,7 +252,7 @@ function preparar(c: Linha): Caso {
   else if (motivo === "cobranca_duplicada") {
     const v = efetivadas.filter((p) => STATUS_COBRANCA_EFETIVADA.has(p.status)).map((p) => p.valor);
     valorAcao = v.reduce((a, b) => a + b, 0) - Math.max(...v);
-  } else if (["avaria", "item_faltante", "erro_personalizacao", "atraso", "troca_fragrancia", "cancelamento"].includes(motivo)) {
+  } else if (["avaria", "item_faltante", "erro_personalizacao", "atraso", "rastreio", "troca_fragrancia", "cancelamento"].includes(motivo)) {
     valorAcao = valorPedido;
   }
 
@@ -261,6 +267,7 @@ function preparar(c: Linha): Caso {
     valorAcao: Math.round(valorAcao * 100) / 100,
     mencaoSaude: saude,
     minutos: minutos.get(id) ?? 0,
+    entregueDepois: pedido?.status_entrega === "entregue" && !!pedido.data_entrega && instante(String(pedido.data_entrega)) > instante(agora),
   };
 }
 
@@ -274,18 +281,28 @@ interface Resultado {
   cenario: string;
   p_sem_sinal: number;
   conversas: number;
-  nivel0: number;
+  nivel0: number; // nível da ação
   nivel1: number;
   nivel2: number;
   pct_nivel0: number;
   pct_nivel1: number;
   pct_nivel2: number;
+  aprovacao_resposta: number; // Reclame Aqui: resposta pública aprovada por pessoa
+  autonomas: number; // ação no nível 0 e sem aprovação de resposta: nenhuma pessoa toca
+  pct_autonomas: number;
   conversas_mes_liberadas: number;
   horas_mes_liberadas: number;
   custo_atendimento_evitado_mes_rs: number;
   reclamacoes_evidencia: number;
   reclamacoes_nivel0: number;
-  perda_esperada_mes_rs: number;
+  perda_esperada_evidencia_mes_rs: number;
+  reenvios_atraso_nivel0: number;
+  reenvios_atraso_original_entregue_depois: number;
+  reenvios_extravio: number;
+  reenvios_extravio_original_entregue_depois: number;
+  perda_reenvio_atraso_mes_rs: number;
+  perda_total_mes_rs: number;
+  perda_reenvio_atraso_politica_mes_rs: number; // em qualquer nível: a política manda reenviar, quem aprova também não sabe
   casos_sinal_forte: number;
   fraudes_esperadas_mes: number;
   perda_evitada_mes_rs: number;
@@ -293,7 +310,13 @@ interface Resultado {
   auditados: number;
   auditoria_mes_rs: number;
   saldo_liquido_mes_rs: number;
-  gasto_autonomo_dia_p90_rs: number;
+  saldo_comparavel_mes_rs: number;
+  acoes_sem_teto: number;
+  gasto_sem_teto_mes_rs: number;
+  gasto_sem_teto_dia_p90_rs: number;
+  gasto_sem_teto_dia_max_rs: number;
+  casos_freados: number;
+  dias_com_freio: number;
 }
 
 function percentil(v: number[], q: number): number {
@@ -302,25 +325,31 @@ function percentil(v: number[], q: number): number {
   return s[Math.min(s.length - 1, Math.floor(q * (s.length - 1)))];
 }
 
-// Causa do nível 1: o escalonador que subiu o caso (Reclame Aqui, limite, freio) ou a regra do motivo.
+// Causa do nível 1 da ação: o escalonador que subiu o caso ou a regra do motivo.
 function causaNivel1(motivo: Motivo, justificativa: string): string {
   if (justificativa.includes("reclame_aqui.resposta_publica")) return "reclame_aqui";
-  if (justificativa.includes("seção 4 (cenário: freio")) return "freio_diario";
+  if (justificativa.includes("Freio diário")) return "freio_diario";
   if (justificativa.includes("› limites_por_papel]")) return "limite_do_atendente";
+  if (justificativa.includes("acima do valor do pedido")) return "acima_do_valor_do_pedido";
   if (justificativa.includes("acima do de sinalizar")) return "custo_esperado";
-  if (motivo === "cancelamento" || motivo === "troca_fragrancia") return `${motivo}_sempre_nivel1`;
+  if (motivo === "cancelamento" || motivo === "troca_fragrancia") return `regra_${motivo}`;
   if (justificativa.includes("motivos fora da tabela")) return `sem_regra_${motivo}`;
   return `regra_${motivo}`;
 }
 
-function simular(nome: string, base: CenarioPolitica, p0: number): { r: Resultado; porMotivo: Record<string, number[]>; causas: Record<string, number> } {
+const DINHEIRO = new Set(["reenviar_produto", "reimprimir_personalizacao", "reembolsar", "trocar_produto", "cancelar_pedido"]);
+
+function simular(nome: string, base: CenarioPolitica, p0: number) {
   const bloqueados = new Set<string>();
   const cenario: CenarioPolitica = { ...base, pSemSinal: p0, hashesBloqueados: bloqueados };
-  const gastoDia = new Map<string, number>(); // R$ escalados (×4), como no dia real
+  const gastoDia = new Map<string, number>(); // R$ escalados (×4) em ações sem teto, como no dia real
+  const diasFreio = new Set<string>();
   const niveis = [0, 0, 0];
   const porMotivo: Record<string, number[]> = {};
   const causas: Record<string, number> = {};
-  let horas = 0, evitado = 0, perda = 0, recl = 0, recl0 = 0, fortes = 0, fraudes = 0, perdaEvitada = 0, atrito = 0, auditados = 0;
+  let aprovResp = 0, autonomas = 0, horas = 0, evitado = 0, perda = 0, recl = 0, recl0 = 0;
+  let reenvAtraso = 0, reenvAtrasoDup = 0, perdaAtraso = 0, reenvExtravio = 0, reenvExtravioDup = 0, perdaAtrasoPolitica = 0;
+  let fortes = 0, fraudes = 0, perdaEvitada = 0, atrito = 0, auditados = 0, semTeto = 0, gastoSemTeto = 0, freados = 0;
 
   for (const c of casos) {
     const hoje = dia(c.agora);
@@ -337,26 +366,52 @@ function simular(nome: string, base: CenarioPolitica, p0: number): { r: Resultad
       gastoAutonomoHojeRs: gastoDia.get(hoje) ?? 0,
       chaveAmostra: c.id,
     });
-    niveis[d.nivel]++;
-    (porMotivo[c.motivo] ??= [0, 0, 0])[d.nivel]++;
-    if (d.nivel === 1) {
+    niveis[d.nivelAcao]++;
+    (porMotivo[c.motivo] ??= [0, 0, 0])[d.nivelAcao]++;
+    if (d.nivelAcao === 1) {
       const k = causaNivel1(c.motivo, d.justificativa);
       causas[k] = (causas[k] ?? 0) + 1;
+      if (k === "freio_diario") {
+        freados++;
+        diasFreio.add(hoje);
+      }
     }
+    if (d.aprovacaoResposta) aprovResp++;
     const p = probabilidadeImprocedente(c.sinais, p0);
+    if ((c.motivo === "atraso" || c.motivo === "rastreio") && d.ferramenta === "reenviar_produto" && c.entregueDepois) {
+      perdaAtrasoPolitica += FATOR_CUSTO_IMPROCEDENTE * c.fatos.valorPedido;
+    }
     const temForte = classificarSinais(c.sinais).fortes.length > 0;
 
-    if (d.nivel === 0) {
-      horas += c.minutos / 60;
-      evitado += CUSTO_CANAL[c.canal] ?? 0;
+    if (d.nivelAcao === 0) {
       if (d.auditoriaPosterior) auditados++;
-      const comDinheiro = ["reenviar_produto", "reimprimir_personalizacao", "reembolsar", "trocar_produto"].includes(d.ferramenta);
-      if (comDinheiro) gastoDia.set(hoje, (gastoDia.get(hoje) ?? 0) + c.valorAcao * FATOR_AMOSTRA);
+      if (d.acaoSemTeto) {
+        semTeto++;
+        gastoSemTeto += c.valorAcao;
+        gastoDia.set(hoje, (gastoDia.get(hoje) ?? 0) + c.valorAcao * FATOR_AMOSTRA);
+      }
+      // Reenvio por atraso no nível 0: se o original chegou depois, o reenvio foi a mais (0,45 × valor, parametros.md).
+      if ((c.motivo === "atraso" || c.motivo === "rastreio") && d.ferramenta === "reenviar_produto") {
+        reenvAtraso++;
+        if (c.fatos.statusEntrega === "extraviado") {
+          reenvExtravio++;
+          if (c.entregueDepois) reenvExtravioDup++;
+        }
+        if (c.entregueDepois) {
+          reenvAtrasoDup++;
+          perdaAtraso += FATOR_CUSTO_IMPROCEDENTE * c.fatos.valorPedido;
+        }
+      }
+      // Liberada de verdade só quando nenhuma pessoa toca (nem aprova a resposta pública).
+      if (!d.aprovacaoResposta) {
+        autonomas++;
+        horas += c.minutos / 60;
+        evitado += CUSTO_CANAL[c.canal] ?? 0;
+      }
     }
     if (MOTIVOS_EVIDENCIA.has(c.motivo)) {
       recl++;
-      const executa = d.nivel === 0 && (d.ferramenta === "reenviar_produto" || d.ferramenta === "reimprimir_personalizacao");
-      if (executa) {
+      if (d.nivelAcao === 0 && (d.ferramenta === "reenviar_produto" || d.ferramenta === "reimprimir_personalizacao")) {
         recl0++;
         perda += p * FATOR_CUSTO_IMPROCEDENTE * c.fatos.valorPedido;
       }
@@ -372,10 +427,13 @@ function simular(nome: string, base: CenarioPolitica, p0: number): { r: Resultad
       if (c.sinais.includes("hash_em_outro_pedido_ou_cliente")) for (const h of c.hashes) bloqueados.add(h);
     }
   }
+  void DINHEIRO;
 
   const n = casos.length;
   const auditoria = auditados * CUSTO_AUDITORIA_RS;
   const m = (v: number) => Math.round(v * ESCALA_MES * 100) / 100;
+  const pct = (v: number) => Math.round((v / n) * 1000) / 10;
+  const gastos = [...gastoDia.values()];
   const r: Resultado = {
     cenario: nome,
     p_sem_sinal: p0,
@@ -383,42 +441,69 @@ function simular(nome: string, base: CenarioPolitica, p0: number): { r: Resultad
     nivel0: niveis[0],
     nivel1: niveis[1],
     nivel2: niveis[2],
-    pct_nivel0: Math.round((niveis[0] / n) * 1000) / 10,
-    pct_nivel1: Math.round((niveis[1] / n) * 1000) / 10,
-    pct_nivel2: Math.round((niveis[2] / n) * 1000) / 10,
-    conversas_mes_liberadas: Math.round(niveis[0] * ESCALA_MES),
+    pct_nivel0: pct(niveis[0]),
+    pct_nivel1: pct(niveis[1]),
+    pct_nivel2: pct(niveis[2]),
+    aprovacao_resposta: aprovResp,
+    autonomas,
+    pct_autonomas: pct(autonomas),
+    conversas_mes_liberadas: Math.round(autonomas * ESCALA_MES),
     horas_mes_liberadas: Math.round(horas * ESCALA_MES * 10) / 10,
     custo_atendimento_evitado_mes_rs: m(evitado),
     reclamacoes_evidencia: recl,
     reclamacoes_nivel0: recl0,
-    perda_esperada_mes_rs: m(perda),
+    perda_esperada_evidencia_mes_rs: m(perda),
+    reenvios_atraso_nivel0: reenvAtraso,
+    reenvios_atraso_original_entregue_depois: reenvAtrasoDup,
+    reenvios_extravio: reenvExtravio,
+    reenvios_extravio_original_entregue_depois: reenvExtravioDup,
+    perda_reenvio_atraso_mes_rs: m(perdaAtraso),
+    perda_total_mes_rs: m(perda + perdaAtraso),
+    perda_reenvio_atraso_politica_mes_rs: m(perdaAtrasoPolitica),
     casos_sinal_forte: fortes,
     fraudes_esperadas_mes: Math.round(fraudes * ESCALA_MES * 10) / 10,
     perda_evitada_mes_rs: m(perdaEvitada),
     atrito_mes_rs: m(atrito),
     auditados,
     auditoria_mes_rs: m(auditoria),
-    saldo_liquido_mes_rs: m(evitado - perda - atrito - auditoria),
-    gasto_autonomo_dia_p90_rs: Math.round(percentil([...gastoDia.values()], 0.9) * 100) / 100,
+    saldo_liquido_mes_rs: m(evitado - perda - perdaAtraso - atrito - auditoria),
+    saldo_comparavel_mes_rs: m(evitado - perda - perdaAtrasoPolitica - atrito - auditoria),
+    acoes_sem_teto: semTeto,
+    gasto_sem_teto_mes_rs: m(gastoSemTeto),
+    gasto_sem_teto_dia_p90_rs: Math.round(percentil(gastos, 0.9) * 100) / 100,
+    gasto_sem_teto_dia_max_rs: Math.round(Math.max(0, ...gastos) * 100) / 100,
+    casos_freados: freados,
+    dias_com_freio: diasFreio.size,
   };
   return { r, porMotivo, causas };
 }
 
 // ---------------------------------------------------------------------------
-// Cenários (cumulativos)
+// Cenários (cumulativos, um a um)
 // ---------------------------------------------------------------------------
 const c1: CenarioPolitica = { ...CENARIO_VIGENTE, nome: "1_vigente" };
-const c2: CenarioPolitica = { ...c1, nome: "2_auditoria_10pct", auditoriaAmostraPct: 10 };
-const c3: CenarioPolitica = { ...c2, nome: "3_estorno_sem_teto", estornoDuplicidadeSemTeto: true };
-const c4: CenarioPolitica = { ...c3, nome: "4_brinde_sem_foto", brindeSemFoto: true };
-const c5: CenarioPolitica = { ...c4, nome: "5_fotos_bloqueadas", bloquearFotosConfirmadas: true };
-const c6a: CenarioPolitica = { ...c5, nome: "6a_limite_300", limiteReenvioRs: 300 };
-const c6b: CenarioPolitica = { ...c5, nome: "6b_limite_500", limiteReenvioRs: 500 };
-// Freio: teto medido = p90 do gasto autônomo diário (escalado ×4) do cenário 6b com p = 0,05, em centenas.
-const tetoMedido = simular("pre_6b", c6b, 0.05).r.gasto_autonomo_dia_p90_rs;
-const teto = Math.max(100, Math.round(tetoMedido / 100) * 100);
-const c7: CenarioPolitica = { ...c6b, nome: `7_freio_${teto}`, freioDiarioRs: teto };
-const CENARIOS = [c1, c2, c3, c4, c5, c6a, c6b, c7];
+const c2: CenarioPolitica = {
+  ...c1,
+  nome: "2_base_ajustada",
+  limiteReenvioRs: 300,
+  auditoriaAmostraPct: 10,
+  estornoDuplicidadeSemTeto: true,
+  bloquearFotosConfirmadas: true,
+};
+const c3: CenarioPolitica = { ...c2, nome: "3_cancelamento_antes_separacao", cancelamentoAntesSeparacaoNivel0: true };
+const c4: CenarioPolitica = { ...c3, nome: "4_atraso_comprovado", atrasoComprovadoNivel0: true };
+const c5: CenarioPolitica = { ...c4, nome: "5_troca_fragrancia", trocaFragranciaNivel0: true };
+const c6: CenarioPolitica = { ...c5, nome: "6_reclame_aqui_separa", reclameAquiSeparaResposta: true };
+const c7: CenarioPolitica = { ...c6, nome: "7_freio_3000", freioDiarioRs: 3000 };
+const CENARIOS = [c1, c2, c3, c4, c5, c6, c7];
+
+// O último cenário tem de ser o padrão de regras.ts (fora o nome).
+const { nome: _n1, hashesBloqueados: _h1, ...semNome7 } = c7;
+const { nome: _n2, hashesBloqueados: _h2, ...semNomePadrao } = CENARIO_PADRAO;
+void _n1; void _n2; void _h1; void _h2;
+if (JSON.stringify(semNome7) !== JSON.stringify(semNomePadrao)) {
+  throw new Error(`cenário 7 diferente de CENARIO_PADRAO:\n${JSON.stringify(semNome7)}\n${JSON.stringify(semNomePadrao)}`);
+}
 
 const resultados: Resultado[] = [];
 const motivos: Record<string, Record<string, number[]>> = {};
@@ -434,43 +519,36 @@ for (const cen of CENARIOS) {
   }
 }
 
-// Efeito isolado de cada alavanca sobre o vigente (p = 0,05), para separar o que ajuda do que atrapalha.
-const ALAVANCAS: [string, Partial<CenarioPolitica>][] = [
-  ["auditoria_10pct", { auditoriaAmostraPct: 10 }],
-  ["estorno_sem_teto", { estornoDuplicidadeSemTeto: true }],
-  ["brinde_sem_foto", { brindeSemFoto: true }],
-  ["fotos_bloqueadas", { bloquearFotosConfirmadas: true }],
-  ["limite_300", { limiteReenvioRs: 300 }],
-  ["limite_500", { limiteReenvioRs: 500 }],
-  [`freio_${teto}`, { freioDiarioRs: teto }],
-];
-const refVigente = resultados.find((r) => r.cenario === c1.nome && r.p_sem_sinal === 0.05)!;
-const efeitoIsolado = ALAVANCAS.map(([nome, delta]) => {
-  const r = simular(nome, { ...c1, ...delta, nome }, 0.05).r;
+// Ganho de cada regra somada (p = 0,05): diferença para o cenário anterior.
+const em005 = CENARIOS.map((c) => resultados.find((r) => r.cenario === c.nome && r.p_sem_sinal === 0.05)!);
+const ganhoIncremental = em005.slice(1).map((r, i) => {
+  const ant = em005[i];
+  const dif = (k: keyof Resultado) => Math.round(((r[k] as number) - (ant[k] as number)) * 100) / 100;
   return {
-    alavanca: nome,
-    delta_nivel0: r.nivel0 - refVigente.nivel0,
-    delta_pct_nivel0: Math.round((r.pct_nivel0 - refVigente.pct_nivel0) * 10) / 10,
-    delta_saldo_mes_rs: Math.round((r.saldo_liquido_mes_rs - refVigente.saldo_liquido_mes_rs) * 100) / 100,
-    delta_perda_mes_rs: Math.round((r.perda_esperada_mes_rs - refVigente.perda_esperada_mes_rs) * 100) / 100,
+    cenario: r.cenario,
+    delta_acao_nivel0: dif("nivel0"),
+    delta_autonomas: dif("autonomas"),
+    delta_pct_autonomas: dif("pct_autonomas"),
+    delta_conversas_mes: dif("conversas_mes_liberadas"),
+    delta_horas_mes: dif("horas_mes_liberadas"),
+    delta_perda_mes_rs: dif("perda_total_mes_rs"),
+    delta_saldo_mes_rs: dif("saldo_liquido_mes_rs"),
+    delta_saldo_comparavel_mes_rs: dif("saldo_comparavel_mes_rs"),
   };
 });
 
-// Recomendado: maior % de nível 0 (p = 0,05) com saldo líquido positivo nos três valores de p.
-// Empate: maior autonomia média nos três p.
-const porCenario = CENARIOS.map((c) => {
+// Avaliação: saldo positivo nos três p e autonomia total.
+const avaliacao = CENARIOS.map((c) => {
   const rs = resultados.filter((r) => r.cenario === c.nome);
-  const media = rs.reduce((a, r) => a + r.pct_nivel0, 0) / rs.length;
   return {
     nome: c.nome,
-    autonomia: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_nivel0,
-    autonomiaMedia: Math.round(media * 100) / 100,
-    saldoMinimo: Math.min(...rs.map((r) => r.saldo_liquido_mes_rs)),
-    positivoEmTodos: rs.every((r) => r.saldo_liquido_mes_rs > 0),
+    pct_autonomas_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_autonomas,
+    pct_acao_nivel0_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_nivel0,
+    saldo_minimo_mes_rs: Math.min(...rs.map((r) => r.saldo_liquido_mes_rs)),
+    saldo_comparavel_minimo_mes_rs: Math.min(...rs.map((r) => r.saldo_comparavel_mes_rs)),
+    positivo_em_todos: rs.every((r) => r.saldo_liquido_mes_rs > 0),
   };
 });
-const recomendado =
-  porCenario.filter((c) => c.positivoEmTodos).sort((a, b) => b.autonomia - a.autonomia || b.autonomiaMedia - a.autonomiaMedia)[0] ?? null;
 
 // ---------------------------------------------------------------------------
 // Saída
@@ -496,15 +574,21 @@ writeFileSync(
         custo_auditoria_rs: CUSTO_AUDITORIA_RS,
         custo_brinde_rs: custoBrinde,
         p_sem_sinal_testados: VALORES_P,
-        freio_teto_rs: teto,
-        freio_origem: `p90 do gasto autônomo diário (×4) no cenário 6b com p = 0,05: R$ ${tetoMedido}`,
+        freio_teto_rs: 3000,
       },
+      cenarios: CENARIOS.map(({ hashesBloqueados: _h, ...c }) => (void _h, c)),
       definicoes: {
-        custo_atendimento_evitado: "custo por conversa do canal (parametros.md) das conversas de nível 0",
-        perda_esperada: "soma de p × 0,45 × valor do pedido das reclamações com evidência resolvidas no nível 0",
+        nivel_acao: "nível da ação que o agente executa (decidirNivel.nivelAcao)",
+        aprovacao_resposta: "Reclame Aqui: a resposta pública precisa de aprovação, mesmo com a ação no nível 0",
+        autonomas: "ação no nível 0 e sem aprovação de resposta: nenhuma pessoa toca na conversa",
+        custo_atendimento_evitado: "custo por conversa do canal (parametros.md) das conversas autônomas",
+        perda_esperada_evidencia: "soma de p × 0,45 × valor do pedido das reclamações com evidência resolvidas no nível 0",
+        perda_reenvio_atraso: "0,45 × valor do pedido nos reenvios por atraso no nível 0 cujo pedido original foi entregue depois (medido)",
         atrito: "(1 − p) × R$ 6 por caso sinalizado ao supervisor",
         auditoria: "R$ 6 por caso de nível 0 sorteado",
-        saldo_liquido: "custo evitado − perda esperada − atrito − auditoria",
+        saldo_liquido: "custo evitado − perda esperada (evidência) − perda de reenvio por atraso no nível 0 − atrito − auditoria",
+        saldo_comparavel: "igual ao saldo líquido, mas com a perda de reenvio por atraso em qualquer nível (a política manda reenviar também no nível 1): compara cenários sem atribuir à autonomia um custo que é da política",
+        perda_reenvio_atraso_politica: "0,45 × valor do pedido nos reenvios por atraso (qualquer nível) cujo original foi entregue depois",
         perda_evitada: "informativa, fora do saldo: p × 0,45 × valor dos casos com sinal forte",
       },
       limitacoes: [
@@ -514,15 +598,16 @@ writeFileSync(
         "reenvios do cliente contados no OMS nos 365 dias anteriores",
         "lista de fotos bloqueadas supõe que o supervisor confirma toda foto repetida sinalizada (limite superior)",
         "p é hipótese; por isso a sensibilidade em 0,02, 0,05 e 0,10",
-        "níveis 1 e 2 não contam economia, mesmo quando o agente prepara o caso",
+        "níveis 1 e 2 e conversas do Reclame Aqui com resposta aprovada não contam economia",
+        "atraso: supõe que o cliente escolhe o reenvio; se escolher reembolso e o original chegar, a perda é o valor do pedido",
+        "cancelamento antes da separação e troca com conferência do CD: sem perda modelada (nada foi enviado / o CD confere antes)",
       ],
       motivos_amostra: contagemMotivos,
-      niveis_por_motivo_p005: motivos,
+      niveis_acao_por_motivo_p005: motivos,
       causas_nivel1_p005: causasNivel1,
-      efeito_isolado_p005: efeitoIsolado,
+      ganho_incremental_p005: ganhoIncremental,
+      avaliacao,
       resultados,
-      recomendado,
-      avaliacao: porCenario,
     },
     null,
     2,
@@ -532,17 +617,19 @@ writeFileSync(
 // Tabela no terminal
 const t = (v: number | string, w: number) => String(v).padStart(w);
 console.log(
-  `\n${"cenário".padEnd(20)}${t("p0", 6)}${t("%N0", 7)}${t("%N1", 7)}${t("%N2", 7)}${t("conv/mês", 10)}${t("h/mês", 8)}${t("evitado", 10)}${t("perda", 9)}${t("atrito", 8)}${t("audit.", 8)}${t("saldo", 10)}${t("fraudes", 9)}`,
+  `\n${"cenário".padEnd(32)}${t("p0", 5)}${t("açãoN0", 8)}${t("%N1", 6)}${t("%N2", 5)}${t("%auto", 7)}${t("conv/mês", 9)}${t("h/mês", 7)}${t("evitado", 9)}${t("perda", 7)}${t("audit.", 7)}${t("saldo", 8)}${t("s.comp", 8)}${t("freados", 8)}`,
 );
 for (const r of resultados) {
   console.log(
-    `${r.cenario.padEnd(20)}${t(r.p_sem_sinal, 6)}${t(r.pct_nivel0, 7)}${t(r.pct_nivel1, 7)}${t(r.pct_nivel2, 7)}${t(r.conversas_mes_liberadas, 10)}${t(r.horas_mes_liberadas, 8)}${t(r.custo_atendimento_evitado_mes_rs.toFixed(0), 10)}${t(r.perda_esperada_mes_rs.toFixed(0), 9)}${t(r.atrito_mes_rs.toFixed(0), 8)}${t(r.auditoria_mes_rs.toFixed(0), 8)}${t(r.saldo_liquido_mes_rs.toFixed(0), 10)}${t(r.fraudes_esperadas_mes, 9)}`,
+    `${r.cenario.padEnd(32)}${t(r.p_sem_sinal, 5)}${t(r.pct_nivel0, 8)}${t(r.pct_nivel1, 6)}${t(r.pct_nivel2, 5)}${t(r.pct_autonomas, 7)}${t(r.conversas_mes_liberadas, 9)}${t(r.horas_mes_liberadas, 7)}${t(r.custo_atendimento_evitado_mes_rs.toFixed(0), 9)}${t(r.perda_total_mes_rs.toFixed(0), 7)}${t(r.auditoria_mes_rs.toFixed(0), 7)}${t(r.saldo_liquido_mes_rs.toFixed(0), 8)}${t(r.saldo_comparavel_mes_rs.toFixed(0), 8)}${t(r.casos_freados, 8)}`,
   );
 }
-console.log("\nMotivos (amostra):", contagemMotivos);
-console.log("Efeito isolado de cada alavanca (sobre o vigente, p = 0,05):");
-console.table(efeitoIsolado);
-console.log("Causas do nível 1 (vigente, p = 0,05):", causasNivel1["1_vigente"]);
-console.log(`Freio: teto R$ ${teto} (medido: R$ ${tetoMedido})`);
-console.log("Recomendado:", recomendado);
+console.log("\nGanho de cada regra somada (p = 0,05):");
+console.table(ganhoIncremental);
+console.log("Causas do nível 1 da ação (padrão, p = 0,05):", causasNivel1[c7.nome]);
+const p7 = em005.at(-1)!;
+console.log(
+  `Sem teto no padrão: ${p7.acoes_sem_teto} ações na amostra, R$ ${p7.gasto_sem_teto_mes_rs}/mês; dia p90 R$ ${p7.gasto_sem_teto_dia_p90_rs}, máx R$ ${p7.gasto_sem_teto_dia_max_rs}; freio atuou em ${p7.dias_com_freio} dias (${p7.casos_freados} casos).`,
+);
+console.log(`Reenvios por atraso no nível 0: ${p7.reenvios_atraso_nivel0}; original entregue depois: ${p7.reenvios_atraso_original_entregue_depois} (R$ ${p7.perda_reenvio_atraso_mes_rs}/mês); por extravio: ${p7.reenvios_extravio} (entregue depois: ${p7.reenvios_extravio_original_entregue_depois}).`);
 console.log(`\nGravado em ${OUT}/simulacao_autonomia.{json,csv}`);

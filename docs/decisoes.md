@@ -155,3 +155,61 @@ Tabela completa (todos os cenários × p, mais atrito, fraudes e auditados) em `
 - O freio não entrou porque reduz a autonomia (−18 conversas) e o saldo; fica disponível como proteção operacional se o gasto diário sair do padrão medido (p90 de R$ 1.669/dia).
 
 **Onde está o resto da autonomia (causas do nível 1 no 6b, p = 0,05, 1.413 casos de nível 1 na amostra).** Conversas só de bot sem regra (330), motivo "outro" (242), Reclame Aqui (200), troca de fragrância sempre nível 1 (158), cancelamento sempre nível 1 (156), atraso acima de 7 dias úteis ou extravio (148), dúvida sem ficha ou sem pedido (71), rastreio de pedido já entregue (37 + 13 sem regra), custo esperado acima de R$ 6 (28), cobrança duplicada já estornada ou não confirmada (28). As alavancas com efeito grande são essas, não as simuladas: encerrar sem ação as conversas só de bot, permitir cancelamento antes da separação e troca de fragrância dentro das regras no nível 0, e classificar melhor o "outro". Cada uma muda política e precisa da mesma medição antes de entrar.
+
+## 5. Direito comprovado por sistema e nova simulação
+
+**Ajustes no padrão (após a seção 4).** Brinde sem foto **desligado** (piorou na simulação: −1 conversa e −R$ 55,69/mês); limite do atendente para reenvio/reimpressão **R$ 300** (mesmo efeito do R$ 500 com p = 0,05, menor risco); auditoria 10% e fotos bloqueadas ligadas; estorno de duplicidade sem teto mantido.
+
+**Princípio:** *direito comprovado por sistema → nível 0 sem teto em R$ (até o valor do pedido); direito que depende de declaração do cliente → fórmula de custo.* O sistema que comprova é citado na justificativa, e o simulador de ferramentas confere o direito nos dados antes de dispensar o teto: não basta o agente declarar o motivo (`direitoComprovado` em `lib/ferramentas`).
+
+| Regra | Comprovação | Nível 0 | Continua nível 1 |
+| --- | --- | --- | --- |
+| Cobrança duplicada (seção 4) | gateway: 2+ cobranças efetivadas, sem estorno | `reembolsar` sem teto, até o valor do pedido | não confirmada, já estornada ou acima do valor do pedido |
+| Cancelamento/arrependimento antes da separação | ERP: `aguardando_separacao` e sem `data_separacao` | `cancelar_pedido` + `reembolsar` integral | depois da separação, separação desconhecida, acima do valor do pedido |
+| Atraso > 7 dias úteis ou extravio | ERP/portal: data prometida + feriados, ou status `extraviado` | `reenviar_produto` ou `reembolsar` à escolha do cliente, até o valor do pedido | atraso desconhecido, acima do valor do pedido |
+| Troca de fragrância | ERP/OMS: entregue há até 30 dias e 0 trocas no pedido | `trocar_produto` com coleta reversa; o novo item só sai depois de o CD conferir a devolução (até 20% usado) | mais de 30 dias, troca anterior, trocas desconhecidas, valor acima do limite de troca (R$ 200: a troca não é sem teto) |
+| Reclame Aqui | — | a ação segue a regra do motivo | só a resposta pública (`responder_cliente`) precisa de aprovação |
+
+- **Saída separada.** `decidirNivel` devolve `nivelAcao` (o que o agente executa; `nivel` é o mesmo valor) e `aprovacaoResposta` (true no Reclame Aqui). No vigente, o Reclame Aqui continua subindo a conversa inteira para o nível 1.
+- **Freio diário como rede de segurança das regras sem teto.** Teto de R$ 3.000/dia, contado só nas ações sem teto executadas no nível 0 (`acaoSemTeto` na saída). A ação que passaria do teto vai para o nível 1. As ações pela fórmula (com o teto do atendente) não entram no freio.
+- A confiança do classificador abaixo de 0,7 continua subindo qualquer ação, inclusive sem teto, para o nível 1.
+
+**Nova simulação** (`npm run simular`; cenários somados um a um; o cenário 7 é conferido igual a `CENARIO_PADRAO`). Mudanças de medida em relação à seção 4:
+
+- *Autonomia total* = ação no nível 0 **e** sem aprovação de resposta (nenhuma pessoa toca). Só ela conta conversas, horas e custo evitado. No Reclame Aqui com a ação no nível 0, a ação sai sem esperar, mas a resposta ainda passa por uma pessoa, então não conta economia.
+- *Perda de reenvio por atraso* (medida): 0,45 × valor do pedido (`parametros.md`) quando o agente reenviou por atraso no nível 0 e o pedido original foi entregue depois (posição final de 02/11). Supõe que o cliente escolhe o reenvio; se escolher reembolso e o original chegar, a perda seria o valor do pedido.
+- *Saldo comparável*: a política (vigente ou nova) manda reenviar depois de 7 dias úteis também no nível 1, e quem aprova não sabe se o original vai chegar. O saldo comparável desconta essa perda em qualquer nível, para não atribuir à autonomia um custo que é da política. O saldo líquido continua descontando só o que o agente executa sozinho (mais conservador).
+
+| Cenário (cumulativo) | p | ação N0 | % autônomas | conversas/mês | horas/mês | custo evitado | perda | auditoria | saldo líquido | saldo comparável |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 vigente | 0,05 | 51,1% | 51,1% | 2.035 | 366,5 | 11.164,80 | 417,55 | 0 | 10.734 | 3.162 |
+| 2 base ajustada (limite 300, auditoria, estorno sem teto, fotos bloqueadas) | 0,05 | 51,8% | 51,8% | 2.060 | 371,2 | 11.308,80 | 478,19 | 1.104 | 9.714 | 2.141 |
+| 3 + cancelamento antes da separação | 0,05 | 53,6% | 53,6% | 2.131 | 384,1 | 11.686,40 | 478,19 | 1.144 | 10.051 | 2.479 |
+| 4 + atraso comprovado | 0,05 | 58,4% | 58,4% | 2.324 | 419,4 | 12.745,60 | 6.687,35 | 1.264 | 4.781 | 3.418 |
+| 5 + troca de fragrância | 0,05 | 60,5% | 60,5% | 2.405 | 435,0 | 13.216,00 | 6.687,35 | 1.344 | 5.172 | 3.809 |
+| 6 + Reclame Aqui separa ação e resposta | 0,05 | 69,1% | 60,5% | 2.405 | 435,0 | 13.216,00 | 8.096,51 | 1.560 | 3.547 | 3.547 |
+| **7 + freio R$ 3.000/dia (padrão)** | 0,02 | 68,8% | 60,3% | 2.399 | 434,0 | 13.184,00 | 7.178 | 1.552 | 4.442 | 3.811 |
+| **7 + freio R$ 3.000/dia (padrão)** | 0,05 | 68,7% | 60,2% | 2.395 | 433,1 | 13.158,40 | 7.465,57 | 1.552 | 4.128 | 3.497 |
+| **7 + freio R$ 3.000/dia (padrão)** | 0,10 | 66,8% | 58,4% | 2.324 | 418,0 | 12.758,40 | 7.341 | 1.520 | 3.884 | 3.253 |
+
+Valores por mês, escalados (×4 ÷ 3). Todos os cenários têm saldo líquido e saldo comparável positivos nos três valores de p (tabela completa em `data/processed/simulacao_autonomia.csv`).
+
+**Ganho de cada regra somada** (p = 0,05; diferença para o cenário anterior):
+
+| Regra somada | conversas autônomas (amostra) | conversas/mês | horas/mês | perda/mês | saldo líquido/mês | saldo comparável/mês |
+| --- | --- | --- | --- | --- | --- | --- |
+| base ajustada | +19 | +25 | +4,7 | +60,64 | −1.020,64 | −1.020,64 |
+| cancelamento antes da separação | +53 | +71 | +12,9 | 0 | +337,60 | +337,60 |
+| atraso comprovado | +145 | +193 | +35,3 | +6.209,16 | −5.269,96 | +939,20 |
+| troca de fragrância | +61 | +81 | +15,6 | 0 | +390,40 | +390,40 |
+| Reclame Aqui separa (257 ações a mais no nível 0, resposta aprovada) | 0 | 0 | 0 | +1.409,16 | −1.625,16 | −261,99 |
+| freio R$ 3.000 | −8 | −10 | −1,9 | −630,94 | +581,34 | −49,60 |
+
+**Leitura.**
+
+- O princípio é o que move a autonomia: as conversas sem nenhuma pessoa vão de 51,1% (vigente) para 60,2% no padrão (+360 conversas e +66,6 horas por mês), e as ações no nível 0 para 68,7%. As alavancas da seção 4 juntas somavam +0,7 ponto.
+- **Atraso: achado medido.** Dos 178 reenvios por atraso no nível 0 do padrão (todos por atraso acima de 7 dias úteis; nenhum por extravio já confirmado no momento da decisão), em **115 (65%) o pedido original foi entregue depois**. Isso custa R$ 7.572/mês na política como está (vigente incluído, quando a pessoa aprova o mesmo reenvio). Não é custo da autonomia: no saldo comparável, a regra de atraso no nível 0 rende +R$ 939/mês. Mas sugere rever a política de atraso, por exemplo reenviar no nível 0 só com extravio confirmado pela transportadora (resposta do chamado) e, no atraso sem extravio, abrir o chamado e esperar a resposta antes de reenviar. Precisa da mesma medição antes de mudar.
+- **Reclame Aqui separado** não libera horas (a resposta pública continua com uma pessoa), mas tira 257 ações da fila de espera (o reenvio ou o estorno sai na hora). O custo medido (+R$ 1.409/mês de perda) vem do reenvio por atraso, que agora sai no nível 0 também no Reclame Aqui; no saldo comparável o efeito é −R$ 262/mês (auditoria e perda pela fórmula).
+- **Freio de R$ 3.000/dia.** Gasto sem teto no padrão: R$ 38.348/mês; por dia, p90 R$ 2.741 e máximo R$ 3.248 (escalados). O freio atuou em 4 dias (10 casos da amostra), custa −10 conversas/mês e −R$ 49,60/mês no saldo comparável. Fica ligado como rede de segurança: limita o pior dia sem mexer no dia típico.
+- **O que ainda está no nível 1 da ação** (padrão, p = 0,05, amostra): conversas só de bot sem regra (330), "outro" (242), cancelamento depois da separação (95), troca fora das condições (77), dúvida sem ficha ou sem pedido (71), cobrança duplicada já estornada ou não confirmada (28), custo esperado acima de R$ 6 (27), rastreio de pedido entregue sem regra (13), limite do atendente (11), freio (10). As duas primeiras linhas (572 casos, 19% da amostra) dependem do classificador e de uma regra para conversa sem interação, não de valor em R$.
+- **Limitações** (além das da seção 4): o reenvio por atraso supõe que o cliente escolhe o reenvio; cancelamento antes da separação e troca com conferência do CD não têm perda modelada; "entregue depois" usa a posição final de 02/11.

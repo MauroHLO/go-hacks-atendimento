@@ -6,7 +6,15 @@
 import { mascararPii } from "../pii";
 import { AGORA, BASE, dia, type Base, type Pedido } from "../dados";
 import { STATUS_COBRANCA_EFETIVADA } from "../contexto";
-import { CENARIO_PADRAO, podeAprovar, type CenarioPolitica, type Papel, type Pessoa } from "../policy";
+import {
+  ATRASO_LIMITE_DIAS_UTEIS,
+  CENARIO_PADRAO,
+  diasUteisEntre,
+  podeAprovar,
+  type CenarioPolitica,
+  type Papel,
+  type Pessoa,
+} from "../policy";
 
 // ---------------------------------------------------------------------------
 // Tipos
@@ -134,6 +142,28 @@ function definicao(sim: Simulador, ferramenta: string) {
   return sim.base.ferramentas.find((f) => f.ferramenta === ferramenta);
 }
 
+// Direito comprovado pelos sistemas, conferido aqui nos dados (não basta o agente declarar o motivo):
+// duplicidade no gateway, pedido ainda não separado no ERP, atraso > 7 dias úteis ou extravio no ERP/portal.
+// Devolve o valor do pedido (teto da ação) ou null.
+export function direitoComprovado(sim: Simulador, ferramenta: string, p: Pedidos): { valorPedido: number } | null {
+  if (!p.order_id || !p.motivo) return null;
+  const ped = sim.pedido(p.order_id);
+  if (!ped) return null;
+  const c = sim.cenario;
+  if (ferramenta === "reembolsar" && p.motivo === "cobranca_duplicada" && c.estornoDuplicidadeSemTeto) {
+    const efetivadas = sim.base.pagamentos.filter((x) => x.order_id === p.order_id && STATUS_COBRANCA_EFETIVADA.has(x.status));
+    return efetivadas.length > 1 ? { valorPedido: ped.valor } : null;
+  }
+  if (ferramenta === "reembolsar" && p.motivo === "cancelamento" && c.cancelamentoAntesSeparacaoNivel0) {
+    return ped.data_separacao === null && ped.status_entrega === "aguardando_separacao" ? { valorPedido: ped.valor } : null;
+  }
+  if ((ferramenta === "reembolsar" || ferramenta === "reenviar_produto") && p.motivo === "atraso" && c.atrasoComprovadoNivel0) {
+    const atraso = ped.data_prometida ? diasUteisEntre(ped.data_prometida, ped.data_entrega ?? dia(sim.agora())) : 0;
+    return ped.status_entrega === "extraviado" || atraso > ATRASO_LIMITE_DIAS_UTEIS ? { valorPedido: ped.valor } : null;
+  }
+  return null;
+}
+
 // Devolve erro, ou o id do supervisor que aprovou (quando houve aprovação), ou null.
 function autorizar(sim: Simulador, ferramenta: string, p: Pedidos): { erro: Resultado<never> } | { aprovadoPor: string | null } {
   const def = definicao(sim, ferramenta);
@@ -160,12 +190,11 @@ function autorizar(sim: Simulador, ferramenta: string, p: Pedidos): { erro: Resu
   }
 
   let limite: number | boolean | undefined = def.limites.valor_max_sem_aprovacao_rs;
-  // Cenário de política: limite de reenvio/reimpressão configurável; estorno de duplicidade comprovada sem teto.
+  // Cenário de política: limite de reenvio/reimpressão configurável. Direito comprovado por sistema
+  // (docs/decisoes.md, seção 5): sem o teto do atendente, mas nunca acima do valor do pedido.
   if (ferramenta === "reenviar_produto" || ferramenta === "reimprimir_personalizacao") limite = sim.cenario.limiteReenvioRs;
-  if (ferramenta === "reembolsar" && p.motivo === "cobranca_duplicada" && sim.cenario.estornoDuplicidadeSemTeto && p.order_id) {
-    const efetivadas = sim.base.pagamentos.filter((x) => x.order_id === p.order_id && STATUS_COBRANCA_EFETIVADA.has(x.status));
-    if (efetivadas.length > 1) limite = undefined;
-  }
+  const comprovado = direitoComprovado(sim, ferramenta, p);
+  if (comprovado) limite = comprovado.valorPedido;
   if (typeof limite === "number" && p.valor !== undefined) {
     if (!Number.isFinite(p.valor) || p.valor < 0) return { erro: { ok: false, erro: `valor inválido: ${p.valor}` } };
     if (p.valor > limite) {
@@ -368,8 +397,14 @@ export function reimprimir_personalizacao(sim: Simulador, p: AcaoValor & { perso
   return acaoComValor(sim, "reimprimir_personalizacao", SISTEMA.producao, "OMS", p);
 }
 
-export function trocar_produto(sim: Simulador, p: AcaoValor & { sku_novo?: string }) {
-  return acaoComValor(sim, "trocar_produto", SISTEMA.oms, "OMS", p);
+// Com coleta reversa (troca de fragrância no nível 0, docs/decisoes.md, seção 5): o novo item só é
+// enviado depois de o CD conferir a devolução (até 20% usado).
+export const ENVIO_CONDICIONADO_CD = "aguardando conferência da devolução pelo CD (até 20% usado)";
+
+export function trocar_produto(sim: Simulador, p: AcaoValor & { sku_novo?: string; coleta_reversa?: boolean }) {
+  const r = acaoComValor(sim, "trocar_produto", SISTEMA.oms, "OMS", p);
+  if (!r.ok || !p.coleta_reversa) return r;
+  return { ...r, dados: { coletaReversa: true, envioNovoItem: ENVIO_CONDICIONADO_CD } };
 }
 
 export function reembolsar(sim: Simulador, p: AcaoValor & { motivo: string }) {

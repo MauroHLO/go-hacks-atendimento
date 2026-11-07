@@ -85,10 +85,23 @@ export interface CenarioPolitica {
   // Foto com hash confirmado como fraude pelo supervisor: nível 2, antes de qualquer outra regra.
   bloquearFotosConfirmadas: boolean;
   hashesBloqueados: ReadonlySet<string>;
-  // Teto diário em R$ de ações autônomas com dinheiro; acima dele, vão para o nível 1. null = sem freio.
+  // Rede de segurança das regras sem teto: teto diário em R$ das ações "sem teto" (direito comprovado por
+  // sistema) executadas no nível 0; a que passaria do teto vai para o nível 1. null = sem freio.
   freioDiarioRs: number | null;
   // Probabilidade inicial de a reclamação não proceder sem nenhum sinal (HIPÓTESE; vigente 0,05).
   pSemSinal: number;
+
+  // Princípio (docs/decisoes.md, seção 5): direito comprovado por sistema → nível 0 sem teto em R$
+  // (até o valor do pedido); direito que depende de declaração do cliente → fórmula de custo.
+  // Cancelamento/arrependimento antes da separação (ERP): cancelar_pedido + reembolso integral no nível 0.
+  cancelamentoAntesSeparacaoNivel0: boolean;
+  // Atraso > 7 dias úteis ou extravio (portal/ERP): reenvio ou reembolso no nível 0, até o valor do pedido.
+  atrasoComprovadoNivel0: boolean;
+  // Troca de fragrância em até 30 dias e sem troca anterior no pedido: troca com coleta reversa no nível 0;
+  // o novo item só sai depois de o CD conferir a devolução (até 20% usado).
+  trocaFragranciaNivel0: boolean;
+  // Reclame Aqui: a ação segue a regra do motivo; só a resposta pública (responder_cliente) exige aprovação.
+  reclameAquiSeparaResposta: boolean;
 }
 
 export const CENARIO_VIGENTE: CenarioPolitica = {
@@ -101,18 +114,28 @@ export const CENARIO_VIGENTE: CenarioPolitica = {
   hashesBloqueados: new Set(),
   freioDiarioRs: null,
   pSemSinal: 0.05,
+  cancelamentoAntesSeparacaoNivel0: false,
+  atrasoComprovadoNivel0: false,
+  trocaFragranciaNivel0: false,
+  reclameAquiSeparaResposta: false,
 };
 
-// Recomendado pela simulação de autonomia (cenário 6b; docs/decisoes.md, seção 4): maior autonomia com
-// saldo líquido positivo com p sem sinal em 0,02, 0,05 e 0,10.
+// Padrão (docs/decisoes.md, seções 4 e 5): limite de reenvio R$ 300 (mesmo efeito do 500 na simulação,
+// menor risco), auditoria 10%, fotos bloqueadas, brinde sem foto desligado (piorou na simulação),
+// direito comprovado por sistema no nível 0 e freio de R$ 3.000/dia nas ações sem teto.
 export const CENARIO_PADRAO: CenarioPolitica = {
   ...CENARIO_VIGENTE,
-  nome: "padrao_6b_limite_500",
-  limiteReenvioRs: 500,
+  nome: "padrao",
+  limiteReenvioRs: 300,
   auditoriaAmostraPct: 10,
   estornoDuplicidadeSemTeto: true,
-  brindeSemFoto: true,
+  brindeSemFoto: false,
   bloquearFotosConfirmadas: true,
+  cancelamentoAntesSeparacaoNivel0: true,
+  atrasoComprovadoNivel0: true,
+  trocaFragranciaNivel0: true,
+  reclameAquiSeparaResposta: true,
+  freioDiarioRs: 3000,
 };
 
 // Mensagem neutra ao cliente quando o caso é sinalizado.
@@ -258,8 +281,20 @@ export const REGRAS = {
     texto: "Brinde de campanha faltante: reenvio sem exigir foto.",
   },
   freio: {
-    origem: "docs/decisoes.md › seção 4 (cenário: freio diário)",
-    texto: "Acima do teto diário em R$ de ações autônomas, as ações com dinheiro vão para o nível 1.",
+    origem: "docs/decisoes.md › seção 5 (freio diário das ações sem teto)",
+    texto: "Acima do teto diário em R$ das ações sem teto executadas no nível 0, a ação vai para o nível 1.",
+  },
+  direito_comprovado: {
+    origem: "docs/decisoes.md › seção 5 (direito comprovado por sistema)",
+    texto: "Direito comprovado por sistema resolve no nível 0 sem teto em R$, até o valor do pedido; direito que depende de declaração do cliente segue a fórmula de custo.",
+  },
+  troca_coleta: {
+    origem: "docs/decisoes.md › seção 5 (troca de fragrância com coleta reversa)",
+    texto: "Troca em até 30 dias e sem troca anterior no pedido: coleta reversa no nível 0; o novo item só sai depois de o CD conferir até 20% de uso.",
+  },
+  reclame_aqui_resposta: {
+    origem: "docs/decisoes.md › seção 5 (Reclame Aqui: ação e resposta separadas)",
+    texto: "No Reclame Aqui a ação segue a regra do motivo; só a resposta pública exige aprovação.",
   },
   auditoria: {
     origem: "docs/decisoes.md › seção 4 (cenário: auditoria por amostra)",

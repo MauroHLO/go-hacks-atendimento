@@ -132,10 +132,10 @@ describe("limites (valor_max_sem_aprovacao_rs)", () => {
     expect(!r.ok && r.erro).toContain(PRECISA_APROVACAO);
   });
 
-  it("cenário padrão (6b): reenvio até R$ 500 sem aprovação; reembolso continua R$ 100", () => {
+  it("cenário padrão: reenvio até R$ 300 sem aprovação; reembolso comum continua R$ 100", () => {
     const s = new Simulador({ base: base(), cenario: CENARIO_PADRAO });
-    expect(F.reenviar_produto(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 500, motivo: "avaria" }).ok).toBe(true);
-    expect(F.reenviar_produto(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 500.01, motivo: "avaria" }).ok).toBe(false);
+    expect(F.reenviar_produto(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 300, motivo: "avaria" }).ok).toBe(true);
+    expect(F.reenviar_produto(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 300.01, motivo: "avaria" }).ok).toBe(false);
     expect(F.reembolsar(s, { conversation_id: "AT900001", order_id: "GCH900001", valor: 100.01, motivo: "atraso" }).ok).toBe(false);
   });
 
@@ -190,6 +190,50 @@ describe("limites (valor_max_sem_aprovacao_rs)", () => {
 
   it("valor negativo é recusado", () => {
     expect(F.reenviar_produto(sim(), { conversation_id: "AT900001", order_id: "GCH900001", valor: -1, motivo: "x" }).ok).toBe(false);
+  });
+});
+
+describe("direito comprovado por sistema (sem teto, até o valor do pedido)", () => {
+  const atrasado = pedido("GCH900003", { data_prometida: "2026-10-15", valor: 420 }); // 11 dias úteis até 02/11
+  const noPrazo = pedido("GCH900004", { data_prometida: "2026-10-30", valor: 420 });
+  const extraviado = pedido("GCH900005", { status_entrega: "extraviado", valor: 380 });
+  const naoSeparado = pedido("GCH900006", { status_entrega: "aguardando_separacao", data_separacao: null, valor: 640 });
+  const b = () => base({ pedidos: [atrasado, noPrazo, extraviado, naoSeparado, pedido("GCH900001")] });
+  const s = (cenario = CENARIO_PADRAO) => new Simulador({ base: b(), cenario, agora: () => "2026-11-02 09:00:00" });
+  const p = (order_id: string, valor: number, motivo: string) => ({ conversation_id: "AT900001", order_id, valor, motivo });
+
+  it("atraso > 7 dias úteis: reenvio e reembolso sem teto até o valor do pedido", () => {
+    expect(F.reenviar_produto(s(), p("GCH900003", 420, "atraso")).ok).toBe(true);
+    expect(F.reembolsar(s(), p("GCH900003", 420, "atraso")).ok).toBe(true);
+    const acima = F.reembolsar(s(), p("GCH900003", 420.01, "atraso"));
+    expect(acima).toMatchObject({ ok: false, precisaAprovacaoDe: "supervisor" });
+  });
+
+  it("extravio: sem teto", () => {
+    expect(F.reembolsar(s(), p("GCH900005", 380, "atraso")).ok).toBe(true);
+  });
+
+  it("atraso não comprovado nos dados: vale o teto do atendente, mesmo com o motivo declarado", () => {
+    expect(F.reembolsar(s(), p("GCH900004", 420, "atraso")).ok).toBe(false);
+    expect(F.reembolsar(s(), p("GCH900004", 100, "atraso")).ok).toBe(true);
+  });
+
+  it("cancelamento antes da separação: cancelar_pedido + reembolso integral sem teto", () => {
+    const sim = s();
+    expect(F.cancelar_pedido(sim, { conversation_id: "AT900001", order_id: "GCH900006" }).ok).toBe(true);
+    expect(F.reembolsar(sim, p("GCH900006", 640, "cancelamento")).ok).toBe(true);
+    expect(F.reembolsar(s(), p("GCH900001", 250, "cancelamento")).ok).toBe(false); // já separado: teto de R$ 100
+  });
+
+  it("cenário vigente: as mesmas ações voltam ao teto do atendente", () => {
+    expect(F.reembolsar(s(CENARIO_VIGENTE), p("GCH900003", 420, "atraso")).ok).toBe(false);
+    expect(F.reembolsar(s(CENARIO_VIGENTE), p("GCH900006", 640, "cancelamento")).ok).toBe(false);
+  });
+
+  it("troca com coleta reversa: o novo item fica aguardando a conferência do CD", () => {
+    const r = F.trocar_produto(s(), { conversation_id: "AT900001", order_id: "GCH900001", valor: 150, coleta_reversa: true });
+    expect(r).toMatchObject({ ok: true, dados: { coletaReversa: true, envioNovoItem: F.ENVIO_CONDICIONADO_CD } });
+    expect(F.trocar_produto(s(), { conversation_id: "AT900001", order_id: "GCH900001", valor: 200.01, coleta_reversa: true }).ok).toBe(false);
   });
 });
 

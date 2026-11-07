@@ -13,6 +13,7 @@ import {
   LIMITE_ATENDENTE_REENVIO_RS,
   LIMITE_ATENDENTE_TROCA_RS,
   MAX_TROCAS_FRAGRANCIA_POR_PEDIDO,
+  MAX_USO_FRAGRANCIA_PCT,
   MENSAGEM_EM_ANALISE,
   PRAZO_ARREPENDIMENTO_DIAS,
   PRAZO_RECLAMACAO_DIAS,
@@ -117,12 +118,15 @@ export interface EntradaPolitica {
   mencaoSaude?: boolean; // o texto do cliente fala de saúde ou reação (lib/agent/sinais)
   cenario?: CenarioPolitica; // padrão: CENARIO_PADRAO
   hashesFotos?: readonly string[]; // hash_perceptual das fotos da conversa (lista de bloqueio)
-  gastoAutonomoHojeRs?: number; // R$ já gastos hoje em ações autônomas (freio diário)
+  gastoAutonomoHojeRs?: number; // R$ já gastos hoje em ações sem teto no nível 0 (freio diário)
   chaveAmostra?: string; // ex.: conversation_id; sorteio determinístico da auditoria
 }
 
 export interface DecisaoPolitica {
-  nivel: Nivel;
+  nivel: Nivel; // = nivelAcao
+  nivelAcao: Nivel; // nível da ação (o que o agente executa)
+  aprovacaoResposta: boolean; // a resposta ao cliente precisa de aprovação (Reclame Aqui: resposta pública)
+  acaoSemTeto?: boolean; // ação de direito comprovado por sistema executada no nível 0 (conta no freio diário)
   acao: string;
   ferramenta: Ferramenta;
   ferramentasAdicionais?: Ferramenta[]; // alternativa à escolha do cliente ou ação obrigatória junto
@@ -150,6 +154,7 @@ interface Parcial {
   ferramentasAdicionais?: Ferramenta[];
   motivos: string[];
   mensagemCliente?: string;
+  semTeto?: boolean; // direito comprovado por sistema: sem teto em R$, até o valor do pedido
 }
 
 function d(
@@ -158,7 +163,7 @@ function d(
   ferramenta: Ferramenta,
   explicacao: string,
   regra: IdRegra,
-  extra: Partial<Pick<Parcial, "ferramentasAdicionais" | "mensagemCliente">> = {},
+  extra: Partial<Pick<Parcial, "ferramentasAdicionais" | "mensagemCliente" | "semTeto">> = {},
 ): Parcial {
   return { nivel, acao, ferramenta, motivos: [`${explicacao} ${cita(regra)}`], ...extra };
 }
@@ -224,22 +229,22 @@ function foraDaTabela(o_que: string): Parcial {
   return d(1, "revisao_humana", "encerrar_conversa", `${o_que}: sem regra de autonomia, uma pessoa revisa.`, "fora_da_tabela");
 }
 
-function regraAtraso(f: FatosPedido): Parcial {
-  if (f.statusEntrega === "extraviado") {
-    return d(1, "reenvio_ou_reembolso", "reenviar_produto", "Extravio confirmado: reenvio ou reembolso, à escolha do cliente.", "atraso", {
+function regraAtraso(f: FatosPedido, cenario: CenarioPolitica): Parcial {
+  // Atraso acima de 7 dias úteis ou extravio é comprovado pelo portal/ERP: com a regra ligada, nível 0
+  // sem teto (até o valor do pedido), reenvio ou reembolso à escolha do cliente.
+  const comprovado = (texto: string): Parcial => {
+    const n: Nivel = cenario.atrasoComprovadoNivel0 ? 0 : 1;
+    const r = d(n, "reenvio_ou_reembolso", "reenviar_produto", `${texto}: reenvio ou reembolso, à escolha do cliente.`, "atraso", {
       ferramentasAdicionais: ["reembolsar"],
+      semTeto: n === 0,
     });
-  }
+    if (n === 0) r.motivos.push(`Comprovado por sistema: nível 0 até o valor do pedido. ${cita("direito_comprovado")}`);
+    return r;
+  };
+  if (f.statusEntrega === "extraviado") return comprovado("Extravio confirmado");
   if (f.diasUteisAtraso === undefined) return foraDaTabela("Atraso sem dias úteis de atraso conhecidos");
   if (f.diasUteisAtraso > ATRASO_LIMITE_DIAS_UTEIS) {
-    return d(
-      1,
-      "reenvio_ou_reembolso",
-      "reenviar_produto",
-      `Atraso de ${f.diasUteisAtraso} dias úteis, acima de ${ATRASO_LIMITE_DIAS_UTEIS}: reenvio ou reembolso, à escolha do cliente.`,
-      "atraso",
-      { ferramentasAdicionais: ["reembolsar"] },
-    );
+    return comprovado(`Atraso de ${f.diasUteisAtraso} dias úteis, acima de ${ATRASO_LIMITE_DIAS_UTEIS}`);
   }
   if (f.diasUteisAtraso <= 0) {
     return d(0, "informar_status", "informar_status", "Pedido ainda dentro do prazo prometido: informa status e previsão.", "rastreio");
@@ -253,9 +258,9 @@ function regraAtraso(f: FatosPedido): Parcial {
   );
 }
 
-function regraRastreio(f: FatosPedido): Parcial {
+function regraRastreio(f: FatosPedido, cenario: CenarioPolitica): Parcial {
   // Fora do prazo, rastreio é atraso: vale a regra de atraso.
-  if (f.statusEntrega === "extraviado" || (f.diasUteisAtraso ?? 0) > ATRASO_LIMITE_DIAS_UTEIS) return regraAtraso(f);
+  if (f.statusEntrega === "extraviado" || (f.diasUteisAtraso ?? 0) > ATRASO_LIMITE_DIAS_UTEIS) return regraAtraso(f, cenario);
   if ((f.diasUteisSemAtualizacao ?? 0) >= RASTREIO_PARADO_DIAS_UTEIS) {
     return d(
       0,
@@ -265,7 +270,7 @@ function regraRastreio(f: FatosPedido): Parcial {
       "rastreio",
     );
   }
-  if ((f.diasUteisAtraso ?? 0) > 0) return regraAtraso(f);
+  if ((f.diasUteisAtraso ?? 0) > 0) return regraAtraso(f, cenario);
   if (f.statusEntrega === "em_transito" || f.statusEntrega === "aguardando_separacao") {
     return d(0, "informar_status", "informar_status", "Pedido dentro do prazo: informa status e previsão.", "rastreio");
   }
@@ -339,7 +344,9 @@ function regraCobranca(e: EntradaPolitica): Parcial {
     return d(1, "verificar_pagamento", "verificar_pagamento", "Duplicidade não confirmada no gateway ou já estornada: uma pessoa verifica.", "fora_da_tabela");
   }
   if ((e.cenario ?? CENARIO_PADRAO).estornoDuplicidadeSemTeto) {
-    return d(0, "estorno", "reembolsar", `Duplicidade comprovada no gateway e sem estorno: estorna ${reais(e.valorAcao)} sem teto.`, "estorno_sem_teto");
+    return d(0, "estorno", "reembolsar", `Duplicidade comprovada no gateway e sem estorno: estorna ${reais(e.valorAcao)} sem teto.`, "estorno_sem_teto", {
+      semTeto: true,
+    });
   }
   if (e.valorAcao > LIMITE_ATENDENTE_REEMBOLSO_RS) {
     return d(1, "estorno", "reembolsar", `Duplicidade confirmada; estorno de ${reais(e.valorAcao)} acima de ${reais(LIMITE_ATENDENTE_REEMBOLSO_RS)}: supervisor aprova.`, "cobranca_duplicada");
@@ -360,8 +367,18 @@ function regraEndereco(f: FatosPedido): Parcial {
   return foraDaTabela(`Alteração de endereço com pedido "${f.statusEntrega}"`);
 }
 
-function regraCancelamento(f: FatosPedido): Parcial {
+function regraCancelamento(e: EntradaPolitica): Parcial {
+  const f = e.fatos;
+  const cenario = e.cenario ?? CENARIO_PADRAO;
   if (f.statusEntrega === "aguardando_separacao" && f.separado === false) {
+    if (cenario.cancelamentoAntesSeparacaoNivel0) {
+      const r = d(0, "cancelar_e_reembolsar", "cancelar_pedido", "Antes da separação (ERP): cancela o pedido com reembolso integral.", "cancelamento", {
+        ferramentasAdicionais: ["reembolsar"],
+        semTeto: true,
+      });
+      r.motivos.push(`Comprovado por sistema: nível 0 até o valor do pedido. ${cita("direito_comprovado")}`);
+      return r;
+    }
     return d(1, "cancelar", "cancelar_pedido", "Antes da separação: prepara o cancelamento com estorno integral.", "cancelamento");
   }
   if (f.statusEntrega === "entregue" && f.diasDesdeRecebimento !== undefined) {
@@ -372,7 +389,19 @@ function regraCancelamento(f: FatosPedido): Parcial {
   return d(1, "revisao_cancelamento", "cancelar_pedido", `Cancelamento com pedido "${f.statusEntrega}": uma pessoa decide.`, "cancelamento");
 }
 
-function regraFragrancia(f: FatosPedido): Parcial {
+function regraFragrancia(e: EntradaPolitica): Parcial {
+  const f = e.fatos;
+  const cenario = e.cenario ?? CENARIO_PADRAO;
+  const dentroDoPrazo = f.statusEntrega === "entregue" && f.diasDesdeRecebimento !== undefined && f.diasDesdeRecebimento <= PRAZO_TROCA_FRAGRANCIA_DIAS;
+  if (cenario.trocaFragranciaNivel0 && dentroDoPrazo && f.trocasNoPedido === 0) {
+    return d(
+      0,
+      "troca_com_coleta_reversa",
+      "trocar_produto",
+      `Recebido há ${f.diasDesdeRecebimento} dias e sem troca anterior no pedido: troca com coleta reversa; o novo item só sai depois de o CD conferir até ${MAX_USO_FRAGRANCIA_PCT}% de uso.`,
+      "troca_coleta",
+    );
+  }
   if ((f.trocasNoPedido ?? 0) >= MAX_TROCAS_FRAGRANCIA_POR_PEDIDO) {
     return d(1, "negar_troca", "negar_por_politica", `Pedido já teve ${f.trocasNoPedido} troca: limite de ${MAX_TROCAS_FRAGRANCIA_POR_PEDIDO}.`, "troca_fragrancia");
   }
@@ -396,9 +425,9 @@ function porMotivo(e: EntradaPolitica): Parcial {
   const f = e.fatos;
   switch (e.motivo) {
     case "rastreio":
-      return regraRastreio(f);
+      return regraRastreio(f, e.cenario ?? CENARIO_PADRAO);
     case "atraso":
-      return regraAtraso(f);
+      return regraAtraso(f, e.cenario ?? CENARIO_PADRAO);
     case "avaria":
     case "item_faltante":
     case "brinde":
@@ -409,9 +438,9 @@ function porMotivo(e: EntradaPolitica): Parcial {
     case "endereco":
       return regraEndereco(f);
     case "cancelamento":
-      return regraCancelamento(f);
+      return regraCancelamento(e);
     case "troca_fragrancia":
-      return regraFragrancia(f);
+      return regraFragrancia(e);
     case "duvida_produto":
       return regraDuvida(e);
     case "cupom":
@@ -478,22 +507,33 @@ export function decidirNivel(entrada: EntradaPolitica): DecisaoPolitica {
   let nivel = r.nivel;
   const motivos = [...r.motivos];
 
-  // Limite do atendente vale para qualquer motivo: acima dele, pelo menos nível 1.
-  // Exceção do cenário: estorno de duplicidade comprovada sem teto.
-  const semTeto = entrada.motivo === "cobranca_duplicada" && cenario.estornoDuplicidadeSemTeto && r.ferramenta === "reembolsar";
-  const limite = semTeto ? null : limiteDoAtendente(r.ferramenta, cenario);
-  if (limite !== null && entrada.valorAcao > limite && nivel === 0) {
-    nivel = 1;
-    motivos.push(`Valor ${reais(entrada.valorAcao)} acima do limite do atendente (${reais(limite)}): supervisor aprova. ${cita("limites")}`);
+  // Direito comprovado por sistema: sem teto em R$, mas nunca acima do valor do pedido.
+  // Demais ações: limite do atendente; acima dele, pelo menos nível 1.
+  const semTeto = r.semTeto === true && nivel === 0;
+  if (semTeto) {
+    if (entrada.valorAcao > entrada.fatos.valorPedido) {
+      nivel = 1;
+      motivos.push(`Valor ${reais(entrada.valorAcao)} acima do valor do pedido (${reais(entrada.fatos.valorPedido)}): supervisor aprova. ${cita("direito_comprovado")}`);
+    }
+  } else {
+    const limite = limiteDoAtendente(r.ferramenta, cenario);
+    if (limite !== null && entrada.valorAcao > limite && nivel === 0) {
+      nivel = 1;
+      motivos.push(`Valor ${reais(entrada.valorAcao)} acima do limite do atendente (${reais(limite)}): supervisor aprova. ${cita("limites")}`);
+    }
   }
-  // Freio diário: ação autônoma com dinheiro que passaria do teto do dia vai para o nível 1.
+  // Freio diário (rede de segurança das ações sem teto): a que passaria do teto do dia vai para o nível 1.
   const gasto = entrada.gastoAutonomoHojeRs ?? 0;
-  if (nivel === 0 && cenario.freioDiarioRs !== null && entrada.valorAcao > 0 && gasto + entrada.valorAcao > cenario.freioDiarioRs) {
+  if (semTeto && nivel === 0 && cenario.freioDiarioRs !== null && entrada.valorAcao > 0 && gasto + entrada.valorAcao > cenario.freioDiarioRs) {
     nivel = 1;
-    motivos.push(`Freio diário: ${reais(gasto)} já gastos hoje + ${reais(entrada.valorAcao)} passam de ${reais(cenario.freioDiarioRs)}. ${cita("freio")}`);
+    motivos.push(`Freio diário: ${reais(gasto)} já executados hoje em ações sem teto + ${reais(entrada.valorAcao)} passam de ${reais(cenario.freioDiarioRs)}. ${cita("freio")}`);
   }
-  // Reclame Aqui: resposta pública, sempre pelo menos nível 1.
-  if (entrada.canal === "reclame_aqui" && nivel < 1) {
+  // Reclame Aqui: resposta pública. Vigente: a conversa inteira sobe para nível 1. Com a separação, a ação
+  // segue a regra do motivo e só a resposta (responder_cliente) precisa de aprovação.
+  const aprovacaoResposta = entrada.canal === "reclame_aqui";
+  if (aprovacaoResposta && cenario.reclameAquiSeparaResposta) {
+    motivos.push(`Reclame Aqui: a ação segue a regra do motivo; a resposta pública precisa de aprovação. ${cita("reclame_aqui_resposta")}`);
+  } else if (aprovacaoResposta && nivel < 1) {
     nivel = 1;
     motivos.push(`Reclame Aqui: a resposta é pública, uma pessoa aprova. ${cita("reclame_aqui")}`);
   }
@@ -505,13 +545,16 @@ export function decidirNivel(entrada: EntradaPolitica): DecisaoPolitica {
 
   const decisao: DecisaoPolitica = {
     nivel,
+    nivelAcao: nivel,
+    aprovacaoResposta,
     acao: r.acao,
     ferramenta: r.ferramenta,
     justificativa: motivos.join(" "),
   };
   if (r.ferramentasAdicionais) decisao.ferramentasAdicionais = r.ferramentasAdicionais;
   if (r.mensagemCliente) decisao.mensagemCliente = r.mensagemCliente;
-  if (nivel >= 1) decisao.precisaAprovacaoDe = "supervisor";
+  if (nivel >= 1 || aprovacaoResposta) decisao.precisaAprovacaoDe = "supervisor";
+  if (semTeto && nivel === 0) decisao.acaoSemTeto = true;
   // Auditoria por amostra: o caso de nível 0 executa e entra na fila de revisão posterior.
   if (nivel === 0 && cenario.auditoriaAmostraPct > 0 && entrada.chaveAmostra && sorteio(entrada.chaveAmostra) < cenario.auditoriaAmostraPct) {
     decisao.auditoriaPosterior = true;

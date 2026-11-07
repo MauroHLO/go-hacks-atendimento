@@ -481,24 +481,39 @@ describe("dias úteis", () => {
 // ---------- Cenário de política (docs/decisoes.md, seção 4) ----------
 
 describe("cenário: padrão recomendado pela simulação", () => {
-  it("é o 6b: limite de reenvio 500, auditoria 10%, estorno sem teto, brinde sem foto, fotos bloqueadas, sem freio, p 0,05", () => {
+  it("limite de reenvio 300, auditoria 10%, fotos bloqueadas, brinde sem foto desligado, direito comprovado no nível 0, freio R$ 3.000", () => {
     expect(CENARIO_PADRAO).toMatchObject({
-      limiteReenvioRs: 500,
+      limiteReenvioRs: 300,
       auditoriaAmostraPct: 10,
       estornoDuplicidadeSemTeto: true,
-      brindeSemFoto: true,
+      brindeSemFoto: false,
       bloquearFotosConfirmadas: true,
-      freioDiarioRs: null,
+      freioDiarioRs: 3000,
       pSemSinal: 0.05,
+      cancelamentoAntesSeparacaoNivel0: true,
+      atrasoComprovadoNivel0: true,
+      trocaFragranciaNivel0: true,
+      reclameAquiSeparaResposta: true,
     });
   });
   it("vigente reproduz politicas.csv", () => {
-    expect(CENARIO_VIGENTE).toMatchObject({ limiteReenvioRs: 200, auditoriaAmostraPct: 0, estornoDuplicidadeSemTeto: false, brindeSemFoto: false, freioDiarioRs: null, pSemSinal: 0.05 });
+    expect(CENARIO_VIGENTE).toMatchObject({
+      limiteReenvioRs: 200,
+      auditoriaAmostraPct: 0,
+      estornoDuplicidadeSemTeto: false,
+      brindeSemFoto: false,
+      freioDiarioRs: null,
+      pSemSinal: 0.05,
+      cancelamentoAntesSeparacaoNivel0: false,
+      atrasoComprovadoNivel0: false,
+      trocaFragranciaNivel0: false,
+      reclameAquiSeparaResposta: false,
+    });
   });
   it("sem cenário na entrada vale o padrão", () => {
     const { cenario: _c, ...semCenario } = entrada("avaria", { ...ELEGIVEL, valorPedido: 100 }, { valorAcao: 300 });
     void _c;
-    expect(decidirNivel(semCenario).nivel).toBe(0); // 300 <= 500 do padrão
+    expect(decidirNivel(semCenario).nivel).toBe(0); // 300 <= 300 do padrão
   });
 });
 
@@ -542,10 +557,16 @@ describe("cenário: auditoria por amostra", () => {
 describe("cenário: estorno de duplicidade sem teto", () => {
   const confirmada = { duplicidadeConfirmadaGateway: true, duplicidadeJaEstornada: false };
   const cen = { ...CENARIO_VIGENTE, estornoDuplicidadeSemTeto: true };
-  it("ligado: R$ 450 comprovado no gateway vai no nível 0", () => {
-    const r = decidirNivel(entrada("cobranca_duplicada", confirmada, { valorAcao: 450, cenario: cen }));
-    expect(r).toMatchObject({ nivel: 0, ferramenta: "reembolsar" });
+  it("ligado: R$ 450 comprovado no gateway vai no nível 0 (pedido de R$ 450)", () => {
+    const r = decidirNivel(entrada("cobranca_duplicada", { ...confirmada, valorPedido: 450 }, { valorAcao: 450, cenario: cen }));
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "reembolsar", acaoSemTeto: true });
     expect(r.justificativa).toContain("estorno de duplicidade sem teto");
+  });
+  it("ligado: acima do valor do pedido vai para nível 1", () => {
+    const r = decidirNivel(entrada("cobranca_duplicada", { ...confirmada, valorPedido: 450 }, { valorAcao: 450.01, cenario: cen }));
+    expect(r.nivel).toBe(1);
+    expect(r.acaoSemTeto).toBeUndefined();
+    expect(r.justificativa).toContain("acima do valor do pedido");
   });
   it("ligado, mas sem comprovação no gateway: continua nível 1", () => {
     expect(decidirNivel(entrada("cobranca_duplicada", { duplicidadeConfirmadaGateway: false }, { valorAcao: 450, cenario: cen })).nivel).toBe(1);
@@ -589,19 +610,23 @@ describe("cenário: fotos bloqueadas", () => {
   });
 });
 
-describe("cenário: freio diário", () => {
-  const cen = { ...CENARIO_VIGENTE, freioDiarioRs: 1000 };
+describe("cenário: freio diário (só ações sem teto)", () => {
+  const confirmada = { duplicidadeConfirmadaGateway: true, duplicidadeJaEstornada: false, valorPedido: 500 };
+  const cen = { ...CENARIO_VIGENTE, estornoDuplicidadeSemTeto: true, freioDiarioRs: 1000 };
   it("até o teto exato: nível 0; um centavo acima: nível 1 com a regra citada", () => {
-    expect(evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 920, cenario: cen }).nivel).toBe(0);
-    const r = evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 920.01, cenario: cen });
+    expect(decidirNivel(entrada("cobranca_duplicada", confirmada, { valorAcao: 80, gastoAutonomoHojeRs: 920, cenario: cen })).nivel).toBe(0);
+    const r = decidirNivel(entrada("cobranca_duplicada", confirmada, { valorAcao: 80, gastoAutonomoHojeRs: 920.01, cenario: cen }));
     expect(r.nivel).toBe(1);
     expect(r.justificativa).toContain("Freio diário");
+  });
+  it("ação pela fórmula (com teto do atendente) não é freada", () => {
+    expect(evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 1e9, cenario: cen }).nivel).toBe(0);
   });
   it("ação sem dinheiro não é freada", () => {
     expect(decidirNivel(entrada("rastreio", { diasUteisAtraso: 0 }, { gastoAutonomoHojeRs: 99999, cenario: cen })).nivel).toBe(0);
   });
   it("desligado (null): sem teto", () => {
-    expect(evidencia("avaria", {}, { valorAcao: 80, gastoAutonomoHojeRs: 1e9 }).nivel).toBe(0);
+    expect(decidirNivel(entrada("cobranca_duplicada", confirmada, { valorAcao: 80, gastoAutonomoHojeRs: 1e9, cenario: { ...cen, freioDiarioRs: null } })).nivel).toBe(0);
   });
 });
 
@@ -622,5 +647,117 @@ describe("cenário: p inicial sem sinal", () => {
     for (const ruim of [{ pSemSinal: 1.5 }, { auditoriaAmostraPct: 101 }, { limiteReenvioRs: -1 }, { freioDiarioRs: -5 }]) {
       expect(() => decidirNivel(entrada("cupom", {}, { cenario: { ...CENARIO_VIGENTE, ...ruim } }))).toThrow(RangeError);
     }
+  });
+});
+
+// ---------- Direito comprovado por sistema (docs/decisoes.md, seção 5) ----------
+
+describe("princípio: cancelamento antes da separação", () => {
+  const cen = { ...CENARIO_VIGENTE, cancelamentoAntesSeparacaoNivel0: true };
+  const antes = { statusEntrega: "aguardando_separacao" as const, separado: false, valorPedido: 899 };
+  it("antes da separação (ERP): nível 0, cancelar_pedido + reembolso integral, sem teto até o valor do pedido", () => {
+    const r = decidirNivel(entrada("cancelamento", antes, { valorAcao: 899, cenario: cen }));
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "cancelar_pedido", ferramentasAdicionais: ["reembolsar"], acaoSemTeto: true });
+    expect(r.precisaAprovacaoDe).toBeUndefined();
+    expect(r.justificativa).toContain("direito comprovado por sistema");
+  });
+  it("reembolso acima do valor do pedido: nível 1", () => {
+    expect(decidirNivel(entrada("cancelamento", antes, { valorAcao: 899.01, cenario: cen })).nivel).toBe(1);
+  });
+  it("depois da separação continua nível 1", () => {
+    expect(decidirNivel(entrada("cancelamento", { statusEntrega: "aguardando_separacao", separado: true }, { valorAcao: 50, cenario: cen })).nivel).toBe(1);
+    expect(decidirNivel(entrada("cancelamento", { statusEntrega: "em_transito" }, { valorAcao: 50, cenario: cen })).nivel).toBe(1);
+    expect(decidirNivel(entrada("cancelamento", { statusEntrega: "entregue", diasDesdeRecebimento: 3 }, { valorAcao: 50, cenario: cen })).nivel).toBe(1);
+  });
+  it("separação desconhecida: nível 1 (o motor não supõe)", () => {
+    expect(decidirNivel(entrada("cancelamento", { statusEntrega: "aguardando_separacao" }, { valorAcao: 50, cenario: cen })).nivel).toBe(1);
+  });
+  it("desligado (vigente): nível 1", () => {
+    expect(decidirNivel(entrada("cancelamento", antes, { valorAcao: 50 })).nivel).toBe(1);
+  });
+});
+
+describe("princípio: atraso comprovado", () => {
+  const cen = { ...CENARIO_VIGENTE, atrasoComprovadoNivel0: true };
+  it("8 dias úteis: nível 0, reenvio ou reembolso, sem teto até o valor do pedido", () => {
+    const r = decidirNivel(entrada("atraso", { diasUteisAtraso: 8, valorPedido: 650 }, { valorAcao: 650, cenario: cen }));
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "reenviar_produto", ferramentasAdicionais: ["reembolsar"], acaoSemTeto: true });
+  });
+  it("extravio confirmado: nível 0", () => {
+    expect(decidirNivel(entrada("atraso", { statusEntrega: "extraviado", valorPedido: 120 }, { valorAcao: 120, cenario: cen })).nivel).toBe(0);
+  });
+  it("7 dias úteis (borda): continua abrindo chamado", () => {
+    expect(decidirNivel(entrada("atraso", { diasUteisAtraso: 7 }, { cenario: cen })).ferramenta).toBe("abrir_chamado_transportadora");
+  });
+  it("valor acima do valor do pedido: nível 1", () => {
+    expect(decidirNivel(entrada("atraso", { diasUteisAtraso: 9, valorPedido: 120 }, { valorAcao: 120.01, cenario: cen })).nivel).toBe(1);
+  });
+  it("rastreio de pedido com atraso comprovado segue a mesma regra", () => {
+    expect(decidirNivel(entrada("rastreio", { diasUteisAtraso: 12, valorPedido: 120 }, { valorAcao: 120, cenario: cen })).nivel).toBe(0);
+  });
+  it("desligado (vigente): nível 1", () => {
+    expect(decidirNivel(entrada("atraso", { diasUteisAtraso: 8 }, { valorAcao: 50 })).nivel).toBe(1);
+  });
+});
+
+describe("princípio: troca de fragrância com coleta reversa", () => {
+  const cen = { ...CENARIO_VIGENTE, trocaFragranciaNivel0: true };
+  const ok = { statusEntrega: "entregue" as const, diasDesdeRecebimento: 30, trocasNoPedido: 0, valorPedido: 150 };
+  it("até 30 dias (borda) e sem troca anterior: nível 0, troca com coleta reversa e conferência do CD", () => {
+    const r = decidirNivel(entrada("troca_fragrancia", ok, { valorAcao: 150, cenario: cen }));
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "trocar_produto", acao: "troca_com_coleta_reversa" });
+    expect(r.justificativa).toContain("CD conferir até 20%");
+  });
+  it("31 dias, troca anterior ou trocas desconhecidas: nível 1", () => {
+    expect(decidirNivel(entrada("troca_fragrancia", { ...ok, diasDesdeRecebimento: 31 }, { valorAcao: 150, cenario: cen })).nivel).toBe(1);
+    expect(decidirNivel(entrada("troca_fragrancia", { ...ok, trocasNoPedido: 1 }, { valorAcao: 150, cenario: cen })).nivel).toBe(1);
+    expect(decidirNivel(entrada("troca_fragrancia", { ...ok, trocasNoPedido: undefined }, { valorAcao: 150, cenario: cen })).nivel).toBe(1);
+  });
+  it("troca não é direito sem teto: acima de R$ 200 (limite de troca) vai para nível 1", () => {
+    expect(decidirNivel(entrada("troca_fragrancia", { ...ok, valorPedido: 260 }, { valorAcao: 260, cenario: cen })).nivel).toBe(1);
+  });
+  it("desligado (vigente): nível 1", () => {
+    expect(decidirNivel(entrada("troca_fragrancia", ok, { valorAcao: 150 })).nivel).toBe(1);
+  });
+});
+
+describe("princípio: Reclame Aqui separa ação e resposta", () => {
+  const cen = { ...CENARIO_VIGENTE, reclameAquiSeparaResposta: true };
+  it("ligado: a ação segue o motivo (nível 0) e só a resposta precisa de aprovação", () => {
+    const r = decidirNivel(entrada("cupom", {}, { canal: "reclame_aqui", cenario: cen }));
+    expect(r).toMatchObject({ nivel: 0, nivelAcao: 0, aprovacaoResposta: true, precisaAprovacaoDe: "supervisor" });
+    expect(r.justificativa).toContain("Reclame Aqui: ação e resposta separadas");
+  });
+  it("ligado: motivo de nível 1 continua nível 1 na ação", () => {
+    expect(decidirNivel(entrada("cancelamento", { separado: true }, { canal: "reclame_aqui", cenario: cen }))).toMatchObject({ nivelAcao: 1, aprovacaoResposta: true });
+  });
+  it("vigente: a conversa inteira sobe para nível 1", () => {
+    expect(decidirNivel(entrada("cupom", {}, { canal: "reclame_aqui" }))).toMatchObject({ nivel: 1, nivelAcao: 1, aprovacaoResposta: true });
+  });
+  it("fora do Reclame Aqui não há aprovação de resposta", () => {
+    expect(decidirNivel(entrada("cupom", {}, { cenario: cen }))).toMatchObject({ nivelAcao: 0, aprovacaoResposta: false });
+  });
+});
+
+describe("padrão: os princípios juntos", () => {
+  it("atraso comprovado no Reclame Aqui: ação no nível 0 e resposta aprovada", () => {
+    const r = decidirNivel({
+      motivo: "atraso",
+      confiancaClassificador: 0.9,
+      fatos: { statusEntrega: "em_transito", valorPedido: 220, diasUteisAtraso: 10 },
+      valorAcao: 220,
+      canal: "reclame_aqui",
+    });
+    expect(r).toMatchObject({ nivelAcao: 0, aprovacaoResposta: true, acaoSemTeto: true, ferramenta: "reenviar_produto" });
+  });
+  it("freio de R$ 3.000 do padrão segura a ação sem teto que passaria do dia", () => {
+    const fatos = { statusEntrega: "aguardando_separacao" as const, separado: false, valorPedido: 400 };
+    expect(decidirNivel({ motivo: "cancelamento", confiancaClassificador: 0.9, fatos, valorAcao: 400, canal: "email", gastoAutonomoHojeRs: 2600 }).nivel).toBe(0);
+    expect(decidirNivel({ motivo: "cancelamento", confiancaClassificador: 0.9, fatos, valorAcao: 400, canal: "email", gastoAutonomoHojeRs: 2600.01 }).nivel).toBe(1);
+  });
+  it("confiança abaixo de 0,7 sobe a ação sem teto para nível 1", () => {
+    const fatos = { statusEntrega: "aguardando_separacao" as const, separado: false, valorPedido: 400 };
+    const r = decidirNivel({ motivo: "cancelamento", confiancaClassificador: 0.69, fatos, valorAcao: 400, canal: "email" });
+    expect(r.nivel).toBe(1);
   });
 });
