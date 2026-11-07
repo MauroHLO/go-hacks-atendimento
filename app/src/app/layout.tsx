@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Agente de atendimento: Gocase e GoBeauté",
-  description: "GoHacks Talent 2026: o modelo classifica e redige; o código decide o que se resolve sozinho e o que precisa de uma pessoa.",
+  title: "Ponta Firme",
+  description: "Ponta Firme: o agente de atendimento que resolve sozinho onde é seguro e chama uma pessoa só onde ela faz diferença. GoHacks Talent 2026, Gocase e GoBeauté.",
   robots: { index: false, follow: false },
 };
 

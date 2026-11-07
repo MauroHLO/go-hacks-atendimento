@@ -151,7 +151,8 @@ describe("histórico do cliente", () => {
 });
 
 describe("produto da foto x pedido", () => {
-  const cmp = (d: string, itens: Pick<Item, "descricao" | "personalizacao">[] = ITENS) => compararFotoComPedido(d, PEDIDO, itens, CATALOGO);
+  const cmp = (d: string, itens: Pick<Item, "descricao" | "personalizacao">[] = ITENS) => compararFotoComPedido(d, PEDIDO, itens, CATALOGO)?.motivo ?? null;
+  const regra = (d: string, itens: Pick<Item, "descricao" | "personalizacao">[] = ITENS) => compararFotoComPedido(d, PEDIDO, itens, CATALOGO);
 
   it("produto do pedido citado pelo nome: compatível", () => {
     expect(cmp("Copo Teste 600ml Personalizado Nome com a pintura descascada.")).toBeNull();
@@ -175,8 +176,22 @@ describe("produto da foto x pedido", () => {
     expect(cmp("Copo térmico de inox com a tampa quebrada.")).toBeNull();
   });
 
-  it("mesma categoria com estampa e pedido personalizado por nome: incompatível", () => {
+  it("mesma categoria com estampa e pedido personalizado por nome: incompatível, mas regra 4 e fraca", () => {
     expect(cmp("Copo térmico estampado com a tampa quebrada.")).toContain("personalizado por nome");
+    expect(regra("Copo térmico estampado com a tampa quebrada.")).toMatchObject({ regra: 4, forte: false });
+  });
+
+  it("regras 1 a 3 continuam fortes (inclusive categoria ausente, como copo × garrafa)", () => {
+    expect(regra("Caixa da transportadora; etiqueta com o número do pedido GBH900777 legível.")).toMatchObject({ regra: 1, forte: true });
+    expect(regra("Embalagem de Sérum Teste 30ml amassada e vazando.")).toMatchObject({ regra: 2, forte: true });
+    expect(regra("Necessaire estampada rasgado na costura.")).toMatchObject({ regra: 3, forte: true });
+  });
+
+  it("no cálculo de sinais, a regra 4 vira sinal fraco com a evidência", () => {
+    const r = calcularSinais(entrada({ anexos: [anexo({ descricao_visual: "Copo térmico estampado com a tampa quebrada." })] }));
+    expect(r.sinais).toEqual(["estampa_em_pedido_personalizado"]);
+    expect(r.detalhes[0]).toMatchObject({ tipo: "fraco", anexoId: "IMG-T1" });
+    expect(r.detalhes[0].evidencia).toContain("personalizado por nome");
   });
 
   it("estampa com pedido personalizado por foto: compatível (a foto impressa parece estampa)", () => {

@@ -212,6 +212,14 @@ describe("custo esperado: p × 0,45 × valor do pedido < R$ 6", () => {
     expect(probabilidadeImprocedente(["sem_foto", "fora_do_prazo_7_dias"])).toBe(0.05); // elegibilidade não é suspeita
   });
 
+  it("estampa × pedido personalizado é sinal fraco (rebaixado): p 0,15, e não vai ao supervisor sozinho", () => {
+    expect(probabilidadeImprocedente(["estampa_em_pedido_personalizado"])).toBe(0.15);
+    // R$ 80: 0,15 × 0,45 × 80 = 5,40 < 6 → nível 0 (antes, como forte, ia ao supervisor no nível 2)
+    expect(decidirNivel(entrada("avaria", { temFoto: true, statusEntrega: "entregue", diasDesdeRecebimento: 2, valorPedido: 80 }, { sinais: ["estampa_em_pedido_personalizado"], valorAcao: 80 })).nivel).toBe(0);
+    // com hash repetido (forte) continua no nível 2
+    expect(decidirNivel(entrada("avaria", { temFoto: true, statusEntrega: "entregue", diasDesdeRecebimento: 2, valorPedido: 80 }, { sinais: ["estampa_em_pedido_personalizado", "hash_em_outro_pedido_ou_cliente"], valorAcao: 80 })).nivel).toBe(2);
+  });
+
   // Bordas: 6 / (p × 0,45) → 266,67 (p 0,05); 88,89 (0,15); 44,44 (0,30); 14,81 (0,90)
   it.each<[number, number, number]>([
     [0.05, 266.66, 266.67],

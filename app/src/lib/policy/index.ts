@@ -84,7 +84,8 @@ export const SINAIS_FORTES = [
   "exif_antes_da_entrega",
   "produto_da_foto_diferente_do_pedido",
 ] as const;
-export const SINAIS_FRACOS = ["software_de_edicao", "cliente_2_ou_mais_reenvios_12m"] as const;
+// estampa_em_pedido_personalizado: rebaixado de forte para fraco (docs/decisoes.md, seção 9).
+export const SINAIS_FRACOS = ["software_de_edicao", "cliente_2_ou_mais_reenvios_12m", "estampa_em_pedido_personalizado"] as const;
 export const SINAIS_ELEGIBILIDADE = ["fora_do_prazo_7_dias", "sem_foto"] as const;
 export type SinalForte = (typeof SINAIS_FORTES)[number];
 export type SinalFraco = (typeof SINAIS_FRACOS)[number];

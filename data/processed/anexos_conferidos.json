@@ -2,6 +2,11 @@
   "gerado_por": "app/scripts/anexos-conferidos.ts",
   "n": 9,
   "todos_com_outro_sinal_forte": true,
+  "regra_4_fraca": [
+    "IMG000082",
+    "IMG000209",
+    "IMG000322"
+  ],
   "anexos": [
     {
       "anexo_id": "IMG000010",
@@ -10,6 +15,8 @@
       "descricao_visual": "Necessaire estampada rasgado na costura.",
       "produto_do_pedido": "Connect Card Magsafe Personalizado Iniciais",
       "regra": "foto mostra necessaire, o pedido tem Connect Card Magsafe Personalizado Iniciais",
+      "numero_regra": 3,
+      "forca": "forte",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente",
         "EXIF antes da entrega"
@@ -22,6 +29,8 @@
       "descricao_visual": "Copo térmico de inox com a pintura descascada e um amassado lateral.",
       "produto_do_pedido": "Garrafa Fresh 950ml Personalizada Iniciais",
       "regra": "foto mostra copo, o pedido tem Garrafa Fresh 950ml Personalizada Iniciais",
+      "numero_regra": 3,
+      "forca": "forte",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente"
       ]
@@ -33,6 +42,8 @@
       "descricao_visual": "Necessaire estampada com o zíper arrebentado.",
       "produto_do_pedido": "Tote Bag Daily Personalizada Nome",
       "regra": "foto mostra necessaire, o pedido tem Tote Bag Daily Personalizada Nome",
+      "numero_regra": 3,
+      "forca": "forte",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente",
         "EXIF antes da entrega"
@@ -45,6 +56,8 @@
       "descricao_visual": "Capinha de celular transparente com estampa rachada na lateral, perto dos botões.",
       "produto_do_pedido": "Case Anti Impacto Slim Air / Samsung Galaxy A56 Personalizada Iniciais",
       "regra": "foto mostra capinha com estampa, o pedido é personalizado por iniciais",
+      "numero_regra": 4,
+      "forca": "fraco (rebaixada na conferência manual)",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente",
         "EXIF antes da entrega"
@@ -57,6 +70,8 @@
       "descricao_visual": "Necessaire estampada rasgado na costura.",
       "produto_do_pedido": "Mini Tote Personalizada Iniciais",
       "regra": "foto mostra necessaire, o pedido tem Mini Tote Personalizada Iniciais",
+      "numero_regra": 3,
+      "forca": "forte",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente"
       ]
@@ -68,6 +83,8 @@
       "descricao_visual": "Copo térmico de inox com a pintura descascada e um amassado lateral.",
       "produto_do_pedido": "Garrafa Urban 500ml Personalizada Iniciais",
       "regra": "foto mostra copo, o pedido tem Garrafa Urban 500ml Personalizada Iniciais",
+      "numero_regra": 3,
+      "forca": "forte",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente"
       ]
@@ -79,6 +96,8 @@
       "descricao_visual": "Capinha de celular transparente com estampa rachada na lateral, perto dos botões.",
       "produto_do_pedido": "Case Guard Magsafe / iPhone 16 Pro Personalizada Iniciais",
       "regra": "foto mostra capinha com estampa, o pedido é personalizado por iniciais",
+      "numero_regra": 4,
+      "forca": "fraco (rebaixada na conferência manual)",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente",
         "EXIF antes da entrega"
@@ -91,6 +110,8 @@
       "descricao_visual": "Copo térmico de inox com a pintura descascada e um amassado lateral.",
       "produto_do_pedido": "Garrafa Mini 350ml Personalizada Nome",
       "regra": "foto mostra copo, o pedido tem Garrafa Mini 350ml Personalizada Nome",
+      "numero_regra": 3,
+      "forca": "forte",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente"
       ]
@@ -102,6 +123,8 @@
       "descricao_visual": "Necessaire estampada com o zíper arrebentado.",
       "produto_do_pedido": "Necessaire Voyage Personalizada Nome",
       "regra": "foto mostra necessaire com estampa, o pedido é personalizado por nome",
+      "numero_regra": 4,
+      "forca": "fraco (rebaixada na conferência manual)",
       "outros_sinais_fortes": [
         "hash em outro pedido ou cliente"
       ]

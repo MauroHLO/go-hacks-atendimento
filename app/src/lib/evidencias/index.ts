@@ -64,17 +64,27 @@ function mesmoProduto(a: string, b: string): boolean {
   return x === y || x.includes(y) || y.includes(x);
 }
 
-// Devolve o motivo da incompatibilidade, ou null se a foto é compatível (ou não mostra produto).
+// Incompatibilidade entre a foto e o pedido. Regras 1 a 3 são sinal forte; a regra 4 (estampa × pedido
+// personalizado por nome ou iniciais) é sinal fraco desde a conferência manual dos 9 anexos (docs/decisoes.md,
+// seção 9): um produto com iniciais pode ter estampa de fundo, e com dados reais isso mandaria clientes honestos
+// ao supervisor.
+export interface FotoIncompativel {
+  regra: 1 | 2 | 3 | 4;
+  forte: boolean;
+  motivo: string;
+}
+
+// Devolve a incompatibilidade, ou null se a foto é compatível (ou não mostra produto).
 export function compararFotoComPedido(
   descricao: string,
   pedido: Pick<Pedido, "order_id">,
   itens: readonly Pick<Item, "descricao" | "personalizacao">[],
   nomesCatalogo: readonly string[],
-): string | null {
+): FotoIncompativel | null {
   // 1. Etiqueta com o número de outro pedido.
   const etiqueta = /n[úu]mero do pedido (G[BC]H\d+)/.exec(descricao);
   if (etiqueta && etiqueta[1] !== pedido.order_id) {
-    return `etiqueta da foto mostra o pedido ${etiqueta[1]}, a conversa é do pedido ${pedido.order_id}`;
+    return { regra: 1, forte: true, motivo: `etiqueta da foto mostra o pedido ${etiqueta[1]}, a conversa é do pedido ${pedido.order_id}` };
   }
 
   // 2. Produto do catálogo citado pelo nome.
@@ -85,7 +95,7 @@ export function compararFotoComPedido(
   if (citados.length > 0) {
     const doPedido = citados.some((c) => itens.some((i) => mesmoProduto(c, i.descricao)));
     if (doPedido) return null;
-    return `foto mostra "${citados[0]}", que não está no pedido (${itens.map((i) => i.descricao).join("; ")})`;
+    return { regra: 2, forte: true, motivo: `foto mostra "${citados[0]}", que não está no pedido (${itens.map((i) => i.descricao).join("; ")})` };
   }
 
   // 3. Categoria genérica (capinha, copo, garrafa...) que não existe no pedido.
@@ -93,7 +103,7 @@ export function compararFotoComPedido(
   if (catFoto.length === 0) return null; // caixa, embalagem sem produto identificável
   const itensMesmaCat = itens.filter((i) => categorias(i.descricao).some((c) => catFoto.includes(c)));
   if (itensMesmaCat.length === 0) {
-    return `foto mostra ${catFoto.join("/")}, o pedido tem ${itens.map((i) => i.descricao).join("; ")}`;
+    return { regra: 3, forte: true, motivo: `foto mostra ${catFoto.join("/")}, o pedido tem ${itens.map((i) => i.descricao).join("; ")}` };
   }
 
   // 4. Mesma categoria, mas a foto mostra estampa de linha e o pedido é personalizado por nome ou iniciais.
@@ -101,7 +111,7 @@ export function compararFotoComPedido(
   const personalizadoTexto = itensMesmaCat.every((i) => i.personalizacao === "nome" || i.personalizacao === "iniciais");
   if (estampa && personalizadoTexto) {
     const tipos = [...new Set(itensMesmaCat.map((i) => i.personalizacao))].join("/");
-    return `foto mostra ${catFoto.join("/")} com estampa, o pedido é personalizado por ${tipos}`;
+    return { regra: 4, forte: false, motivo: `foto mostra ${catFoto.join("/")} com estampa, o pedido é personalizado por ${tipos}` };
   }
   return null;
 }
@@ -161,11 +171,13 @@ export function calcularSinais(e: EntradaEvidencias): ResultadoEvidencias {
       });
     }
 
-    // Forte: produto da foto diferente do pedido.
+    // Forte: produto da foto diferente do pedido (regras 1 a 3). Fraco: estampa × personalização (regra 4).
     if (pedido) {
-      const motivo = compararFotoComPedido(a.descricao_visual, pedido, e.itens, e.nomesCatalogo);
-      if (motivo) {
-        detalhes.push({ sinal: "produto_da_foto_diferente_do_pedido", tipo: "forte", anexoId: a.anexo_id, evidencia: `Foto ${a.anexo_id}: ${motivo}.` });
+      const r = compararFotoComPedido(a.descricao_visual, pedido, e.itens, e.nomesCatalogo);
+      if (r?.forte) {
+        detalhes.push({ sinal: "produto_da_foto_diferente_do_pedido", tipo: "forte", anexoId: a.anexo_id, evidencia: `Foto ${a.anexo_id}: ${r.motivo}.` });
+      } else if (r) {
+        detalhes.push({ sinal: "estampa_em_pedido_personalizado", tipo: "fraco", anexoId: a.anexo_id, evidencia: `Foto ${a.anexo_id}: ${r.motivo}.` });
       }
     }
 

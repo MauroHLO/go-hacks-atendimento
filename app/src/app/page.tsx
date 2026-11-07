@@ -17,8 +17,9 @@ export default function Home() {
               </span>
               <span className="rounded-full bg-limao px-3 py-0.5 text-sm font-semibold text-azul-escuro">GoHacks Talent 2026 · Desafio 1</span>
             </div>
-            <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Agente de atendimento Gocase e GoBeauté</h1>
-            <p className="max-w-2xl text-sm text-white sm:text-base">O modelo classifica e redige; o código decide o que se resolve sozinho e o que precisa de uma pessoa.</p>
+            <h1 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Ponta Firme</h1>
+            <p className="max-w-2xl text-base font-semibold text-white sm:text-lg">O agente de atendimento que resolve sozinho onde é seguro e chama uma pessoa só onde ela faz diferença.</p>
+            <p className="max-w-2xl text-sm text-white">Gocase e GoBeauté. O modelo classifica e redige; o código decide.</p>
           </div>
           <a href={GITHUB} target="_blank" rel="noreferrer" className="rounded-full border-2 border-white px-4 py-2 text-sm font-semibold text-white hover:bg-white hover:text-azul focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano">
             Código no GitHub

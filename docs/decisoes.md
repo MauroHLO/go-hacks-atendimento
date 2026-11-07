@@ -71,9 +71,9 @@
 
 **`lib/evidencias`: `calcularSinais`.** Cada sinal vem com uma evidência curta e verificável (anexo, data, hash, pedido), sem acusação.
 
-- *Fortes:* mesma imagem (hash) em outro pedido ou de outro cliente (a mesma foto reenviada no mesmo pedido não conta); EXIF de captura anterior à data de entrega; produto da foto diferente do pedido.
+- *Fortes:* mesma imagem (hash) em outro pedido ou de outro cliente (a mesma foto reenviada no mesmo pedido não conta); EXIF de captura anterior à data de entrega; produto da foto diferente do pedido (regras 1 a 3 abaixo; a regra 4 virou sinal fraco na seção 9).
 - *Produto diferente*, em ordem: (1) etiqueta com o número de outro pedido; (2) nome de produto do catálogo citado na descrição que não está no pedido; (3) categoria genérica (capinha, copo, garrafa, necessaire, bolsa, Connect Card, mala) que não existe no pedido; (4) mesma categoria, mas a foto mostra estampa e o pedido é personalizado por nome ou iniciais (personalização por foto pode parecer estampa, então não conta). Caixa ou embalagem sem produto identificável não gera sinal.
-- *Fracos:* software no EXIF; cliente com 2 ou mais trocas/reenvios em 12 meses (CRM).
+- *Fracos:* software no EXIF; cliente com 2 ou mais trocas/reenvios em 12 meses (CRM); estampa × pedido personalizado por nome ou iniciais (`estampa_em_pedido_personalizado`, desde a seção 9).
 - *Elegibilidade:* sem foto; reclamação mais de 7 dias corridos após a entrega.
 - *Conferência com os dados reais* (fora do repositório, sobre os 382 anexos do histórico): 17 anexos com hash em outro pedido/cliente, 11 com EXIF antes da entrega, 10 com software de edição e 82 fora do prazo, os mesmos números de `analysis/analise_atendimento.py`; 9 com produto diferente do pedido (ex.: "foto mostra necessaire, o pedido tem Connect Card").
 
@@ -388,3 +388,14 @@ Página única (`app/src/app/page.tsx`) com sete abas (`_componentes/`). Os dado
 - **Teste ao vivo.** Escolher uma conversa da fila ou escrever uma mensagem fictícia ligada ao pedido dela; o `POST /api/agent` devolve a ficha completa. Se o proxy falhar ou o limite estourar, a tela avisa que o resultado é o gravado.
 - **Conferido no navegador** (`npm run dev` e Edge headless): as sete abas abrem sem erro. Na largura de celular (400 px, testada dentro de um iframe, porque o Edge headless não fica abaixo de 496 px), a página não rola na horizontal; só as tabelas e a barra de abas rolam, cada uma no próprio contêiner.
 - **Limitação de ambiente.** Neste Windows, `next dev` iniciado pelo Git Bash falha ao criar o processo do loader de CSS (0xc0000142). Iniciado pelo PowerShell/cmd, funciona. O build de produção não é afetado.
+
+## 9. Regra da estampa rebaixada para sinal fraco; nome Ponta Firme
+
+**Conferência manual dos 9 anexos (Mauro).** Das quatro regras de "produto da foto diferente do pedido" (seção 3), a regra 4 passou de sinal forte para **fraco**. É a regra da mesma categoria em que a foto mostra estampa e o pedido é personalizado por nome ou iniciais (`IMG000082`, `IMG000209`, `IMG000322`). Motivo: um produto com iniciais pode ter estampa de fundo. Com dados reais, isso mandaria clientes honestos ao supervisor (nível 2) com base numa descrição visual ambígua.
+
+- As regras 1 a 3 continuam **fortes**: etiqueta de outro pedido, produto do catálogo ausente do pedido e categoria ausente do pedido, inclusive copo × garrafa.
+- No código, `compararFotoComPedido` devolve `{ regra, forte, motivo }`. A regra 4 gera o sinal fraco `estampa_em_pedido_personalizado`, que sobe p de 0,05 para 0,15 e entra na fórmula de custo (p × 0,45 × valor < R$ 6), em vez de ir direto ao nível 2.
+- **Efeito medido:** nenhum nos 9 casos, porque todos também têm hash repetido em outro pedido ou cliente, que é forte. `npm run simular` saiu idêntico byte a byte (`simulacao_autonomia.json` sem diferença). `anexos_conferidos.json` passou a registrar o número da regra e a força de cada caso.
+- Testes: as regras 1 a 3 continuam fortes; a regra 4 é fraca; um pedido de R$ 80 só com esse sinal fica no nível 0 (0,15 × 0,45 × 80 = R$ 5,40 < R$ 6), e com hash repetido continua no nível 2.
+
+**Nome do projeto: Ponta Firme.** Da cultura Gogroup: se compromete, cumpre e cumpre bem. Subtítulo: "o agente de atendimento que resolve sozinho onde é seguro e chama uma pessoa só onde ela faz diferença". Aplicado no cabeçalho do app, no metadata da página e no README.

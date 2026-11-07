@@ -1,6 +1,8 @@
-# Agente de atendimento Gocase e GoBeauté
+# Ponta Firme
 
-GoHacks Talent 2026 (Gogroup), Desafio 1: Atendimento ao Cliente.
+**O agente de atendimento que resolve sozinho onde é seguro e chama uma pessoa só onde ela faz diferença.**
+
+GoHacks Talent 2026 (Gogroup), Desafio 1: Atendimento ao Cliente (Gocase e GoBeauté). O nome vem da cultura Gogroup: se compromete, cumpre e cumpre bem.
 
 - **App:** https://app-sigma-drab-58.vercel.app
 - **Código:** https://github.com/gohacks20-code/go-hacks-atendimento

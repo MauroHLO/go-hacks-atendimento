@@ -80,8 +80,14 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
       <section className="space-y-3">
         <Subtitulo>Os 9 anexos com &quot;produto da foto diferente do pedido&quot;, conferidos à mão</Subtitulo>
         <p className="text-sm text-tinta">
-          O verificador compara a descrição visual da foto com o pedido (etiqueta, nome do catálogo, categoria, estampa × personalização). Todos os {c.anexos.length} também têm a mesma foto em outro pedido ou cliente, e {c.anexos.filter((a) => a.outros_sinais_fortes.includes("EXIF antes da entrega")).length} têm EXIF anterior à entrega: nenhum depende só da comparação de produto. Pontos frágeis anotados na conferência: &quot;copo × garrafa&quot; depende de a descrição distinguir os dois; &quot;estampa × personalização&quot; supõe que nome e iniciais não aparecem como estampa.
+          O verificador compara a descrição visual da foto com o pedido: (1) etiqueta de outro pedido, (2) produto do catálogo que não está no pedido, (3) categoria ausente no pedido (inclusive copo × garrafa), (4) mesma categoria, mas a foto mostra estampa e o pedido é personalizado por nome ou iniciais. Todos os {c.anexos.length} também têm a mesma foto em outro pedido ou cliente, e {c.anexos.filter((a) => a.outros_sinais_fortes.includes("EXIF antes da entrega")).length} têm EXIF anterior à entrega: nenhum depende só da comparação de produto.
         </p>
+        <div className="rounded-2xl border-4 border-limao p-4 text-tinta">
+          <p className="font-semibold text-azul">Regra rebaixada depois da conferência manual (Mauro)</p>
+          <p className="mt-1 text-sm">
+            A regra 4 passou de sinal <strong>forte</strong> para <strong>fraco</strong> ({c.anexos.filter((a) => a.numero_regra === 4).map((a) => a.anexo_id).join(", ")}): um produto com iniciais pode ter estampa de fundo, e com dados reais isso mandaria clientes honestos ao supervisor. Como sinal fraco, ela só sobe a probabilidade de a reclamação não proceder (de 0,05 para 0,15) e entra na fórmula de custo. As regras 1 a 3 continuam fortes. A decisão desses 9 casos não muda, porque todos têm hash repetido, e a simulação saiu idêntica.
+          </p>
+        </div>
         <Tabela legenda="Anexos conferidos">
           <thead>
             <tr>
@@ -89,6 +95,7 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
               <th className={TH}>Conversa</th>
               <th className={TH}>Descrição da foto</th>
               <th className={TH}>Produto do pedido</th>
+              <th className={TH}>Força</th>
               <th className={TH}>Regra</th>
               <th className={TH}>Outros sinais fortes</th>
             </tr>
@@ -100,7 +107,8 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
                 <td className={TD}>{a.conversation_id}</td>
                 <td className={`${TD} max-w-xs whitespace-normal`}>{a.descricao_visual}</td>
                 <td className={`${TD} max-w-xs whitespace-normal`}>{a.produto_do_pedido}</td>
-                <td className={`${TD} max-w-xs whitespace-normal`}>{a.regra}</td>
+                <td className={`${TD} ${a.numero_regra === 4 ? "font-semibold" : ""}`}>{a.numero_regra === 4 ? "fraco (rebaixada)" : "forte"}</td>
+                <td className={`${TD} max-w-xs whitespace-normal`}>{a.numero_regra}. {a.regra}</td>
                 <td className={TD}>{a.outros_sinais_fortes.join("; ")}</td>
               </tr>
             ))}

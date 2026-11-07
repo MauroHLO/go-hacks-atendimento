@@ -17,8 +17,8 @@ for (const a of anexosPorData) {
   const pedido = porPedido.get(a.order_id);
   if (!pedido) continue;
   const itens = (porPedidoItens.get(a.order_id) ?? []) as unknown as Item[];
-  const motivo = compararFotoComPedido(a.descricao_visual, pedido as unknown as Pedido, itens, nomesCatalogo);
-  if (!motivo) continue;
+  const cmp = compararFotoComPedido(a.descricao_visual, pedido as unknown as Pedido, itens, nomesCatalogo);
+  if (!cmp) continue;
   const s = sinaisCsv.get(a.anexo_id);
   const outros: string[] = [];
   if (s?.hash_outro_pedido === "True" || s?.hash_outro_cliente === "True") outros.push("hash em outro pedido ou cliente");
@@ -30,7 +30,9 @@ for (const a of anexosPorData) {
     order_id: a.order_id,
     descricao_visual: a.descricao_visual,
     produto_do_pedido: String(pedido.descricao_produto),
-    regra: motivo,
+    regra: cmp.motivo,
+    numero_regra: cmp.regra,
+    forca: cmp.forte ? "forte" : "fraco (rebaixada na conferência manual)",
     outros_sinais_fortes: outros,
   });
 }
@@ -39,6 +41,7 @@ const saida = {
   gerado_por: "app/scripts/anexos-conferidos.ts",
   n: linhas.length,
   todos_com_outro_sinal_forte: linhas.every((l) => l.outros_sinais_fortes.length > 0),
+  regra_4_fraca: linhas.filter((l) => l.numero_regra === 4).map((l) => l.anexo_id),
   anexos: linhas,
 };
 writeFileSync(path.join(OUT, "anexos_conferidos.json"), JSON.stringify(saida, null, 2) + "\n");
