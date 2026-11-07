@@ -221,5 +221,13 @@
   "pedidos_com_brinde_e_conversa": 89,
   "conversas": 112,
   "conversas_produto_faltando": 39
+ },
+ "cobranca_duplicada": {
+  "pedidos": 81,
+  "com_estorno": 69,
+  "sem_estorno": 12,
+  "sem_estorno_com_estorno_em_processamento": 0,
+  "valor_excedente_sem_estorno_rs": 1668.81,
+  "conversas_nesses_pedidos": 99
  }
 }

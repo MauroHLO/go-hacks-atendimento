@@ -1,0 +1,32 @@
+[
+  {
+    "canal": "email",
+    "conversas_com_resposta_humana": 675,
+    "espera_mediana_min": 916.4,
+    "espera_p90_min": 1423.8,
+    "estouros": 64,
+    "pct_estouro_sla": 9.5,
+    "sla_min": 1440,
+    "sem_resposta_humana": 0
+  },
+  {
+    "canal": "reclame_aqui",
+    "conversas_com_resposta_humana": 346,
+    "espera_mediana_min": 1783.5,
+    "espera_p90_min": 2887.1,
+    "estouros": 36,
+    "pct_estouro_sla": 10.4,
+    "sla_min": 2880,
+    "sem_resposta_humana": 0
+  },
+  {
+    "canal": "whatsapp",
+    "conversas_com_resposta_humana": 1633,
+    "espera_mediana_min": 13.5,
+    "espera_p90_min": 65.9,
+    "estouros": 447,
+    "pct_estouro_sla": 27.4,
+    "sla_min": 30,
+    "sem_resposta_humana": 330
+  }
+]

@@ -4,7 +4,10 @@
 // para os pedidos ainda abertos afetados, respeitando o consentimento do CRM e o máximo de 300 por dia.
 // Regras (dados medidos, não opinião):
 // - transportadora × UF: recontato >= 2× o das demais transportadoras, com pelo menos 30 conversas;
-// - brinde da campanha: >= 25% das conversas dos pedidos com brinde são "Produto faltando".
+// - brinde da campanha: >= 25% das conversas dos pedidos com brinde são "Produto faltando";
+// - cobrança em dobro: pedido com 2+ cobranças efetivadas e sem estorno (gateway). O estorno é direito comprovado
+//   por sistema (nível 0 sem teto, docs/decisoes.md, seção 5): o incidente lista os pedidos para o agente de
+//   atendimento estornar; não há aviso em massa (o cliente recebe a resposta do estorno).
 // Os textos dos avisos não prometem prazo nem solução.
 
 import agregadosJson from "../../dados/agregados.json";
@@ -21,6 +24,7 @@ export interface Agregados {
   recontato_transportadora_uf: { transportadora: string; uf: string; conversas: number; pct_recontato: number }[];
   pct_recontato_demais_transportadoras: number;
   brinde: { conversas: number; conversas_produto_faltando: number; pedidos_com_brinde_e_conversa: number };
+  cobranca_duplicada?: { pedidos: number; com_estorno: number; sem_estorno: number; valor_excedente_sem_estorno_rs: number; conversas_nesses_pedidos: number };
 }
 
 export interface PedidoAfetado {
@@ -46,13 +50,14 @@ export const AVISO = {
 } as const;
 
 export interface Incidente {
-  tipo: "transportadora_uf" | "brinde_campanha";
+  tipo: "transportadora_uf" | "brinde_campanha" | "cobranca_duplicada";
   escopo: string;
   evidencias: string[];
   referencia: string | null; // INC-SIM-…
   pedidosAfetados: number; // abertos, na base
   semConsentimento: number;
   avisos: { dia: string; pedidos: number; executado: boolean; referencia: string | null }[];
+  acao?: string; // o que fica aberto além dos avisos
 }
 
 export interface ResultadoAnalista {
@@ -159,6 +164,29 @@ export function detectarIncidentes(o: OpcoesAnalista = {}): ResultadoAnalista {
       pedidosAfetados: abertos.length,
       semConsentimento: abertos.length - comConsent.length,
       avisos: avisar(comConsent, "brinde_campanha", AVISO.brinde_campanha()),
+    });
+  }
+
+  // 3. Cobrança em dobro sem estorno
+  const cd = ag.cobranca_duplicada;
+  if (cd && cd.sem_estorno > 0) {
+    const reais = (v: number) => `R$ ${v.toFixed(2).replace(".", ",")}`;
+    const escopo = "Cobranças em dobro sem estorno";
+    const evidencias = [
+      `${cd.pedidos} pedidos com 2 ou mais cobranças efetivadas; ${cd.com_estorno} já estornados, ${cd.sem_estorno} sem estorno (amostra 1 em 4)`,
+      `${reais(cd.valor_excedente_sem_estorno_rs)} cobrados a mais e ainda não devolvidos (amostra 1 em 4)`,
+      `${cd.conversas_nesses_pedidos} conversas nesses pedidos`,
+    ];
+    const r = FERRAMENTAS.abrir_incidente(sim, { tipo: "cobranca_duplicada", escopo, evidencias });
+    incidentes.push({
+      tipo: "cobranca_duplicada",
+      escopo,
+      evidencias,
+      referencia: r.ok ? (r.registro?.referencia_sistema ?? null) : null,
+      pedidosAfetados: cd.sem_estorno,
+      semConsentimento: 0,
+      avisos: [],
+      acao: `${cd.sem_estorno} estornos preparados para o agente de atendimento: direito comprovado pelo gateway, nível 0 sem teto até o valor do pedido`,
     });
   }
 

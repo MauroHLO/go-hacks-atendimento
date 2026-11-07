@@ -28,6 +28,16 @@ describe("detecção", () => {
     expect(r.log.filter((l) => l.acao === "abrir_incidente")).toHaveLength(3);
   });
 
+  it("cobrança em dobro sem estorno: incidente com os estornos preparados, sem aviso em massa", () => {
+    const ag = { ...AG, cobranca_duplicada: { pedidos: 81, com_estorno: 69, sem_estorno: 12, valor_excedente_sem_estorno_rs: 1668.81, conversas_nesses_pedidos: 99 } };
+    const i = detectarIncidentes({ sim: analista(), agregados: ag, afetados: [] }).incidentes.at(-1)!;
+    expect(i).toMatchObject({ tipo: "cobranca_duplicada", pedidosAfetados: 12, avisos: [] });
+    expect(i.evidencias[1]).toContain("R$ 1668,81");
+    expect(i.acao).toContain("12 estornos preparados");
+    const zerado = { ...ag, cobranca_duplicada: { ...ag.cobranca_duplicada, sem_estorno: 0 } };
+    expect(detectarIncidentes({ sim: analista(), agregados: zerado, afetados: [] }).incidentes.map((x) => x.tipo)).not.toContain("cobranca_duplicada");
+  });
+
   it("abaixo dos limiares: nenhum incidente", () => {
     const ag = { ...AG, recontato_transportadora_uf: [AG.recontato_transportadora_uf[2]], brinde: { ...AG.brinde, conversas_produto_faltando: 24 } };
     expect(detectarIncidentes({ sim: analista(), agregados: ag, afetados: [] }).incidentes).toEqual([]);

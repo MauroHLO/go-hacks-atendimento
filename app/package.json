@@ -12,7 +12,8 @@
     "processar-fila": "tsx --env-file=../.env.local scripts/processar-fila.ts",
     "avaliar-jev": "tsx --env-file=../.env.local scripts/avaliar-jev.ts",
     "casos-demo": "tsx --env-file=../.env.local scripts/casos-demo.ts",
-    "copiar-dados": "tsx scripts/copiar-processados.ts"
+    "copiar-dados": "tsx scripts/copiar-processados.ts",
+    "anexos-conferidos": "tsx scripts/anexos-conferidos.ts"
   },
   "dependencies": {
     "next": "16.4.3",

@@ -1,47 +1,62 @@
 @import "tailwindcss";
 
-/* Tema claro fixo: cores e contraste verificados só nele. */
+/* Identidade visual do brandbook Gogroup. Tema claro fixo: contrastes verificados só nele.
+   Pares de texto: branco sobre azul 6,7:1; azul sobre creme 6,2:1; azul-escuro sobre limão 7,6:1
+   (nunca branco sobre amarelo); texto escuro sobre laranja 8,7:1. Os níveis nunca aparecem só pela cor:
+   o número vai no círculo e o rótulo "Nível N" ao lado, em texto escuro. */
 :root {
-  --background: #fafafa;
-  --foreground: #18181b;
-  /* Azul da logo (#1a5da8). Contraste AA: branco sobre ele e ele sobre o fundo claro. */
-  --marca: #1a5da8;
-  /* Séries: cor só em marcas (barra, chip); texto sempre escuro. Fundos tingidos dão AA com texto escuro. */
-  --nivel-0: #1baf7a;
-  --nivel-1: #eda100;
-  --nivel-2: #e34948;
-  --nivel-0-claro: #e3f6ef;
-  --nivel-1-claro: #fdf3dc;
-  --nivel-2-claro: #fce8e7;
-  --serie-azul: #2a78d6;
-  --serie-laranja: #eb6834;
+  --azul: #005cac;
+  --azul-escuro: #003a6e;
+  --limao: #d7d900;
+  --creme: #f5f5f5;
+  --ciano: #3dbfef;
+  --nivel-0: #005cac;
+  --nivel-1: #f8ae13;
+  --nivel-2: #e5381a;
+  --nivel-0-claro: #e3eef8;
+  --nivel-1-claro: #fef3db;
+  --nivel-2-claro: #fce5e0;
+  --tinta: #1f1f1f;
+  --tinta-suave: #4a4a4a;
   color-scheme: light;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-marca: var(--marca);
+  --color-azul: var(--azul);
+  --color-azul-escuro: var(--azul-escuro);
+  --color-limao: var(--limao);
+  --color-creme: var(--creme);
+  --color-ciano: var(--ciano);
   --color-nivel-0: var(--nivel-0);
   --color-nivel-1: var(--nivel-1);
   --color-nivel-2: var(--nivel-2);
   --color-nivel-0-claro: var(--nivel-0-claro);
   --color-nivel-1-claro: var(--nivel-1-claro);
   --color-nivel-2-claro: var(--nivel-2-claro);
-  --color-serie-azul: var(--serie-azul);
-  --color-serie-laranja: var(--serie-laranja);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-tinta: var(--tinta);
+  --color-tinta-suave: var(--tinta-suave);
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: #ffffff;
+  color: var(--tinta);
 }
 
-/* Legenda dos gráficos: hachurado = hipótese. */
-.hachurado {
-  background-image: repeating-linear-gradient(45deg, #71717a 0 3px, #ffffff 3px 6px);
+/* Entrada das linhas quando o botão "Processar a fila" anima o resultado gravado. */
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(-2px);
+    background-color: var(--limao);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.surgir {
+  animation: surgir 600ms ease-out;
 }
 
 @media (prefers-reduced-motion: reduce) {

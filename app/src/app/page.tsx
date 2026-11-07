@@ -1,40 +1,39 @@
 import Image from "next/image";
+import { montarPainel } from "@/lib/painel/dados";
+import { Painel } from "./_componentes/Painel";
 
-// Página provisória: a interface (fila priorizada, ficha do caso, painel de causa-raiz e impacto)
-// entra nos próximos commits. Os componentes do projeto de referência foram removidos (docs/decisoes.md, seção 2).
-
-const MODULOS = [
-  ["Visão única do pedido", "ERP, transportadora, gateway, OMS, CRM e anexos numa ficha só."],
-  ["Classificador", "O modelo lê a conversa e devolve motivos e campos; texto do cliente é dado, nunca instrução."],
-  ["Verificador de evidências", "Sinais explicáveis de suspeita nas fotos e no histórico do cliente."],
-  ["Motor de política", "Código determinístico decide o nível: 0 resolve, 1 pessoa aprova, 2 pessoa obrigatória."],
-  ["Causa-raiz e contatos evitáveis", "Recontatos por transportadora, campanha, máquina, lote e cobrança duplicada."],
-] as const;
+const GITHUB = "https://github.com/gohacks20-code/go-hacks-atendimento";
 
 export default function Home() {
+  const dados = montarPainel();
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
-      <header className="space-y-3 border-b-2 border-marca pb-4">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <Image src="/gogroup-logo.png" alt="Gogroup" width={98} height={28} />
-          <p className="text-sm text-zinc-700">GoHacks Talent 2026, Desafio 1. Não é um produto oficial da Gogroup.</p>
+    <div className="flex min-h-full flex-1 flex-col overflow-x-clip">
+      <header className="bg-azul text-white">
+        <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6">
+          <div className="space-y-1">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-lg bg-white px-2 py-1">
+                <Image src="/gogroup-logo.png" alt="Gogroup" width={98} height={28} priority />
+              </span>
+              <span className="rounded-full bg-limao px-3 py-0.5 text-sm font-semibold text-azul-escuro">GoHacks Talent 2026 · Desafio 1</span>
+            </div>
+            <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">Agente de atendimento Gocase e GoBeauté</h1>
+            <p className="max-w-2xl text-sm text-white sm:text-base">O modelo classifica e redige; o código decide o que se resolve sozinho e o que precisa de uma pessoa.</p>
+          </div>
+          <a href={GITHUB} target="_blank" rel="noreferrer" className="rounded-full border-2 border-white px-4 py-2 text-sm font-semibold text-white hover:bg-white hover:text-azul focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano">
+            Código no GitHub
+          </a>
         </div>
-        <h1 className="text-2xl font-semibold tracking-tight text-marca sm:text-3xl">Agente de atendimento: Gocase e GoBeauté</h1>
-        <p className="text-lg text-zinc-900">O modelo entende e redige; o código decide o que se resolve sozinho e o que precisa de uma pessoa.</p>
       </header>
-      <ol className="mt-6 space-y-3">
-        {MODULOS.map(([nome, texto], i) => (
-          <li key={nome} className="rounded-md border border-zinc-200 bg-white px-4 py-3">
-            <p className="font-medium text-zinc-900">
-              {i + 1}. {nome}
-            </p>
-            <p className="text-sm text-zinc-700">{texto}</p>
-          </li>
-        ))}
-      </ol>
-      <p role="note" className="mt-6 text-sm text-zinc-700">
-        Interface em construção. Dados de demonstração são fictícios.
-      </p>
-    </main>
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 sm:px-6">
+        <Painel dados={dados} />
+      </main>
+      <footer className="border-t-4 border-limao bg-creme">
+        <div className="mx-auto w-full max-w-6xl px-4 py-5 text-sm text-azul sm:px-6">
+          <p className="font-semibold">Dados sintéticos fornecidos pela Gogroup para o GoHacks Talent 2026</p>
+          <p className="mt-1 text-tinta-suave">Não é um produto oficial da Gogroup. Ações das ferramentas são simuladas; nenhum cliente real é contatado.</p>
+        </div>
+      </footer>
+    </div>
   );
 }

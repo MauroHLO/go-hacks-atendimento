@@ -1,0 +1,29 @@
+[
+  {
+    "canal": "email",
+    "conversas": 675,
+    "custo_rs": 4860,
+    "conversas_x4": 2700,
+    "custo_rs_x4": 19440,
+    "pct_conversas": 22.62,
+    "pct_custo": 16.87
+  },
+  {
+    "canal": "reclame_aqui",
+    "conversas": 346,
+    "custo_rs": 14532,
+    "conversas_x4": 1384,
+    "custo_rs_x4": 58128,
+    "pct_conversas": 11.6,
+    "pct_custo": 50.43
+  },
+  {
+    "canal": "whatsapp",
+    "conversas": 1963,
+    "custo_rs": 9422.4,
+    "conversas_x4": 7852,
+    "custo_rs_x4": 37689.6,
+    "pct_conversas": 65.78,
+    "pct_custo": 32.7
+  }
+]

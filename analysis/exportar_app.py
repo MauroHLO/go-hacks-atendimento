@@ -182,6 +182,7 @@ def exportar_analista():
         "recontato_transportadora_uf": tuf.to_dict(orient="records"),
         "pct_recontato_demais_transportadoras": met["expressa_ja"]["pct_recontato_demais"],
         "brinde": met["brinde"],
+        "cobranca_duplicada": met["cobranca_duplicada"],
     })
 
     # Pedidos abertos (sem entrega) em 02/11 que um aviso proativo pode alcançar: Expressa Já no Nordeste e
