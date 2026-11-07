@@ -1,0 +1,4 @@
+canal,conversas_com_resposta_humana,espera_mediana_min,espera_p90_min,estouros,pct_estouro_sla,sla_min,sem_resposta_humana
+email,675,916.4,1423.8,64,9.5,1440,0
+reclame_aqui,346,1783.5,2887.1,36,10.4,2880,0
+whatsapp,1633,13.5,65.9,447,27.4,30,330

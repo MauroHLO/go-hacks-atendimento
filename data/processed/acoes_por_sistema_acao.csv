@@ -1,0 +1,17 @@
+sistema,acao,acoes
+ERP de pedidos,consultar_pedido,2498
+ERP de pedidos,cancelar_pedido,68
+ERP de pedidos,alterar_endereco,65
+Gateway de pagamentos,reembolsar,123
+Gateway de pagamentos,verificar_pagamento,85
+OMS de trocas e reenvios,reenviar_produto,541
+OMS de trocas e reenvios,trocar_produto,97
+Plataforma de cupons,validar_cupom,187
+Portal Correio Ágil,consultar_rastreio,131
+Portal Expressa Já,consultar_rastreio,409
+Portal Expressa Já,abrir_chamado_transportadora,375
+Portal Rápido Sul,consultar_rastreio,40
+Portal TransNorte,consultar_rastreio,40
+Portal ViaLog,consultar_rastreio,141
+Sistema de produção Gocase,reimprimir_personalizacao,29
+Sistema de qualidade (cosmetovigilância),registrar_cosmetovigilancia,27

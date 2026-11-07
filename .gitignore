@@ -1,0 +1,12 @@
+data/*
+!data/processed/
+data/raw/
+*.zip
+*.pdf
+.env*
+!.env.example
+node_modules/
+.next/
+.vercel/
+.venv/
+__pycache__/

@@ -1,0 +1,160 @@
+{
+  "fator_amostra": 4,
+  "agora": "2026-11-02 08:00:00",
+  "validacao": {
+    "conversas": 2984,
+    "conversas_duplicadas": 0,
+    "conversas_sem_pedido": 337,
+    "pedidos_nao_encontrados": 0,
+    "conversas_sem_tempo_por_conversa": 330,
+    "periodo": [
+      "2026-08-04 00:59:04",
+      "2026-11-01 19:38:01"
+    ]
+  },
+  "volume_custo": {
+    "conversas": {
+      "amostra": 2984,
+      "escalado_x4": 11936
+    },
+    "conversas_por_mes": {
+      "amostra": 995.0,
+      "escalado_x4": 3979.0
+    },
+    "custo_periodo_rs": {
+      "amostra": 28814.4,
+      "escalado_x4": 115257.6
+    },
+    "custo_por_mes_rs": {
+      "amostra": 9604.8,
+      "escalado_x4": 38419.2
+    },
+    "horas_trabalhadas_periodo": {
+      "amostra": 538.2,
+      "escalado_x4": 2152.6
+    },
+    "horas_trabalhadas_por_mes": {
+      "amostra": 179.4,
+      "escalado_x4": 717.5
+    },
+    "minutos_trabalhados_medio": 12.2,
+    "conversas_sem_tag_so_bot": 330,
+    "pct_aberto_fora_8h_20h": 29.1,
+    "pct_aberto_fora_8h_20h_por_canal": {
+      "whatsapp": 28.3,
+      "email": 29.2,
+      "reclame_aqui": 33.5
+    },
+    "dias_historico": 90,
+    "meses_historico": 3.0
+  },
+  "sla": {
+    "email": {
+      "pct_estouro_sla": 9.5,
+      "espera_mediana_min": 916.4,
+      "estouros": 64
+    },
+    "reclame_aqui": {
+      "pct_estouro_sla": 10.4,
+      "espera_mediana_min": 1783.5,
+      "estouros": 36
+    },
+    "whatsapp": {
+      "pct_estouro_sla": 27.4,
+      "espera_mediana_min": 13.5,
+      "estouros": 447
+    }
+  },
+  "trabalho_espalhado": {
+    "sistemas_acessados_medio": 1.83,
+    "sistemas_acessados_medio_por_canal": {
+      "email": 1.83,
+      "reclame_aqui": 1.83,
+      "whatsapp": 1.83
+    },
+    "pct_conversas_com_3_ou_mais_sistemas": 16.4,
+    "acoes_registradas": 4856,
+    "sistemas_distintos_com_acao_medio": 1.69
+  },
+  "recontato": {
+    "pedidos_com_recontato": 453,
+    "conversas_em_pedidos_com_recontato": 982,
+    "pct_conversas_com_pedido_em_recontato": 37.1,
+    "conversas_em_pedidos_com_recontato_x4": 3928,
+    "expressa_ja": {
+      "conversas": 1071,
+      "pct_recontato": 62.0,
+      "pct_recontato_demais": 20.2,
+      "ufs_top": [
+        "BA",
+        "PE",
+        "CE"
+      ]
+    },
+    "chamados_transportadora": {
+      "total": 375,
+      "por_transportadora": {
+        "Expressa Já": 375
+      }
+    },
+    "brinde": {
+      "pedidos_com_brinde_na_base": 321,
+      "pedidos_com_brinde_e_conversa": 89,
+      "conversas": 112,
+      "conversas_produto_faltando": 39
+    },
+    "cobranca_duplicada": {
+      "pedidos": 81,
+      "com_estorno": 69,
+      "sem_estorno": 12,
+      "sem_estorno_com_estorno_em_processamento": 0,
+      "valor_excedente_sem_estorno_rs": 1668.81,
+      "conversas_nesses_pedidos": 99
+    }
+  },
+  "evidencias": {
+    "anexos": 382,
+    "hashes_repetidos": 36,
+    "anexos_com_hash_repetido": 77,
+    "anexos_hash_mesmo_pedido": 60,
+    "anexos_hash_outro_pedido": 17,
+    "anexos_hash_outro_cliente": 17,
+    "hashes_em_mais_de_um_cliente": 8,
+    "anexos_com_exif_data": 170,
+    "exif_antes_entrega": 11,
+    "exif_software_edicao": 10,
+    "exif_software_valores": {
+      "Editor de Fotos do Galaxy": 6,
+      "Fotos do iOS": 4
+    },
+    "fora_prazo_7d": 82,
+    "anexos_de_clientes_com_reenvio_anterior": 106,
+    "anexos_por_n_sinais": {
+      "0": 185,
+      "1": 127,
+      "2": 51,
+      "3": 19
+    }
+  },
+  "fila": {
+    "conversas": 65,
+    "por_canal": {
+      "reclame_aqui": 24,
+      "email": 22,
+      "whatsapp": 19
+    },
+    "por_status": {
+      "aberto": 59,
+      "pendente": 6
+    },
+    "sla_estourado": 2,
+    "sla_estourado_por_canal": {
+      "email": 1,
+      "reclame_aqui": 1,
+      "whatsapp": 0
+    },
+    "sem_resposta_estoura_em_ate_30min": 18,
+    "idade_mediana_h": 12.8,
+    "observacao": "fila em volume cheio (não escalar)"
+  }
+}

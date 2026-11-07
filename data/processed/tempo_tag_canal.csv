@@ -1,0 +1,39 @@
+tag,canal,conversas,minutos_trabalhados_medio,sistemas_acessados_medio,minutos_trabalhados_total
+Atraso,email,117,11.27,1.68,1318.9
+Atraso,reclame_aqui,89,21.11,1.58,1878.7
+Atraso,whatsapp,260,9.36,1.67,2433.7
+Avaria,email,53,12.77,1.68,676.7
+Avaria,reclame_aqui,39,23.05,1.77,899.0
+Avaria,whatsapp,121,11.24,1.77,1360.1
+Cancelamento,email,37,11.76,1.68,435.0
+Cancelamento,reclame_aqui,26,21.7,1.85,564.2
+Cancelamento,whatsapp,93,9.67,1.78,899.2
+Dúvida,email,44,9.49,1.11,417.7
+Dúvida,reclame_aqui,8,23.79,2.25,190.3
+Dúvida,whatsapp,135,7.09,1.04,957.6
+Elogio,email,8,10.4,1.12,83.2
+Elogio,whatsapp,29,7.22,1.03,209.5
+Endereço,email,35,11.93,2.0,417.4
+Endereço,reclame_aqui,11,22.35,1.82,245.9
+Endereço,whatsapp,72,9.91,1.96,713.7
+Financeiro,email,30,11.9,2.0,356.9
+Financeiro,reclame_aqui,17,22.04,1.94,374.7
+Financeiro,whatsapp,91,10.23,1.9,930.9
+Outros,email,45,12.17,2.0,547.5
+Outros,reclame_aqui,22,22.38,1.82,492.3
+Outros,whatsapp,111,9.65,1.77,1071.3
+Produto faltando,email,59,12.15,1.56,716.9
+Produto faltando,reclame_aqui,29,22.79,1.72,660.8
+Produto faltando,whatsapp,90,11.05,1.74,994.2
+Promoção,email,25,10.49,1.4,262.2
+Promoção,reclame_aqui,4,21.35,1.75,85.4
+Promoção,whatsapp,76,8.14,1.41,618.8
+Rastreio,email,151,13.69,2.37,2067.4
+Rastreio,reclame_aqui,61,23.18,2.25,1413.9
+Rastreio,whatsapp,404,11.33,2.36,4576.8
+Reclamação produto,email,27,11.84,1.44,319.8
+Reclamação produto,reclame_aqui,15,22.55,1.67,338.3
+Reclamação produto,whatsapp,62,10.35,1.69,641.9
+Troca,email,44,12.74,1.89,560.5
+Troca,reclame_aqui,25,22.94,1.76,573.6
+Troca,whatsapp,89,11.06,1.94,984.1
