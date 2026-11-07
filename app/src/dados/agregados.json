@@ -1,0 +1,225 @@
+{
+ "fonte": "data/processed (analysis/analise_atendimento.py); amostra de 1 em 4 clientes",
+ "recontato_transportadora": [
+  {
+   "transportadora": "Expressa Já",
+   "conversas": 1071,
+   "conversas_em_recontato": 664,
+   "pedidos": 708,
+   "pct_recontato": 62.0
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "conversas": 535,
+   "conversas_em_recontato": 123,
+   "pedidos": 470,
+   "pct_recontato": 23.0
+  },
+  {
+   "transportadora": "TransNorte",
+   "conversas": 140,
+   "conversas_em_recontato": 29,
+   "pedidos": 125,
+   "pct_recontato": 20.7
+  },
+  {
+   "transportadora": "ViaLog",
+   "conversas": 624,
+   "conversas_em_recontato": 117,
+   "pedidos": 564,
+   "pct_recontato": 18.8
+  },
+  {
+   "transportadora": "Rápido Sul",
+   "conversas": 277,
+   "conversas_em_recontato": 49,
+   "pedidos": 251,
+   "pct_recontato": 17.7
+  }
+ ],
+ "recontato_transportadora_uf": [
+  {
+   "transportadora": "Expressa Já",
+   "uf": "CE",
+   "conversas": 204,
+   "conversas_em_recontato": 152,
+   "pedidos": 120,
+   "pct_recontato": 74.5
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "BA",
+   "conversas": 256,
+   "conversas_em_recontato": 185,
+   "pedidos": 154,
+   "pct_recontato": 72.3
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "PB",
+   "conversas": 72,
+   "conversas_em_recontato": 51,
+   "pedidos": 44,
+   "pct_recontato": 70.8
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "PE",
+   "conversas": 233,
+   "conversas_em_recontato": 164,
+   "pedidos": 146,
+   "pct_recontato": 70.4
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "RN",
+   "conversas": 86,
+   "conversas_em_recontato": 59,
+   "pedidos": 53,
+   "pct_recontato": 68.6
+  },
+  {
+   "transportadora": "Rápido Sul",
+   "uf": "SC",
+   "conversas": 43,
+   "conversas_em_recontato": 15,
+   "pedidos": 35,
+   "pct_recontato": 34.9
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "RJ",
+   "conversas": 34,
+   "conversas_em_recontato": 11,
+   "pedidos": 28,
+   "pct_recontato": 32.4
+  },
+  {
+   "transportadora": "ViaLog",
+   "uf": "DF",
+   "conversas": 41,
+   "conversas_em_recontato": 11,
+   "pedidos": 35,
+   "pct_recontato": 26.8
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "uf": "RS",
+   "conversas": 30,
+   "conversas_em_recontato": 8,
+   "pedidos": 26,
+   "pct_recontato": 26.7
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "uf": "SP",
+   "conversas": 137,
+   "conversas_em_recontato": 33,
+   "pedidos": 119,
+   "pct_recontato": 24.1
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "uf": "RJ",
+   "conversas": 34,
+   "conversas_em_recontato": 8,
+   "pedidos": 30,
+   "pct_recontato": 23.5
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "SP",
+   "conversas": 99,
+   "conversas_em_recontato": 23,
+   "pedidos": 86,
+   "pct_recontato": 23.2
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "uf": "PE",
+   "conversas": 37,
+   "conversas_em_recontato": 8,
+   "pedidos": 33,
+   "pct_recontato": 21.6
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "uf": "BA",
+   "conversas": 35,
+   "conversas_em_recontato": 7,
+   "pedidos": 31,
+   "pct_recontato": 20.0
+  },
+  {
+   "transportadora": "Rápido Sul",
+   "uf": "SP",
+   "conversas": 67,
+   "conversas_em_recontato": 13,
+   "pedidos": 60,
+   "pct_recontato": 19.4
+  },
+  {
+   "transportadora": "Rápido Sul",
+   "uf": "PR",
+   "conversas": 54,
+   "conversas_em_recontato": 10,
+   "pedidos": 49,
+   "pct_recontato": 18.5
+  },
+  {
+   "transportadora": "ViaLog",
+   "uf": "SP",
+   "conversas": 216,
+   "conversas_em_recontato": 39,
+   "pedidos": 196,
+   "pct_recontato": 18.1
+  },
+  {
+   "transportadora": "ViaLog",
+   "uf": "RJ",
+   "conversas": 87,
+   "conversas_em_recontato": 14,
+   "pedidos": 80,
+   "pct_recontato": 16.1
+  },
+  {
+   "transportadora": "ViaLog",
+   "uf": "MG",
+   "conversas": 91,
+   "conversas_em_recontato": 14,
+   "pedidos": 84,
+   "pct_recontato": 15.4
+  },
+  {
+   "transportadora": "Correio Ágil",
+   "uf": "MG",
+   "conversas": 43,
+   "conversas_em_recontato": 6,
+   "pedidos": 40,
+   "pct_recontato": 14.0
+  },
+  {
+   "transportadora": "Expressa Já",
+   "uf": "MG",
+   "conversas": 31,
+   "conversas_em_recontato": 4,
+   "pedidos": 29,
+   "pct_recontato": 12.9
+  },
+  {
+   "transportadora": "Rápido Sul",
+   "uf": "RS",
+   "conversas": 64,
+   "conversas_em_recontato": 4,
+   "pedidos": 62,
+   "pct_recontato": 6.2
+  }
+ ],
+ "pct_recontato_demais_transportadoras": 20.2,
+ "brinde": {
+  "pedidos_com_brinde_na_base": 321,
+  "pedidos_com_brinde_e_conversa": 89,
+  "conversas": 112,
+  "conversas_produto_faltando": 39
+ }
+}

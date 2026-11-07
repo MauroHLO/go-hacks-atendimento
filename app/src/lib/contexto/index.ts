@@ -83,7 +83,7 @@ export interface Ficha {
     dataEntrega: Campo<string | null>;
     dataPrometida: Campo<string | null>;
     diasUteisAtraso: Campo<number | null>; // 0 = dentro do prazo
-    diasDesdeRecebimento: Campo<number | null>;
+    diasDesdeRecebimento: Campo<number | null>; // da entrega até a reclamação (abertura da conversa)
     ultimoEventoRastreio: Campo<EventoRastreio | null>;
     diasUteisSemAtualizacao: Campo<number | null>; // só para pedido ainda não entregue
     cobrancasEfetivadas: Campo<Pagamento[]>;
@@ -131,7 +131,12 @@ export function montarContexto(conversationId: string, base: Base = BASE, agora:
   if (pedido?.data_prometida) {
     atraso = diasUteisEntre(pedido.data_prometida, pedido.data_entrega ?? hoje);
   }
-  const desdeRecebimento = pedido?.data_entrega ? Math.floor((tAgora - instante(pedido.data_entrega)) / DIA_MS) : null;
+  // Prazos de reclamação contam até a reclamação (abertura da conversa), não até a resposta: "em até 7 dias
+  // do recebimento" (politicas.csv). Se a conversa começou antes da entrega, conta até agora.
+  const tEntrega = pedido?.data_entrega ? instante(pedido.data_entrega) : null;
+  const tAbertura = instante(conversa.data_abertura);
+  const referenciaReclamacao = tEntrega !== null && tAbertura >= tEntrega ? tAbertura : tAgora;
+  const desdeRecebimento = tEntrega !== null ? Math.floor((referenciaReclamacao - tEntrega) / DIA_MS) : null;
 
   // Gateway
   const pagamentos = orderId ? base.pagamentos.filter((p) => p.order_id === orderId && instante(p.data_hora_criacao) <= tAgora) : [];
@@ -178,7 +183,7 @@ export function montarContexto(conversationId: string, base: Base = BASE, agora:
       dataEntrega: campo(pedido?.data_entrega ?? null, ORIGEM.erp),
       dataPrometida: campo(pedido?.data_prometida ?? null, ORIGEM.erp),
       diasUteisAtraso: campo(atraso, ORIGEM.calculado("ERP: data prometida e entrega; feriados de parametros.md")),
-      diasDesdeRecebimento: campo(desdeRecebimento, ORIGEM.calculado("ERP: data de entrega")),
+      diasDesdeRecebimento: campo(desdeRecebimento, ORIGEM.calculado("ERP: data de entrega; Central de atendimento: abertura da conversa")),
       ultimoEventoRastreio: campo(ultimo, portal),
       diasUteisSemAtualizacao: campo(semAtualizacao, ORIGEM.calculado(`${portal}: último evento; feriados de parametros.md`)),
       cobrancasEfetivadas: campo(efetivadas, ORIGEM.gateway),

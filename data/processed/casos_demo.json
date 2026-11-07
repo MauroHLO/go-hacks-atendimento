@@ -1,0 +1,603 @@
+{
+  "gerado_por": "app/scripts/casos-demo.ts",
+  "cenario": "padrao",
+  "casos": [
+    {
+      "tipo": "avaria_sem_sinal",
+      "descricao": "Avaria com foto, sem nenhum sinal e dentro do prazo: o agente resolve sozinho (nível 0).",
+      "momento_da_decisao": "2026-08-04 17:43:27",
+      "tag_agente": "Avaria",
+      "ficha": {
+        "order_id": "GBH366247",
+        "status_entrega": {
+          "valor": "entregue",
+          "origem": "ERP de pedidos"
+        },
+        "data_entrega": {
+          "valor": "2026-07-29",
+          "origem": "ERP de pedidos"
+        },
+        "dias_desde_recebimento": {
+          "valor": 6,
+          "origem": "Calculado (ERP: data de entrega; Central de atendimento: abertura da conversa)"
+        },
+        "anexos": 1,
+        "reenvios_cliente_12m": {
+          "valor": 1,
+          "origem": "CRM"
+        }
+      },
+      "conversation_id": "AT104667",
+      "canal": "whatsapp",
+      "status_fila": "resolvido",
+      "order_id": "GBH366247",
+      "classificacao": {
+        "valida": true,
+        "falha": null,
+        "motivo": "item_faltante",
+        "motivo_jev": "item_faltante",
+        "confianca": 1,
+        "urgencia": "alta",
+        "flags": {
+          "reacao_adversa": false,
+          "mencao_saude": false,
+          "ameaca_reclame_aqui_ou_procon": false,
+          "cliente_irritado": false,
+          "pede_ou_envia_dado_sensivel": true,
+          "mais_de_um_motivo": false
+        },
+        "mencao_saude": false
+      },
+      "sinais": [],
+      "decisao": {
+        "nivel": 0,
+        "nivel_final": 0,
+        "aprovacao_resposta": false,
+        "acao": "reenvio",
+        "ferramenta": "reenviar_produto",
+        "acao_sem_teto": false,
+        "auditoria_posterior": false,
+        "justificativa": "Foto recebida, dentro do prazo e de R$ 300,00 (sem sinal; p=0.05, custo esperado R$ 3,66 contra R$ 6,00 de sinalizar). [politicas.csv › categorias › item_faltante.regra]",
+        "ajustes": []
+      },
+      "acoes": [
+        {
+          "ferramenta": "ler_conversa",
+          "ok": true
+        },
+        {
+          "ferramenta": "consultar_pedido",
+          "ok": true
+        },
+        {
+          "ferramenta": "consultar_cliente",
+          "ok": true
+        },
+        {
+          "ferramenta": "ver_anexos",
+          "ok": true
+        },
+        {
+          "ferramenta": "reenviar_produto",
+          "ok": true
+        },
+        {
+          "ferramenta": "responder_cliente",
+          "ok": true
+        },
+        {
+          "ferramenta": "encerrar_conversa",
+          "ok": true
+        }
+      ],
+      "log": [
+        {
+          "acao_id": "AC-SIM-000001",
+          "conversation_id": "AT104667",
+          "order_id": "GBH366247",
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "Central de atendimento",
+          "acao": "ler_conversa",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000002",
+          "conversation_id": "AT104667",
+          "order_id": "GBH366247",
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "ERP de pedidos",
+          "acao": "consultar_pedido",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000003",
+          "conversation_id": "AT104667",
+          "order_id": null,
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "CRM",
+          "acao": "consultar_cliente",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000004",
+          "conversation_id": "AT104667",
+          "order_id": null,
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "Central de atendimento",
+          "acao": "ver_anexos",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000005",
+          "conversation_id": "AT104667",
+          "order_id": "GBH366247",
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "OMS de trocas e reenvios",
+          "acao": "reenviar_produto",
+          "valor_rs": 162.72,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": "OMS-SIM-000001"
+        },
+        {
+          "acao_id": "AC-SIM-000006",
+          "conversation_id": "AT104667",
+          "order_id": null,
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "Central de atendimento",
+          "acao": "responder_cliente",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000007",
+          "conversation_id": "AT104667",
+          "order_id": null,
+          "data_hora": "2026-08-04 17:43:27",
+          "sistema": "Central de atendimento",
+          "acao": "encerrar_conversa",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        }
+      ],
+      "resposta": {
+        "texto": "Fizemos o reenvio sem custo do produto Creme de Pentear Cachos Definidos 1kg referente ao pedido GBH366247.",
+        "enviada": true,
+        "paraAprovacao": false,
+        "reserva": false,
+        "tentativas": 1,
+        "falhasChecagem": []
+      },
+      "telemetria": {
+        "ms": 3316,
+        "jev": {
+          "ms": 742,
+          "tokensEntrada": 1014,
+          "tokensSaida": 320,
+          "custoUsd": 0.000042588
+        },
+        "chat": {
+          "ms": 2549,
+          "tokensEntrada": 372,
+          "tokensSaida": 35,
+          "custoUsd": null
+        },
+        "custoUsdEstimado": 0.000042588,
+        "sistemasAcessados": 4
+      }
+    },
+    {
+      "tipo": "hash_outro_cliente",
+      "descricao": "Foto que já apareceu em conversa de outro cliente: sinal forte, o supervisor decide (nível 2) e o cliente recebe só \"em análise\".",
+      "momento_da_decisao": "2026-08-31 11:48:38",
+      "tag_agente": "Avaria",
+      "ficha": {
+        "order_id": "GCH533082",
+        "status_entrega": {
+          "valor": "entregue",
+          "origem": "ERP de pedidos"
+        },
+        "data_entrega": {
+          "valor": "2026-08-26",
+          "origem": "ERP de pedidos"
+        },
+        "dias_desde_recebimento": {
+          "valor": 5,
+          "origem": "Calculado (ERP: data de entrega; Central de atendimento: abertura da conversa)"
+        },
+        "anexos": 2,
+        "reenvios_cliente_12m": {
+          "valor": 1,
+          "origem": "CRM"
+        }
+      },
+      "conversation_id": "AT108179",
+      "canal": "whatsapp",
+      "status_fila": "resolvido",
+      "order_id": "GCH533082",
+      "classificacao": {
+        "valida": true,
+        "falha": null,
+        "motivo": "avaria",
+        "motivo_jev": "avaria",
+        "confianca": 0.91,
+        "urgencia": "alta",
+        "flags": {
+          "reacao_adversa": false,
+          "mencao_saude": false,
+          "ameaca_reclame_aqui_ou_procon": false,
+          "cliente_irritado": false,
+          "pede_ou_envia_dado_sensivel": false,
+          "mais_de_um_motivo": false
+        },
+        "mencao_saude": false
+      },
+      "sinais": [
+        {
+          "sinal": "hash_em_outro_pedido_ou_cliente",
+          "tipo": "forte",
+          "anexo": "IMG000098",
+          "evidencia": "Foto IMG000098: a mesma imagem (hash 5e1440cf…) aparece em conversa de outro cliente (pedido GCH525527)."
+        },
+        {
+          "sinal": "produto_da_foto_diferente_do_pedido",
+          "tipo": "forte",
+          "anexo": "IMG000098",
+          "evidencia": "Foto IMG000098: foto mostra necessaire, o pedido tem Mini Tote Personalizada Iniciais."
+        }
+      ],
+      "decisao": {
+        "nivel": 2,
+        "nivel_final": 2,
+        "aprovacao_resposta": false,
+        "acao": "sinalizar_suspeita",
+        "ferramenta": "sinalizar_suspeita",
+        "acao_sem_teto": false,
+        "auditoria_posterior": false,
+        "justificativa": "Sinal forte de evidência (hash_em_outro_pedido_ou_cliente, produto_da_foto_diferente_do_pedido): o supervisor decide. [politicas.csv › reclamacao_suspeita]",
+        "ajustes": []
+      },
+      "acoes": [
+        {
+          "ferramenta": "ler_conversa",
+          "ok": true
+        },
+        {
+          "ferramenta": "consultar_pedido",
+          "ok": true
+        },
+        {
+          "ferramenta": "consultar_cliente",
+          "ok": true
+        },
+        {
+          "ferramenta": "ver_anexos",
+          "ok": true
+        },
+        {
+          "ferramenta": "sinalizar_suspeita",
+          "ok": true
+        },
+        {
+          "ferramenta": "responder_cliente",
+          "ok": true
+        }
+      ],
+      "log": [
+        {
+          "acao_id": "AC-SIM-000001",
+          "conversation_id": "AT108179",
+          "order_id": "GCH533082",
+          "data_hora": "2026-08-31 11:48:38",
+          "sistema": "Central de atendimento",
+          "acao": "ler_conversa",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000002",
+          "conversation_id": "AT108179",
+          "order_id": "GCH533082",
+          "data_hora": "2026-08-31 11:48:38",
+          "sistema": "ERP de pedidos",
+          "acao": "consultar_pedido",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000003",
+          "conversation_id": "AT108179",
+          "order_id": null,
+          "data_hora": "2026-08-31 11:48:38",
+          "sistema": "CRM",
+          "acao": "consultar_cliente",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000004",
+          "conversation_id": "AT108179",
+          "order_id": null,
+          "data_hora": "2026-08-31 11:48:38",
+          "sistema": "Central de atendimento",
+          "acao": "ver_anexos",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000005",
+          "conversation_id": "AT108179",
+          "order_id": "GCH533082",
+          "data_hora": "2026-08-31 11:48:38",
+          "sistema": "Central de atendimento",
+          "acao": "sinalizar_suspeita",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": "SUS-SIM-000001"
+        },
+        {
+          "acao_id": "AC-SIM-000006",
+          "conversation_id": "AT108179",
+          "order_id": null,
+          "data_hora": "2026-08-31 11:48:38",
+          "sistema": "Central de atendimento",
+          "acao": "responder_cliente",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        }
+      ],
+      "resposta": {
+        "texto": "Recebemos sua solicitação e ela está em análise. Retornamos em até 24 horas com a solução.",
+        "enviada": true,
+        "paraAprovacao": false,
+        "reserva": false,
+        "tentativas": 0,
+        "falhasChecagem": []
+      },
+      "telemetria": {
+        "ms": 465,
+        "jev": {
+          "ms": 463,
+          "tokensEntrada": 1013,
+          "tokensSaida": 318,
+          "custoUsd": 0.000042546
+        },
+        "chat": {
+          "ms": 0,
+          "tokensEntrada": 0,
+          "tokensSaida": 0,
+          "custoUsd": null
+        },
+        "custoUsdEstimado": 0.000042546,
+        "sistemasAcessados": 3
+      }
+    },
+    {
+      "tipo": "reacao_adversa",
+      "descricao": "Reação adversa a cosmético: orientar a suspensão do uso e acionar a qualidade para a cosmetovigilância em 24 h (nível 2).",
+      "momento_da_decisao": "2026-08-18 10:54:29",
+      "tag_agente": "Reclamação produto",
+      "ficha": {
+        "order_id": "GBH374297",
+        "status_entrega": {
+          "valor": "entregue",
+          "origem": "ERP de pedidos"
+        },
+        "data_entrega": {
+          "valor": "2026-08-11",
+          "origem": "ERP de pedidos"
+        },
+        "dias_desde_recebimento": {
+          "valor": 7,
+          "origem": "Calculado (ERP: data de entrega; Central de atendimento: abertura da conversa)"
+        },
+        "anexos": 0,
+        "reenvios_cliente_12m": {
+          "valor": 0,
+          "origem": "CRM"
+        }
+      },
+      "conversation_id": "AT106482",
+      "canal": "whatsapp",
+      "status_fila": "resolvido",
+      "order_id": "GBH374297",
+      "classificacao": {
+        "valida": true,
+        "falha": null,
+        "motivo": "reacao_adversa",
+        "motivo_jev": "reacao_adversa",
+        "confianca": 1,
+        "urgencia": "alta",
+        "flags": {
+          "reacao_adversa": true,
+          "mencao_saude": true,
+          "ameaca_reclame_aqui_ou_procon": false,
+          "cliente_irritado": true,
+          "pede_ou_envia_dado_sensivel": true,
+          "mais_de_um_motivo": false
+        },
+        "mencao_saude": true
+      },
+      "sinais": [],
+      "decisao": {
+        "nivel": 2,
+        "nivel_final": 2,
+        "aprovacao_resposta": false,
+        "acao": "suspender_uso_e_registrar",
+        "ferramenta": "registrar_cosmetovigilancia",
+        "acao_sem_teto": false,
+        "auditoria_posterior": false,
+        "justificativa": "Reação adversa: orienta a suspensão do uso e o supervisor registra a cosmetovigilância em até 24 h; troca não substitui o registro. [politicas.csv › categorias › reacao_adversa.regra]",
+        "ajustes": []
+      },
+      "acoes": [
+        {
+          "ferramenta": "ler_conversa",
+          "ok": true
+        },
+        {
+          "ferramenta": "consultar_pedido",
+          "ok": true
+        },
+        {
+          "ferramenta": "consultar_cliente",
+          "ok": true
+        },
+        {
+          "ferramenta": "ver_anexos",
+          "ok": true
+        },
+        {
+          "ferramenta": "orientar_suspensao_uso",
+          "ok": true
+        },
+        {
+          "ferramenta": "acionar_pessoa",
+          "ok": true
+        },
+        {
+          "ferramenta": "solicitar_aprovacao",
+          "ok": true
+        }
+      ],
+      "log": [
+        {
+          "acao_id": "AC-SIM-000001",
+          "conversation_id": "AT106482",
+          "order_id": "GBH374297",
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "Central de atendimento",
+          "acao": "ler_conversa",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000002",
+          "conversation_id": "AT106482",
+          "order_id": "GBH374297",
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "ERP de pedidos",
+          "acao": "consultar_pedido",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000003",
+          "conversation_id": "AT106482",
+          "order_id": null,
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "CRM",
+          "acao": "consultar_cliente",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000004",
+          "conversation_id": "AT106482",
+          "order_id": null,
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "Central de atendimento",
+          "acao": "ver_anexos",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000005",
+          "conversation_id": "AT106482",
+          "order_id": null,
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "Central de atendimento",
+          "acao": "orientar_suspensao_uso",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": null
+        },
+        {
+          "acao_id": "AC-SIM-000006",
+          "conversation_id": "AT106482",
+          "order_id": null,
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "Canal do time",
+          "acao": "acionar_pessoa",
+          "valor_rs": null,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": "ACI-SIM-000001"
+        },
+        {
+          "acao_id": "AC-SIM-000007",
+          "conversation_id": "AT106482",
+          "order_id": "GBH374297",
+          "data_hora": "2026-08-18 10:54:29",
+          "sistema": "Central de atendimento",
+          "acao": "solicitar_aprovacao",
+          "valor_rs": 0,
+          "executado_por": "agente",
+          "aprovado_por": null,
+          "referencia_sistema": "APR-SIM-000001"
+        }
+      ],
+      "resposta": {
+        "texto": "Sinto muito que você esteja com coceira. Pare de usar o Magnésio Dimalato e procure atendimento médico se precisar. Uma pessoa da nossa equipe de qualidade vai cuidar do caso do pedido GBH374297.",
+        "enviada": false,
+        "paraAprovacao": true,
+        "reserva": false,
+        "tentativas": 1,
+        "falhasChecagem": []
+      },
+      "telemetria": {
+        "ms": 2757,
+        "jev": {
+          "ms": 438,
+          "tokensEntrada": 1015,
+          "tokensSaida": 320,
+          "custoUsd": 0.00004263
+        },
+        "chat": {
+          "ms": 2309,
+          "tokensEntrada": 397,
+          "tokensSaida": 50,
+          "custoUsd": null
+        },
+        "custoUsdEstimado": 0.00004263,
+        "sistemasAcessados": 4
+      }
+    }
+  ]
+}

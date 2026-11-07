@@ -86,7 +86,14 @@ describe("montarContexto", () => {
     const f = montarContexto("AT900001", base({}, { status_entrega: "entregue", data_entrega: "2026-10-29" }))!;
     expect(f.resumo.diasUteisAtraso.valor).toBe(2); // 28 e 29/10
     expect(f.resumo.diasUteisSemAtualizacao.valor).toBeNull();
-    expect(f.resumo.diasDesdeRecebimento.valor).toBe(4);
+    expect(f.resumo.diasDesdeRecebimento.valor).toBe(3); // entrega 29/10, reclamação 01/11 21:00
+  });
+
+  it("dias desde o recebimento contam até a reclamação; conversa aberta antes da entrega conta até agora", () => {
+    const aberta = (abertura: string) =>
+      base({ conversas: [{ conversation_id: "AT900001", customer_id: "CH900001", order_id: "GBH900001", marca: "Kokeshi", canal: "whatsapp", status: "aberto", data_abertura: abertura, n_interacoes: 1, atendente_id: null, data_primeira_resposta: null, assunto: null }] }, { status_entrega: "entregue", data_entrega: "2026-10-20" });
+    expect(montarContexto("AT900001", aberta("2026-10-27 10:00:00"))!.resumo.diasDesdeRecebimento.valor).toBe(7); // na fila desde 27/10
+    expect(montarContexto("AT900001", aberta("2026-10-15 10:00:00"))!.resumo.diasDesdeRecebimento.valor).toBe(13); // aberta antes da entrega
   });
 
   it("entregue antes do prometido: atraso 0", () => {

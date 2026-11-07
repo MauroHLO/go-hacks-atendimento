@@ -22,7 +22,8 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { detectarSinais } from "../src/lib/agent/sinais";
 import { fatosParaPolitica, montarContexto, STATUS_COBRANCA_EFETIVADA } from "../src/lib/contexto";
-import { baseVazia, dia, instante, type Anexo, type Base, type OcorrenciaHash } from "../src/lib/dados";
+import { dia, instante } from "../src/lib/dados";
+import { motivoDaTag, type Linha } from "./dados-brutos";
 import { calcularSinais } from "../src/lib/evidencias";
 import {
   CENARIO_PADRAO,
@@ -49,99 +50,25 @@ const CUSTO_CANAL: Record<string, number> = { whatsapp: 4.8, email: 7.2, reclame
 const VALORES_P = [0.02, 0.05, 0.1];
 const MOTIVOS_EVIDENCIA: ReadonlySet<Motivo> = new Set(["avaria", "item_faltante", "brinde", "erro_personalizacao"]);
 
-const RAIZ = existsSync(path.resolve("..", "data", "raw")) ? path.resolve("..") : path.resolve(".");
-const RAW = path.join(RAIZ, "data", "raw", "atendimento");
-const OUT = path.join(RAIZ, "data", "processed");
-
-// ---------------------------------------------------------------------------
-// CSV (RFC 4180: aspas, vírgulas e quebras de linha dentro de aspas)
-// ---------------------------------------------------------------------------
-type Linha = Record<string, string | number | null>;
-
-function lerCsv(nome: string, numericas: readonly string[] = []): Linha[] {
-  const texto = readFileSync(path.join(RAW, `${nome}.csv`), "utf8").replace(/^﻿/, "");
-  const linhas: string[][] = [];
-  let campo = "";
-  let linha: string[] = [];
-  let aspas = false;
-  for (let i = 0; i < texto.length; i++) {
-    const c = texto[i];
-    if (aspas) {
-      if (c === '"' && texto[i + 1] === '"') {
-        campo += '"';
-        i++;
-      } else if (c === '"') aspas = false;
-      else campo += c;
-    } else if (c === '"') aspas = true;
-    else if (c === ",") {
-      linha.push(campo);
-      campo = "";
-    } else if (c === "\n" || c === "\r") {
-      if (c === "\r" && texto[i + 1] === "\n") i++;
-      linha.push(campo);
-      linhas.push(linha);
-      linha = [];
-      campo = "";
-    } else campo += c;
-  }
-  if (campo !== "" || linha.length > 0) {
-    linha.push(campo);
-    linhas.push(linha);
-  }
-  const [cab, ...corpo] = linhas.filter((l) => l.length > 1 || l[0] !== "");
-  const num = new Set(numericas);
-  return corpo.map((l) => Object.fromEntries(cab.map((k, j) => [k, l[j] === "" || l[j] === undefined ? null : num.has(k) ? Number(l[j]) : l[j]])));
-}
-
-function agrupar<T extends Linha>(linhas: T[], chave: string): Map<string, T[]> {
-  const m = new Map<string, T[]>();
-  for (const l of linhas) {
-    const k = l[chave];
-    if (k === null || k === undefined) continue;
-    const lista = m.get(String(k));
-    if (lista) lista.push(l);
-    else m.set(String(k), [l]);
-  }
-  return m;
-}
-
-// ---------------------------------------------------------------------------
-// Carga
-// ---------------------------------------------------------------------------
-console.log(`Lendo ${RAW}`);
-const conversas = lerCsv("historico_conversas", ["n_interacoes", "csat"]);
-const mensagens = lerCsv("historico_mensagens");
-const pedidos = lerCsv("pedidos", ["valor", "valor_produtos", "desconto", "frete_cobrado", "quantidade_itens", "parcelas"]);
-const itens = lerCsv("itens_pedido", ["linha", "quantidade", "preco_unitario", "desconto_rateado", "valor_total"]);
-const rastreio = lerCsv("rastreio_portais_transportadoras");
-const pagamentos = lerCsv("pagamentos_gateway", ["valor", "valor_estornado", "parcelas"]);
-const estornos = lerCsv("estornos", ["valor"]);
-const chamados = lerCsv("chamados_transportadora");
-const trocas = lerCsv("trocas_reenvios", ["quantidade", "custo_produto", "custo_frete", "custo_manuseio", "custo_total"]);
-const clientes = lerCsv("clientes", ["n_pedidos", "receita_acumulada", "n_trocas_12m", "n_contatos_12m"]);
-const anexos = lerCsv("anexos_conversas") as unknown as Anexo[];
-const produtos = lerCsv("produtos", ["preco_venda", "custo_unitario"]);
-const tempo = lerCsv("tempo_por_conversa", ["minutos_trabalhados", "sistemas_acessados"]);
-
-const porConversaMsg = agrupar(mensagens, "conversation_id");
-const porPedido = new Map(pedidos.map((p) => [String(p.order_id), p]));
-const porPedidoItens = agrupar(itens, "order_id");
-const porPedidoRastreio = agrupar(rastreio, "pedido_ref");
-const porPedidoPag = agrupar(pagamentos, "order_id");
-const porPedidoEst = agrupar(estornos, "order_id");
-const porPedidoCham = agrupar(chamados, "order_id");
-const porClienteTrocas = agrupar(trocas, "customer_id");
-const porCliente = new Map(clientes.map((c) => [String(c.customer_id), c]));
-const porConversaAnexos = agrupar(anexos as unknown as Linha[], "conversation_id");
-const minutos = new Map(tempo.map((t) => [String(t.conversation_id), Number(t.minutos_trabalhados)]));
-const nomesCatalogo = produtos.map((p) => String(p.nome));
-const custoBrinde = Number(produtos.find((p) => p.categoria === "Brindes de campanha")?.custo_unitario ?? 0);
-const anexosPorData = [...anexos].sort((a, b) => instante(a.enviado_em) - instante(b.enviado_em));
+import {
+  anexosPorData,
+  baseDaConversa,
+  conversas,
+  custoBrinde,
+  indiceAte,
+  minutos,
+  nomesCatalogo,
+  OUT,
+  porConversaMsg,
+  porPedido,
+} from "./dados-brutos";
+void anexosPorData;
 
 // ---------------------------------------------------------------------------
 // Preparação por conversa (independe do cenário)
 // ---------------------------------------------------------------------------
 interface Caso {
+  confianca: number; // 1,0 (tag humana) ou a confiança do Jev no cenário 8
   id: string;
   canal: string;
   agora: string;
@@ -155,53 +82,9 @@ interface Caso {
   entregueDepois: boolean; // o pedido foi entregue depois do momento da decisão (posição final de 02/11)
 }
 
-const RE_BRINDE = /brinde|mimo|necessaire/i;
-
-function motivoDaTag(tag: string | null, pedido: Linha | undefined, texto: string, efetivadas: number, saude: boolean): Motivo {
-  switch (tag) {
-    case "Rastreio":
-      return "rastreio";
-    case "Atraso":
-      return "atraso";
-    case "Avaria":
-      return "avaria";
-    case "Produto faltando":
-      return String(pedido?.descricao_produto ?? "").includes("+ Brinde") && RE_BRINDE.test(texto) ? "brinde" : "item_faltante";
-    case "Troca":
-      return "troca_fragrancia";
-    case "Cancelamento":
-      return "cancelamento";
-    case "Reclamação produto":
-      return saude ? "reacao_adversa" : pedido?.personalizacao ? "erro_personalizacao" : "outro";
-    case "Financeiro":
-      return efetivadas > 1 ? "cobranca_duplicada" : "pagamento_pendente";
-    case "Dúvida":
-      return "duvida_produto";
-    case "Promoção":
-      return "cupom";
-    case "Endereço":
-      return "endereco";
-    case "Elogio":
-      return "elogio";
-    case "Outros":
-      return "outro";
-    default:
-      return "sem_interacao";
-  }
-}
-
-function indiceAte(t: number): Record<string, OcorrenciaHash[]> {
-  const idx: Record<string, OcorrenciaHash[]> = {};
-  for (const a of anexosPorData) {
-    if (instante(a.enviado_em) > t) break;
-    (idx[a.hash_perceptual] ??= []).push({ anexo_id: a.anexo_id, order_id: a.order_id, customer_id: a.customer_id });
-  }
-  return idx;
-}
-
 const FATOS_SEM_PEDIDO: FatosPedido = { statusEntrega: "aguardando_separacao", valorPedido: 0 };
 
-function preparar(c: Linha): Caso {
+function preparar(c: Linha, reclass?: { motivo: Motivo; confianca: number }): Caso {
   const id = String(c.conversation_id);
   const orderId = c.order_id ? String(c.order_id) : null;
   const customerId = String(c.customer_id);
@@ -211,26 +94,12 @@ function preparar(c: Linha): Caso {
   const agora = String(doCliente.at(-1)?.timestamp ?? c.data_abertura);
   const pedido = orderId ? porPedido.get(orderId) : undefined;
 
-  // Base só com as linhas desta conversa (montarContexto filtra por id; isto só evita varrer tudo).
-  const base: Base = baseVazia({
-    conversas: [c as never],
-    mensagens: msgs as never,
-    pedidos: (pedido ? [pedido] : []) as never,
-    itens: (orderId ? (porPedidoItens.get(orderId) ?? []) : []) as never,
-    rastreio: (orderId ? (porPedidoRastreio.get(orderId) ?? []) : []) as never,
-    pagamentos: (orderId ? (porPedidoPag.get(orderId) ?? []) : []) as never,
-    estornos: (orderId ? (porPedidoEst.get(orderId) ?? []) : []) as never,
-    chamados: (orderId ? (porPedidoCham.get(orderId) ?? []) : []) as never,
-    trocas: (porClienteTrocas.get(customerId) ?? []) as never,
-    clientes: (porCliente.has(customerId) ? [porCliente.get(customerId)] : []) as never,
-    anexos: (porConversaAnexos.get(id) ?? []) as never,
-    produtos: produtos as never,
-  });
+  const base = baseDaConversa(c);
   const ficha = montarContexto(id, base, agora)!;
   const fatos = fatosParaPolitica(ficha, { reenvios: "oms" }) ?? FATOS_SEM_PEDIDO;
   const efetivadas = ficha.resumo.cobrancasEfetivadas.valor;
   const saude = detectarSinais(texto).saude;
-  const motivo = motivoDaTag(c.tag_agente as string | null, pedido, texto, efetivadas.length, saude);
+  const motivo = reclass?.motivo ?? motivoDaTag(c.tag_agente as string | null, pedido, texto, efetivadas.length, saude);
 
   let sinais: SinalEvidencia[] = [];
   if (MOTIVOS_EVIDENCIA.has(motivo) && ficha.pedido.valor) {
@@ -257,6 +126,7 @@ function preparar(c: Linha): Caso {
   }
 
   return {
+    confianca: reclass?.confianca ?? 1,
     id,
     canal: String(c.canal),
     agora,
@@ -272,7 +142,23 @@ function preparar(c: Linha): Caso {
 }
 
 console.log(`Preparando ${conversas.length} conversas…`);
-const casos = conversas.map(preparar).sort((a, b) => instante(a.agora) - instante(b.agora));
+const casos = conversas.map((c) => preparar(c)).sort((a, b) => instante(a.agora) - instante(b.agora));
+
+// Cenário 8: as 242 conversas "outro" reclassificadas pelo Jev (app/scripts/avaliar-jev.ts), com a confiança dele.
+const ARQ_JEV = path.join(OUT, "avaliacao_jev.json");
+const reclassJev = new Map<string, { motivo: Motivo; confianca: number }>();
+if (existsSync(ARQ_JEV)) {
+  const j = JSON.parse(readFileSync(ARQ_JEV, "utf8")) as {
+    reclassificacao_572: { conversas: { conversation_id: string; motivo_simulacao: string; motivo_jev: Motivo; confianca: number; valida: boolean; sem_mensagem_do_cliente: boolean }[] };
+  };
+  for (const r of j.reclassificacao_572.conversas) {
+    if (r.valida && !r.sem_mensagem_do_cliente && r.motivo_simulacao === "outro") reclassJev.set(r.conversation_id, { motivo: r.motivo_jev, confianca: r.confianca });
+  }
+}
+const casosJev =
+  reclassJev.size > 0
+    ? conversas.map((c) => preparar(c, reclassJev.get(String(c.conversation_id)))).sort((a, b) => instante(a.agora) - instante(b.agora))
+    : null;
 
 // ---------------------------------------------------------------------------
 // Simulação de um cenário
@@ -339,7 +225,7 @@ function causaNivel1(motivo: Motivo, justificativa: string): string {
 
 const DINHEIRO = new Set(["reenviar_produto", "reimprimir_personalizacao", "reembolsar", "trocar_produto", "cancelar_pedido"]);
 
-function simular(nome: string, base: CenarioPolitica, p0: number) {
+function simular(nome: string, base: CenarioPolitica, p0: number, lista: Caso[] = casos) {
   const bloqueados = new Set<string>();
   const cenario: CenarioPolitica = { ...base, pSemSinal: p0, hashesBloqueados: bloqueados };
   const gastoDia = new Map<string, number>(); // R$ escalados (×4) em ações sem teto, como no dia real
@@ -351,11 +237,11 @@ function simular(nome: string, base: CenarioPolitica, p0: number) {
   let reenvAtraso = 0, reenvAtrasoDup = 0, perdaAtraso = 0, reenvExtravio = 0, reenvExtravioDup = 0, perdaAtrasoPolitica = 0;
   let fortes = 0, fraudes = 0, perdaEvitada = 0, atrito = 0, auditados = 0, semTeto = 0, gastoSemTeto = 0, freados = 0;
 
-  for (const c of casos) {
+  for (const c of lista) {
     const hoje = dia(c.agora);
     const d = decidirNivel({
       motivo: c.motivo,
-      confiancaClassificador: 1,
+      confiancaClassificador: c.confianca,
       fatos: c.fatos,
       sinais: c.sinais,
       valorAcao: c.valorAcao,
@@ -519,8 +405,20 @@ for (const cen of CENARIOS) {
   }
 }
 
+const NOME_JEV = "8_padrao_motivo_jev";
+if (casosJev) {
+  for (const p0 of VALORES_P) {
+    const { r, porMotivo, causas } = simular(NOME_JEV, c7, p0, casosJev);
+    resultados.push(r);
+    if (p0 === 0.05) {
+      motivos[NOME_JEV] = porMotivo;
+      causasNivel1[NOME_JEV] = Object.fromEntries(Object.entries(causas).sort((a, b) => b[1] - a[1]));
+    }
+  }
+}
+
 // Ganho de cada regra somada (p = 0,05): diferença para o cenário anterior.
-const em005 = CENARIOS.map((c) => resultados.find((r) => r.cenario === c.nome && r.p_sem_sinal === 0.05)!);
+const em005 = [...CENARIOS.map((c) => c.nome), ...(casosJev ? [NOME_JEV] : [])].map((nome) => resultados.find((r) => r.cenario === nome && r.p_sem_sinal === 0.05)!);
 const ganhoIncremental = em005.slice(1).map((r, i) => {
   const ant = em005[i];
   const dif = (k: keyof Resultado) => Math.round(((r[k] as number) - (ant[k] as number)) * 100) / 100;
@@ -538,10 +436,10 @@ const ganhoIncremental = em005.slice(1).map((r, i) => {
 });
 
 // Avaliação: saldo positivo nos três p e autonomia total.
-const avaliacao = CENARIOS.map((c) => {
-  const rs = resultados.filter((r) => r.cenario === c.nome);
+const avaliacao = [...CENARIOS.map((c) => c.nome), ...(casosJev ? [NOME_JEV] : [])].map((nome) => {
+  const rs = resultados.filter((r) => r.cenario === nome);
   return {
-    nome: c.nome,
+    nome,
     pct_autonomas_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_autonomas,
     pct_acao_nivel0_p005: rs.find((r) => r.p_sem_sinal === 0.05)!.pct_nivel0,
     saldo_minimo_mes_rs: Math.min(...rs.map((r) => r.saldo_liquido_mes_rs)),
@@ -577,6 +475,9 @@ writeFileSync(
         freio_teto_rs: 3000,
       },
       cenarios: CENARIOS.map(({ hashesBloqueados: _h, ...c }) => (void _h, c)),
+      cenario_8: casosJev
+        ? { nome: NOME_JEV, politica: c7.nome, reclassificadas_pelo_jev: reclassJev.size, fonte: "data/processed/avaliacao_jev.json", observacao: "mesma política do cenário 7; as conversas \"outro\" recebem o motivo e a confiança do Jev" }
+        : null,
       definicoes: {
         nivel_acao: "nível da ação que o agente executa (decidirNivel.nivelAcao)",
         aprovacao_resposta: "Reclame Aqui: a resposta pública precisa de aprovação, mesmo com a ação no nível 0",

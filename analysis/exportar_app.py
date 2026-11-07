@@ -162,6 +162,43 @@ def main():
         })
     gravar("ferramentas", ferramentas)
 
+    # Agente analista (docs/decisoes.md, seção 6): agregados de causa-raiz e pedidos ainda em aberto afetados.
+    exportar_analista()
+
+
+UFS_NE = ["BA", "PE", "CE", "RN", "PB", "MA", "PI", "AL", "SE"]  # politicas.csv › prazos_entrega › regiao_por_uf
+CORTE = "2026-11-02"
+
+
+def exportar_analista():
+    proc = BASE / "data" / "processed"
+    with open(proc / "metricas.json", encoding="utf-8") as f:
+        met = json.load(f)["recontato"]
+    tuf = pd.read_csv(proc / "recontato_transportadora_uf.csv")
+    tr = pd.read_csv(proc / "recontato_transportadora.csv")
+    gravar("agregados", {
+        "fonte": "data/processed (analysis/analise_atendimento.py); amostra de 1 em 4 clientes",
+        "recontato_transportadora": tr.to_dict(orient="records"),
+        "recontato_transportadora_uf": tuf.to_dict(orient="records"),
+        "pct_recontato_demais_transportadoras": met["expressa_ja"]["pct_recontato_demais"],
+        "brinde": met["brinde"],
+    })
+
+    # Pedidos abertos (sem entrega) em 02/11 que um aviso proativo pode alcançar: Expressa Já no Nordeste e
+    # pedidos da campanha com brinde. Só identificadores, situação e consentimentos (sem dado pessoal).
+    ped = ler("pedidos")
+    ped = ped[(ped.data_pedido < CORTE) & ped.status_entrega.isin(["aguardando_separacao", "em_transito"])]
+    ped = ped.assign(tem_brinde=ped.descricao_produto.str.contains(r"\+ Brinde", regex=True))
+    alvo = ped[((ped.transportadora == "Expressa Já") & ped.uf.isin(UFS_NE)) | ped.tem_brinde]
+    cli = ler("clientes")[["customer_id", "aceita_comunicacao_whatsapp", "aceita_comunicacao_email"]]
+    alvo = alvo.merge(cli, on="customer_id", how="left")
+    cols = ["order_id", "customer_id", "transportadora", "uf", "status_entrega", "data_prometida", "tem_brinde",
+            "aceita_comunicacao_whatsapp", "aceita_comunicacao_email"]
+    reg = registros(alvo[cols].assign(tem_brinde=alvo.tem_brinde.map(lambda b: "sim" if b else "nao")))
+    for r in reg:
+        r["tem_brinde"] = r["tem_brinde"] == "sim"
+    gravar("pedidos_afetados", reg)
+
 
 if __name__ == "__main__":
     main()
