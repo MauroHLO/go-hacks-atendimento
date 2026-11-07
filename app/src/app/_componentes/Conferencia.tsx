@@ -1,14 +1,12 @@
 import type { DadosPainel } from "@/lib/painel/dados";
-import { Cartao, Fonte, MOTIVO, pct, Subtitulo, Tabela, TD, TH, Titulo } from "./ui";
+import { Cabecalho, Cartao, Detalhes, Fonte, MOTIVO, pct, Subtitulo, Tabela, TD, TH } from "./ui";
 
 export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: DadosPainel["fila"]["sumario"] }) {
   const j = c.jev;
   const rv = j.revisao;
   return (
     <div className="space-y-8">
-      <Titulo etiqueta="Como conferimos a IA" sub="O que medimos, onde a IA errou (ou pareceu errar) e o que mudou por causa disso.">
-        Conferência
-      </Titulo>
+      <Cabecalho etiqueta="Como conferimos a IA" titulo="Onde a IA errou e o que mudou" frase="Medimos o Jev, conferimos à mão o que parecia erro e corrigimos o que estava errado de fato." />
 
       <section className="space-y-3">
         <Subtitulo>Avaliação do Jev contra a tag do atendente</Subtitulo>
@@ -32,6 +30,7 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
           <p className="font-semibold">Achado de segurança: AT107397</p>
           <p className="mt-1 text-sm">{rv.observacoes.find((o) => o.conversation_id === "AT107397")?.texto}. O Jev classifica como reação adversa (confiança 1,0), o que leva o caso ao nível 2 com orientação de suspensão e registro em 24 h.</p>
         </div>
+        <Detalhes rotulo="Ver concordância por tag e os 20 desencontros revisados">
         <p className="text-sm text-tinta">
           Também revisado: AT114627 tem {rv.observacoes.find((o) => o.conversation_id === "AT114627")?.texto}. Confiança dos desencontros: {j.confiancaDiscordantes[">=0,9"]} de {Object.values(j.confiancaDiscordantes).reduce((a, b) => a + b, 0)} com confiança ≥ 0,9; na revisão, a confiança alta acompanhou acerto. A segurança continua nas regras do motor: fatos de sistema, evidências e limites, não a confiança do modelo.
         </p>
@@ -75,19 +74,21 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
             </tbody>
           </Tabela>
         </div>
+        </Detalhes>
       </section>
 
       <section className="space-y-3">
         <Subtitulo>Os 9 anexos com &quot;produto da foto diferente do pedido&quot;, conferidos à mão</Subtitulo>
-        <p className="text-sm text-tinta">
-          O verificador compara a descrição visual da foto com o pedido: (1) etiqueta de outro pedido, (2) produto do catálogo que não está no pedido, (3) categoria ausente no pedido (inclusive copo × garrafa), (4) mesma categoria, mas a foto mostra estampa e o pedido é personalizado por nome ou iniciais. Todos os {c.anexos.length} também têm a mesma foto em outro pedido ou cliente, e {c.anexos.filter((a) => a.outros_sinais_fortes.includes("EXIF antes da entrega")).length} têm EXIF anterior à entrega: nenhum depende só da comparação de produto.
-        </p>
         <div className="rounded-2xl border-4 border-limao p-4 text-tinta">
           <p className="font-semibold text-azul">Regra rebaixada depois da conferência manual (Mauro)</p>
           <p className="mt-1 text-sm">
             A regra 4 passou de sinal <strong>forte</strong> para <strong>fraco</strong> ({c.anexos.filter((a) => a.numero_regra === 4).map((a) => a.anexo_id).join(", ")}): um produto com iniciais pode ter estampa de fundo, e com dados reais isso mandaria clientes honestos ao supervisor. Como sinal fraco, ela só sobe a probabilidade de a reclamação não proceder (de 0,05 para 0,15) e entra na fórmula de custo. As regras 1 a 3 continuam fortes. A decisão desses 9 casos não muda, porque todos têm hash repetido, e a simulação saiu idêntica.
           </p>
         </div>
+        <Detalhes rotulo="Ver as regras e os 9 anexos">
+        <p className="text-sm text-tinta">
+          O verificador compara a descrição visual da foto com o pedido: (1) etiqueta de outro pedido, (2) produto do catálogo que não está no pedido, (3) categoria ausente no pedido (inclusive copo × garrafa), (4) mesma categoria, mas a foto mostra estampa e o pedido é personalizado por nome ou iniciais. Todos os {c.anexos.length} também têm a mesma foto em outro pedido ou cliente, e {c.anexos.filter((a) => a.outros_sinais_fortes.includes("EXIF antes da entrega")).length} têm EXIF anterior à entrega: nenhum depende só da comparação de produto.
+        </p>
         <Tabela legenda="Anexos conferidos">
           <thead>
             <tr>
@@ -114,6 +115,7 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
             ))}
           </tbody>
         </Tabela>
+        </Detalhes>
       </section>
 
       <section className="grid gap-4 lg:grid-cols-2">
@@ -138,11 +140,13 @@ export function Conferencia({ c, fila }: { c: DadosPainel["conferencia"]; fila: 
         <Cartao>
           <Subtitulo>Checagem do texto gerado</Subtitulo>
           <p className="mt-2 text-sm text-tinta">
-            Toda resposta passa por uma checagem em código antes de sair: número, data ou valor que não está na ficha, acusação, lei sem fonte, promessa que a ação não cumpre, ação dada como feita sem ter sido, link e dado pessoal. Na fila: {fila.redacao_aprovada_na_2a_tentativa} redações aprovadas na 2ª tentativa e {fila.texto_de_reserva} que caiu no texto de reserva e foi para aprovação. Caso sinalizado nem passa pelo modelo: a mensagem é fixa (&quot;em análise&quot;).
+            Toda resposta passa por uma checagem em código antes de sair: número, data ou valor que não está na ficha, acusação, lei sem fonte, promessa que a ação não cumpre, ação dada como feita sem ter sido, link, dado pessoal e previsão de entrega já vencida (se passou, a resposta diz que o pedido está atrasado). Na fila: {fila.redacao_aprovada_na_2a_tentativa} redações aprovadas na 2ª tentativa e {fila.texto_de_reserva} que caiu no texto de reserva e foi para aprovação. Caso sinalizado nem passa pelo modelo: a mensagem é fixa (&quot;em análise&quot;).
           </p>
         </Cartao>
       </section>
-      <Fonte>{c.fonte}; revisão manual registrada em docs/decisoes.md, seção 6.</Fonte>
+      <Detalhes rotulo="Ver as fontes">
+        <Fonte>{c.fonte}; revisão manual registrada em docs/decisoes.md, seção 6.</Fonte>
+      </Detalhes>
     </div>
   );
 }

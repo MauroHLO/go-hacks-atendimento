@@ -6,7 +6,7 @@
 import { useState } from "react";
 import type { DadosPainel } from "@/lib/painel/dados";
 import { FichaCaso } from "./FichaCaso";
-import { dataCurta, Fonte, NivelChip, Titulo, type Nivel } from "./ui";
+import { Cabecalho, dataCurta, Detalhes, Fonte, NivelChip, type Nivel } from "./ui";
 
 const TITULO: Record<string, string> = {
   avaria_sem_sinal: "Avaria sem sinal",
@@ -19,9 +19,7 @@ export function Casos({ casos }: { casos: DadosPainel["casos"] }) {
   const c = casos[i];
   return (
     <div className="space-y-6">
-      <Titulo etiqueta="Casos do histórico" sub="Três conversas reais da amostra (dados sintéticos), uma por desfecho: resolve sozinho, sinaliza ao supervisor e aciona a qualidade. A ficha é montada na data da conversa, sem informação do futuro.">
-        O mesmo agente em três situações
-      </Titulo>
+      <Cabecalho etiqueta="Casos do histórico" titulo="Três desfechos" frase="O mesmo agente resolve sozinho, sinaliza ao supervisor ou aciona a qualidade, conforme a evidência." />
       <div role="tablist" aria-label="Casos" className="flex flex-wrap gap-2">
         {casos.map((x, k) => (
           <button
@@ -44,7 +42,10 @@ export function Casos({ casos }: { casos: DadosPainel["casos"] }) {
         </p>
       </div>
       <FichaCaso caso={c.caso} ficha={c.ficha} />
-      <Fonte>data/processed/casos_demo.json (npm run casos-demo, AI Proxy real)</Fonte>
+      <Detalhes>
+        <p className="text-sm text-tinta">Conversas do histórico (dados sintéticos), escolhidas por critério fixo: a primeira, em ordem cronológica, que atende ao critério. A ficha é montada na data da conversa, sem informação do futuro; a fila de agora não tem anexos, estes têm.</p>
+        <Fonte>data/processed/casos_demo.json (npm run casos-demo, AI Proxy real)</Fonte>
+      </Detalhes>
     </div>
   );
 }

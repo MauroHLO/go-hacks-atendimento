@@ -4,7 +4,8 @@ import { EXECUTADO_POR, Simulador } from "../ferramentas";
 import { CENARIO_PADRAO, MENSAGEM_EM_ANALISE } from "../policy";
 import { TEXTO_RESERVA } from "./checagem";
 import { clienteFalso, respostaChat, respostaJev, type RespostaFalsa } from "./fetch-falso";
-import { novoEstado, processarConversa } from "./orquestrador";
+import { fatosTexto, novoEstado, processarConversa } from "./orquestrador";
+import { montarContexto } from "../contexto";
 
 // ---------- base fictícia ----------
 const AGORA = "2026-11-02 09:00:00";
@@ -185,5 +186,18 @@ describe("dados reais da fila (sem rede)", () => {
       const r = await processarConversa(c.conversation_id, { sim, ia, estado });
       expect([0, 1, 2]).toContain(r.decisao.nivelFinal);
     }
+  });
+});
+
+describe("fatos para o redator: previsão vencida", () => {
+  it("pedido não entregue com prazo vencido: diz que está atrasado, sem a data vencida", () => {
+    const ficha = montarContexto("AT1", base(), AGORA)!;
+    const f = fatosTexto(ficha, AGORA).join(" ");
+    expect(f).toContain("o pedido está atrasado");
+    expect(f).not.toContain("27/10/2026");
+  });
+  it("prazo ainda no futuro: a data prometida entra", () => {
+    const ficha = montarContexto("AT1", base(), "2026-10-20 09:00:00")!;
+    expect(fatosTexto(ficha, "2026-10-20 09:00:00").join(" ")).toContain("Data prometida de entrega: 27/10/2026");
   });
 });

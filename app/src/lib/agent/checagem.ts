@@ -24,7 +24,8 @@ export type FalhaChecagem =
   | "promessa_contato"
   | "termo_de_solucao"
   | "acusacao"
-  | "politica_sem_fonte";
+  | "politica_sem_fonte"
+  | "previsao_vencida";
 
 export interface Permitido {
   textos: readonly string[]; // regra citada, descrição da ação e fatos em texto
@@ -32,6 +33,7 @@ export interface Permitido {
   links?: readonly string[];
   nivel: 0 | 1 | 2;
   acaoExecutada: boolean; // nível 0 com a ação já feita pelo agente
+  agora?: string; // "AAAA-MM-DD HH:MM:SS": previsão ou prazo de entrega anterior a agora é recusado
 }
 
 export interface ResultadoChecagem {
@@ -111,6 +113,24 @@ export function termosSemFonte(texto: string, permitidos: readonly string[]): st
   return termosDeSolucao(texto).filter((t) => !fonte.has(t));
 }
 
+// Previsão ou prazo de entrega vencido: frase que fala de previsão, prazo ou chegada e cita uma data anterior
+// a agora. "Entregue em" (fato passado) não conta. Se a previsão já passou, a resposta deve dizer que o pedido
+// está atrasado, sem citar a data vencida.
+const RE_FALA_DE_PREVISAO = /previs|\bprazo\b|data prometida|\bcheg(a|am|ar|ara|ando)\b|sera entregue|deve ser entregue|entrega prevista|\bpara entrega\b|\bate o dia\b/;
+const RE_DATA = /\b(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?\b/g;
+export function previsaoVencida(texto: string, agora: string): boolean {
+  const hoje = agora.slice(0, 10);
+  const ano = agora.slice(0, 4);
+  return texto.split(/(?<=[.!?;])\s+|\n+/).some((frase) => {
+    const f = normalizar(frase);
+    if (!RE_FALA_DE_PREVISAO.test(f) || /\bentregue em\b|\bfoi entregue\b/.test(f)) return false;
+    return [...frase.matchAll(RE_DATA)].some(([, d, m, a]) => {
+      const aaaa = a ? (a.length === 2 ? `20${a}` : a) : ano;
+      return `${aaaa}-${m.padStart(2, "0")}-${d.padStart(2, "0")}` < hoje;
+    });
+  });
+}
+
 function numeros(texto: string): string[] {
   return texto.match(RE_NUMERO) ?? [];
 }
@@ -142,6 +162,7 @@ export function verificarResposta(texto: string, p: Permitido): ResultadoChecage
   }
   if (p.nivel === 0 && PADROES_PROMESSA_CONTATO.some((re) => re.test(t))) falhas.push("promessa_contato");
   if (termosSemFonte(texto, fontes).length > 0) falhas.push("termo_de_solucao");
+  if (p.agora && previsaoVencida(texto, p.agora)) falhas.push("previsao_vencida");
 
   return { ok: falhas.length === 0, falhas };
 }
@@ -158,6 +179,7 @@ const EXPLICA: Record<FalhaChecagem, string> = {
   termo_de_solucao: "solução, prazo ou benefício que não está na ação decidida",
   acusacao: "tom de suspeita ou acusação ao cliente",
   politica_sem_fonte: "citar lei, artigo ou política que não foi fornecida",
+  previsao_vencida: "citar previsão ou prazo de entrega que já passou (diga que o pedido está atrasado, sem a data vencida)",
 };
 
 export function motivoDaRecusa(falhas: readonly FalhaChecagem[]): string {

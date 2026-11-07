@@ -4,7 +4,7 @@
 
 import type { Resumo } from "@/lib/agent/resumo";
 import type { LinhaFicha } from "@/lib/painel/dados";
-import { CANAL, Cartao, CLARO_NIVEL, MOTIVO, NivelChip, nomeFerramenta, Subtitulo, Tabela, TD, TH, type Nivel } from "./ui";
+import { CANAL, CLARO_NIVEL, COR_NIVEL, MOTIVO, NivelChip, NOME_NIVEL, nomeFerramenta, Tabela, TD, TH, type Nivel } from "./ui";
 
 const NOUL: Record<string, string> = {
   reacao_adversa: "reação adversa",
@@ -55,6 +55,19 @@ function Justificativa({ texto }: { texto: string }) {
   );
 }
 
+// Seção da ficha em acordeão.
+function Secao({ titulo, aberto = false, children }: { titulo: string; aberto?: boolean; children: React.ReactNode }) {
+  return (
+    <details open={aberto} className="group rounded-2xl border border-zinc-200 bg-white">
+      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-2xl px-4 py-3 text-lg font-semibold text-azul hover:bg-creme focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano [&::-webkit-details-marker]:hidden">
+        <span aria-hidden="true" className="inline-block text-base transition-transform group-open:rotate-90">▸</span>
+        {titulo}
+      </summary>
+      <div className="px-4 pb-4">{children}</div>
+    </details>
+  );
+}
+
 export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFicha[]; aviso?: string | null }) {
   const c = caso.classificacao;
   const d = caso.decisao;
@@ -74,19 +87,28 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
         </p>
       ) : null}
 
-      <div className={`flex flex-wrap items-center gap-x-4 gap-y-2 rounded-2xl px-4 py-3 ${CLARO_NIVEL[nivel]}`}>
-        <span className="text-lg font-extrabold text-azul">{caso.conversation_id}</span>
-        <span className="text-sm text-tinta">{CANAL[caso.canal] ?? caso.canal}</span>
-        <NivelChip nivel={nivel} />
-        <span className="text-sm text-tinta">
-          ação: <strong className="font-semibold">{nomeFerramenta(d.ferramenta)}</strong>
-        </span>
-        {d.nivel !== d.nivel_final ? <span className="text-sm text-tinta-suave">(motor decidiu nível {d.nivel}; subiu na execução)</span> : null}
+      <div className={`rounded-[1.5rem] p-5 sm:p-6 ${CLARO_NIVEL[nivel]}`}>
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+          <span className={`flex h-16 w-16 shrink-0 items-center justify-center rounded-full text-3xl font-extrabold ${COR_NIVEL[nivel]}`} aria-hidden="true">
+            {nivel}
+          </span>
+          <div className="min-w-0 space-y-1">
+            <p className="text-sm text-tinta">
+              <span className="font-semibold text-azul">{caso.conversation_id}</span> · {CANAL[caso.canal] ?? caso.canal}
+            </p>
+            <p className="text-2xl font-extrabold text-azul">
+              Nível {nivel} · {NOME_NIVEL[nivel]}
+            </p>
+            <p className="text-tinta">
+              Ação: <strong className="font-semibold">{nomeFerramenta(d.ferramenta)}</strong> · Motivo: <strong className="font-semibold">{MOTIVO[c.motivo] ?? c.motivo}</strong>
+              {c.valida && !semDemanda ? <span className="text-tinta-suave"> (confiança {c.confianca.toLocaleString("pt-BR", { maximumFractionDigits: 2 })})</span> : null}
+            </p>
+            {d.nivel !== d.nivel_final ? <p className="text-sm text-tinta-suave">O motor decidiu nível {d.nivel}; subiu na execução.</p> : null}
+          </div>
+        </div>
       </div>
 
-      <div className="grid gap-5 lg:grid-cols-2">
-        <Cartao>
-          <Subtitulo>1. Classificação (Jev)</Subtitulo>
+      <Secao titulo="1. Classificação (Jev)">
           {semDemanda ? (
             <p className="mt-2 text-sm text-tinta">O cliente não escreveu nada (só o bot falou): sem demanda, sem chamar o modelo.</p>
           ) : !c.valida ? (
@@ -124,10 +146,9 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
               ) : null}
             </div>
           )}
-        </Cartao>
+      </Secao>
 
-        <Cartao>
-          <Subtitulo>2. Decisão do motor de política</Subtitulo>
+      <Secao titulo="2. Decisão do motor de política">
           <div className="mt-2 space-y-2 text-sm text-tinta">
             <p>
               <NivelChip nivel={d.nivel as Nivel} /> · {nomeFerramenta(d.acao)}
@@ -142,11 +163,9 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
               ))}
             </ul>
           </div>
-        </Cartao>
-      </div>
+      </Secao>
 
-      <div>
-        <Subtitulo>3. Ficha única</Subtitulo>
+      <Secao titulo="3. Ficha única">
         <p className="mb-2 text-sm text-tinta-suave">Cada campo com o sistema de onde veio (em vez de abrir cada portal).</p>
         <Tabela legenda="Ficha única com a origem de cada campo">
           <thead>
@@ -166,10 +185,9 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
             ))}
           </tbody>
         </Tabela>
-      </div>
+      </Secao>
 
-      <div>
-        <Subtitulo>4. Sinais de evidência</Subtitulo>
+      <Secao titulo="4. Sinais de evidência">
         {caso.sinais.length === 0 ? (
           <p className="text-sm text-tinta-suave">Nenhum sinal{caso.sinais.length === 0 && ["avaria", "item_faltante", "brinde", "erro_personalizacao"].includes(c.motivo) ? " nas fotos e no histórico do cliente" : " (o motivo não depende de foto)"}.</p>
         ) : (
@@ -183,10 +201,9 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
             ))}
           </ul>
         )}
-      </div>
+      </Secao>
 
-      <div>
-        <Subtitulo>5. Linha do tempo das ferramentas</Subtitulo>
+      <Secao titulo="5. Linha do tempo das ferramentas" aberto>
         <p className="mb-2 text-sm text-tinta-suave [overflow-wrap:anywhere]">Log no formato de acoes_executadas_sistemas; ações simuladas, executado_por = agente.</p>
         <ol className="relative space-y-0 border-l-2 border-ciano pl-4">
           {caso.log.map((l) => (
@@ -206,10 +223,9 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
             </li>
           ))}
         </ol>
-      </div>
+      </Secao>
 
-      <div>
-        <Subtitulo>6. Resposta</Subtitulo>
+      <Secao titulo="6. Resposta" aberto>
         {semDemanda ? (
           <p className="text-sm text-tinta-suave">Sem resposta: não há o que responder. A conversa é encerrada.</p>
         ) : (
@@ -227,7 +243,7 @@ export function FichaCaso({ caso, ficha, aviso }: { caso: Resumo; ficha: LinhaFi
             ) : null}
           </div>
         )}
-      </div>
+      </Secao>
 
       <p className="text-xs text-tinta-suave">
         {caso.telemetria.sistemasAcessados} sistemas consultados · {(caso.telemetria.ms / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} s · Jev {caso.telemetria.jev.tokensEntrada + caso.telemetria.jev.tokensSaida} tokens · redação {caso.telemetria.chat.tokensEntrada + caso.telemetria.chat.tokensSaida} tokens

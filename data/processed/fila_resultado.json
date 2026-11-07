@@ -6,8 +6,8 @@
     "processadas": 65,
     "erros": 0,
     "pct_nivel_final": {
-      "0": 90.8,
-      "1": 7.7,
+      "0": 89.2,
+      "1": 9.2,
       "2": 1.5
     },
     "pct_nivel_acao": {
@@ -15,10 +15,10 @@
       "1": 7.7,
       "2": 1.5
     },
-    "respostas_enviadas": 33,
-    "respostas_para_aprovacao": 27,
-    "texto_de_reserva": 1,
-    "redacao_aprovada_na_2a_tentativa": 15,
+    "respostas_enviadas": 32,
+    "respostas_para_aprovacao": 28,
+    "texto_de_reserva": 2,
+    "redacao_aprovada_na_2a_tentativa": 12,
     "classificacao_invalida": 0,
     "confianca_abaixo_de_0_7": 2,
     "motivos": {
@@ -43,9 +43,9 @@
       "consultar_cliente": 65,
       "ver_anexos": 65,
       "consultar_pedido": 59,
-      "responder_cliente": 33,
-      "encerrar_conversa": 33,
-      "solicitar_aprovacao": 32,
+      "solicitar_aprovacao": 33,
+      "responder_cliente": 32,
+      "encerrar_conversa": 32,
       "solicitar_foto": 12,
       "informar_status": 9,
       "abrir_chamado_transportadora": 6,
@@ -60,14 +60,14 @@
       "trocar_produto": 1
     },
     "sistemas_acessados_por_conversa": 3.35,
-    "tempo_medio_ms": 3180,
-    "tempo_total_lote_ms": 43120,
+    "tempo_medio_ms": 4338,
+    "tempo_total_lote_ms": 65889,
     "concorrencia": 5,
     "tokens": {
       "jevEntrada": 61363,
       "jevSaida": 19142,
-      "chatEntrada": 30136,
-      "chatSaida": 3367
+      "chatEntrada": 30927,
+      "chatSaida": 5066
     },
     "custo_ia_usd": 0.002577,
     "custo_observacao": "custo informado pelo proxy só no Jev; o chat não informa custo (tokens acima)",
@@ -117,6 +117,20 @@
             "referencia": "NOT-SIM-000002"
           }
         ]
+      },
+      {
+        "tipo": "cobranca_duplicada",
+        "escopo": "Cobranças em dobro sem estorno",
+        "evidencias": [
+          "81 pedidos com 2 ou mais cobranças efetivadas; 69 já estornados, 12 sem estorno (amostra 1 em 4)",
+          "R$ 1668,81 cobrados a mais e ainda não devolvidos (amostra 1 em 4)",
+          "99 conversas nesses pedidos"
+        ],
+        "referencia": "INC-SIM-000003",
+        "pedidosAfetados": 12,
+        "semConsentimento": 0,
+        "avisos": [],
+        "acao": "12 estornos preparados para o agente de atendimento: direito comprovado pelo gateway, nível 0 sem teto até o valor do pedido"
       }
     ],
     "log": [
@@ -167,6 +181,18 @@
         "executado_por": "agente",
         "aprovado_por": null,
         "referencia_sistema": "NOT-SIM-000002"
+      },
+      {
+        "acao_id": "AC-SIM-000005",
+        "conversation_id": null,
+        "order_id": null,
+        "data_hora": "2026-11-02 08:00:00",
+        "sistema": "Central de atendimento",
+        "acao": "abrir_incidente",
+        "valor_rs": null,
+        "executado_por": "agente",
+        "aprovado_por": null,
+        "referencia_sistema": "INC-SIM-000003"
       }
     ]
   },
@@ -181,10 +207,10 @@
         "falha": null,
         "motivo": "atraso",
         "motivo_jev": "atraso",
-        "confianca": 0.96,
+        "confianca": 0.97,
         "probabilidades": {
-          "rastreio": 0.04,
-          "atraso": 0.96,
+          "rastreio": 0.03,
+          "atraso": 0.97,
           "avaria": 0,
           "item_faltante": 0,
           "brinde": 0,
@@ -203,9 +229,9 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.05,
+          "mencao_saude": 0.07,
           "ameaca_reclame_aqui_ou_procon": 0.09,
-          "cliente_irritado": 0.83,
+          "cliente_irritado": 0.82,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.05
         },
@@ -309,7 +335,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000024",
+          "acao_id": "AC-SIM-000035",
           "conversation_id": "AT116160",
           "order_id": "GBH473217",
           "data_hora": "2026-11-02 08:00:00",
@@ -318,11 +344,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000001"
+          "referencia_sistema": "APR-SIM-000003"
         }
       ],
       "resposta": {
-        "texto": "Já abrimos um chamado com a Expressa Já sobre a entrega do seu pedido. O rastreio informa que ele está em transferência, e a previsão da transportadora é 29/10/2026.",
+        "texto": "Seu pedido está atrasado e permanece em trânsito pela Expressa Já. Já abrimos um chamado com a transportadora sobre a entrega, que está em acompanhamento.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -330,17 +356,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2709,
+        "ms": 3554,
         "jev": {
-          "ms": 619,
+          "ms": 710,
           "tokensEntrada": 1062,
           "tokensSaida": 319,
           "custoUsd": 0.000044604
         },
         "chat": {
-          "ms": 2072,
-          "tokensEntrada": 425,
-          "tokensSaida": 47,
+          "ms": 2836,
+          "tokensEntrada": 455,
+          "tokensSaida": 36,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000044604,
@@ -379,9 +405,9 @@
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.07,
+          "mencao_saude": 0.08,
           "ameaca_reclame_aqui_ou_procon": 0.06,
-          "cliente_irritado": 0.55,
+          "cliente_irritado": 0.54,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.06
         },
@@ -484,7 +510,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000022",
+          "acao_id": "AC-SIM-000021",
           "conversation_id": "AT116171",
           "order_id": "GBH481046",
           "data_hora": "2026-11-02 08:00:00",
@@ -496,7 +522,7 @@
           "referencia_sistema": "CHM-SIM-000001"
         },
         {
-          "acao_id": "AC-SIM-000037",
+          "acao_id": "AC-SIM-000024",
           "conversation_id": "AT116171",
           "order_id": "GBH481046",
           "data_hora": "2026-11-02 08:00:00",
@@ -505,11 +531,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000002"
+          "referencia_sistema": "APR-SIM-000001"
         }
       ],
       "resposta": {
-        "texto": "O pedido GBH481046 consta como entregue em 30/10/2026, pela ViaLog. Abrimos um chamado com a transportadora sobre a entrega.",
+        "texto": "O rastreio informa que o pedido foi entregue em 30/10/2026. Abrimos um chamado com a ViaLog sobre a entrega do pedido.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -517,17 +543,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 4308,
+        "ms": 2744,
         "jev": {
-          "ms": 703,
+          "ms": 849,
           "tokensEntrada": 1036,
           "tokensSaida": 319,
           "custoUsd": 0.000043512
         },
         "chat": {
-          "ms": 3602,
-          "tokensEntrada": 388,
-          "tokensSaida": 38,
+          "ms": 1884,
+          "tokensEntrada": 404,
+          "tokensSaida": 37,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043512,
@@ -566,9 +592,9 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.04,
-          "ameaca_reclame_aqui_ou_procon": 0.11,
-          "cliente_irritado": 0.91,
+          "mencao_saude": 0.03,
+          "ameaca_reclame_aqui_ou_procon": 0.1,
+          "cliente_irritado": 0.9,
           "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.08
         },
@@ -671,7 +697,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000021",
+          "acao_id": "AC-SIM-000023",
           "conversation_id": "AT116473",
           "order_id": "GBH476745",
           "data_hora": "2026-11-02 08:00:00",
@@ -683,7 +709,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000049",
+          "acao_id": "AC-SIM-000054",
           "conversation_id": "AT116473",
           "order_id": "GBH476745",
           "data_hora": "2026-11-02 08:00:00",
@@ -692,33 +718,29 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000006"
+          "referencia_sistema": "APR-SIM-000008"
         }
       ],
       "resposta": {
-        "texto": "Seu pedido está em trânsito pela transportadora Expressa Já. A previsão informada pela transportadora é 30/10/2026, e o último evento registrado foi transferência em 28/10/2026.",
+        "texto": "Seu pedido GBH476745 está em trânsito pela transportadora Expressa Já e está atrasado. O último evento do rastreio foi uma transferência em 28/10/2026. Abrimos um chamado com a transportadora sobre a entrega, que está em acompanhamento.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 6145,
+        "ms": 7624,
         "jev": {
-          "ms": 667,
+          "ms": 903,
           "tokensEntrada": 1086,
           "tokensSaida": 319,
           "custoUsd": 0.000045612
         },
         "chat": {
-          "ms": 5476,
-          "tokensEntrada": 917,
-          "tokensSaida": 106,
+          "ms": 6719,
+          "tokensEntrada": 473,
+          "tokensSaida": 141,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000045612,
@@ -759,15 +781,15 @@
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.64,
-          "pede_ou_envia_dado_sensivel": 0.04,
+          "cliente_irritado": 0.49,
+          "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.03
         },
         "flags": {
           "reacao_adversa": false,
           "mencao_saude": false,
           "ameaca_reclame_aqui_ou_procon": false,
-          "cliente_irritado": true,
+          "cliente_irritado": false,
           "pede_ou_envia_dado_sensivel": false,
           "mais_de_um_motivo": false
         },
@@ -866,7 +888,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000023",
+          "acao_id": "AC-SIM-000022",
           "conversation_id": "AT116480",
           "order_id": "GCH559342",
           "data_hora": "2026-11-02 08:00:00",
@@ -878,7 +900,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000029",
+          "acao_id": "AC-SIM-000090",
           "conversation_id": "AT116480",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -890,7 +912,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000030",
+          "acao_id": "AC-SIM-000091",
           "conversation_id": "AT116480",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -903,25 +925,30 @@
         }
       ],
       "resposta": {
-        "texto": "O pedido GCH559342 está em trânsito pela transportadora TransNorte. O último registro indica chegada à unidade de destino em 01/11/2026, e a previsão de entrega é 03/11/2026.",
+        "texto": "Seu pedido está em trânsito pela TransNorte. Como a previsão de entrega já passou, o pedido está atrasado.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
-        "tentativas": 1,
-        "falhasChecagem": []
+        "tentativas": 2,
+        "falhasChecagem": [
+          [
+            "numero_sem_fonte",
+            "previsao_vencida"
+          ]
+        ]
       },
       "telemetria": {
-        "ms": 3005,
+        "ms": 12834,
         "jev": {
-          "ms": 771,
+          "ms": 901,
           "tokensEntrada": 1032,
           "tokensSaida": 319,
           "custoUsd": 0.000043344
         },
         "chat": {
-          "ms": 2233,
-          "tokensEntrada": 389,
-          "tokensSaida": 52,
+          "ms": 11926,
+          "tokensEntrada": 896,
+          "tokensSaida": 349,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043344,
@@ -961,10 +988,10 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.03,
-          "ameaca_reclame_aqui_ou_procon": 0.81,
+          "ameaca_reclame_aqui_ou_procon": 0.82,
           "cliente_irritado": 0.96,
           "pede_ou_envia_dado_sensivel": 0.04,
-          "mais_de_um_motivo": 0.06
+          "mais_de_um_motivo": 0.07
         },
         "flags": {
           "reacao_adversa": false,
@@ -1066,7 +1093,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000060",
+          "acao_id": "AC-SIM-000030",
           "conversation_id": "AT116486",
           "order_id": "GBH474054",
           "data_hora": "2026-11-02 08:00:00",
@@ -1075,33 +1102,29 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000008"
+          "referencia_sistema": "APR-SIM-000002"
         }
       ],
       "resposta": {
-        "texto": "Entendemos o transtorno com o atraso na entrega do seu óleo finalizador. Já abrimos um chamado com a transportadora Expressa Já sobre a entrega do pedido.",
+        "texto": "Seu pedido está atrasado. Já abrimos um chamado com a transportadora Expressa Já sobre a entrega e ele está em acompanhamento.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 7463,
+        "ms": 3245,
         "jev": {
-          "ms": 646,
+          "ms": 821,
           "tokensEntrada": 1072,
           "tokensSaida": 319,
           "custoUsd": 0.000045024
         },
         "chat": {
-          "ms": 6815,
-          "tokensEntrada": 881,
-          "tokensSaida": 99,
+          "ms": 2422,
+          "tokensEntrada": 455,
+          "tokensSaida": 31,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000045024,
@@ -1141,9 +1164,9 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.07,
-          "cliente_irritado": 0.28,
-          "pede_ou_envia_dado_sensivel": 0.05,
+          "ameaca_reclame_aqui_ou_procon": 0.06,
+          "cliente_irritado": 0.32,
+          "pede_ou_envia_dado_sensivel": 0.06,
           "mais_de_um_motivo": 0.03
         },
         "flags": {
@@ -1251,7 +1274,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000035",
+          "acao_id": "AC-SIM-000029",
           "conversation_id": "AT116501",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -1272,11 +1295,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000003"
+          "referencia_sistema": "APR-SIM-000005"
         }
       ],
       "resposta": {
-        "texto": "Para seguirmos com sua solicitação sobre a Necessaire GoBeauté, envie uma foto do produto recebido e da embalagem.",
+        "texto": "Sentimos muito pela falta da Necessaire GoBeauté no pedido. Para seguirmos com sua solicitação, envie uma foto do produto recebido e da embalagem.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -1284,17 +1307,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2031,
+        "ms": 2501,
         "jev": {
-          "ms": 417,
+          "ms": 460,
           "tokensEntrada": 1019,
           "tokensSaida": 318,
           "custoUsd": 0.000042798
         },
         "chat": {
-          "ms": 1611,
-          "tokensEntrada": 391,
-          "tokensSaida": 29,
+          "ms": 2038,
+          "tokensEntrada": 407,
+          "tokensSaida": 36,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042798,
@@ -1332,12 +1355,12 @@
         },
         "urgencia": "alta",
         "sinais_texto": {
-          "reacao_adversa": 0.01,
+          "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.83,
-          "cliente_irritado": 0.96,
-          "pede_ou_envia_dado_sensivel": 0.37,
-          "mais_de_um_motivo": 0.11
+          "ameaca_reclame_aqui_ou_procon": 0.84,
+          "cliente_irritado": 0.97,
+          "pede_ou_envia_dado_sensivel": 0.38,
+          "mais_de_um_motivo": 0.1
         },
         "flags": {
           "reacao_adversa": false,
@@ -1438,7 +1461,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000036",
+          "acao_id": "AC-SIM-000040",
           "conversation_id": "AT116507",
           "order_id": "GBH469698",
           "data_hora": "2026-11-02 08:00:00",
@@ -1450,7 +1473,7 @@
           "referencia_sistema": "CHM-SIM-000002"
         },
         {
-          "acao_id": "AC-SIM-000067",
+          "acao_id": "AC-SIM-000047",
           "conversation_id": "AT116507",
           "order_id": "GBH469698",
           "data_hora": "2026-11-02 08:00:00",
@@ -1459,33 +1482,29 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000009"
+          "referencia_sistema": "APR-SIM-000006"
         }
       ],
       "resposta": {
-        "texto": "Abrimos um chamado com a Expressa Já sobre a entrega do seu pedido. Entendemos a frustração com o atraso e sentimos muito pelo transtorno.",
+        "texto": "Seu pedido está atrasado. Abrimos um chamado com a transportadora Expressa Já sobre a entrega.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 4903,
+        "ms": 2005,
         "jev": {
-          "ms": 478,
+          "ms": 404,
           "tokensEntrada": 1083,
           "tokensSaida": 319,
           "custoUsd": 0.000045486
         },
         "chat": {
-          "ms": 4414,
-          "tokensEntrada": 895,
-          "tokensSaida": 94,
+          "ms": 1588,
+          "tokensEntrada": 446,
+          "tokensSaida": 25,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000045486,
@@ -1502,10 +1521,10 @@
         "falha": null,
         "motivo": "atraso",
         "motivo_jev": "atraso",
-        "confianca": 0.48,
+        "confianca": 0.49,
         "probabilidades": {
-          "rastreio": 0.49,
-          "atraso": 0.51,
+          "rastreio": 0.48,
+          "atraso": 0.52,
           "avaria": 0,
           "item_faltante": 0,
           "brinde": 0,
@@ -1525,8 +1544,8 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.04,
-          "ameaca_reclame_aqui_ou_procon": 0.05,
-          "cliente_irritado": 0.6,
+          "ameaca_reclame_aqui_ou_procon": 0.04,
+          "cliente_irritado": 0.59,
           "pede_ou_envia_dado_sensivel": 0.03,
           "mais_de_um_motivo": 0.05
         },
@@ -1550,7 +1569,7 @@
         "ferramenta": "informar_status",
         "acao_sem_teto": false,
         "auditoria_posterior": false,
-        "justificativa": "Pedido ainda dentro do prazo prometido: informa status e previsão. [politicas.csv › categorias › onde_esta_pedido.regra] Reclame Aqui: a ação segue a regra do motivo; a resposta pública precisa de aprovação. [docs/decisoes.md › seção 5 (Reclame Aqui: ação e resposta separadas)] Confiança 0.48 abaixo de 0.7: sobe para nível 1. [CLAUDE.md › regras (Jev)]",
+        "justificativa": "Pedido ainda dentro do prazo prometido: informa status e previsão. [politicas.csv › categorias › onde_esta_pedido.regra] Reclame Aqui: a ação segue a regra do motivo; a resposta pública precisa de aprovação. [docs/decisoes.md › seção 5 (Reclame Aqui: ação e resposta separadas)] Confiança 0.49 abaixo de 0.7: sobe para nível 1. [CLAUDE.md › regras (Jev)]",
         "ajustes": []
       },
       "acoes": [
@@ -1581,7 +1600,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000038",
+          "acao_id": "AC-SIM-000036",
           "conversation_id": "AT116513",
           "order_id": "GBH481890",
           "data_hora": "2026-11-02 08:00:00",
@@ -1593,7 +1612,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000039",
+          "acao_id": "AC-SIM-000037",
           "conversation_id": "AT116513",
           "order_id": "GBH481890",
           "data_hora": "2026-11-02 08:00:00",
@@ -1605,7 +1624,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000040",
+          "acao_id": "AC-SIM-000038",
           "conversation_id": "AT116513",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -1617,7 +1636,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000041",
+          "acao_id": "AC-SIM-000039",
           "conversation_id": "AT116513",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -1629,7 +1648,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000047",
+          "acao_id": "AC-SIM-000041",
           "conversation_id": "AT116513",
           "order_id": "GBH481890",
           "data_hora": "2026-11-02 08:00:00",
@@ -1641,7 +1660,7 @@
           "referencia_sistema": "APR-SIM-000004"
         },
         {
-          "acao_id": "AC-SIM-000115",
+          "acao_id": "AC-SIM-000066",
           "conversation_id": "AT116513",
           "order_id": "GBH481890",
           "data_hora": "2026-11-02 08:00:00",
@@ -1650,11 +1669,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000017"
+          "referencia_sistema": "APR-SIM-000010"
         }
       ],
       "resposta": {
-        "texto": "Seu pedido está em trânsito pela ViaLog, e o último registro indica chegada à unidade de destino. A previsão de entrega informada pela transportadora é 04/11/2026. Uma pessoa da equipe precisa analisar a solicitação antes de qualquer providência.",
+        "texto": "O pedido está em trânsito pela ViaLog, e o último registro informa chegada à unidade de destino. Uma pessoa da equipe vai analisar a solicitação para informar o status atualizado.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -1666,17 +1685,17 @@
         ]
       },
       "telemetria": {
-        "ms": 9035,
+        "ms": 4974,
         "jev": {
-          "ms": 419,
+          "ms": 393,
           "tokensEntrada": 1039,
           "tokensSaida": 319,
           "custoUsd": 0.000043638
         },
         "chat": {
-          "ms": 8612,
-          "tokensEntrada": 859,
-          "tokensSaida": 119,
+          "ms": 4576,
+          "tokensEntrada": 921,
+          "tokensSaida": 98,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043638,
@@ -1693,7 +1712,7 @@
         "falha": null,
         "motivo": "cancelamento",
         "motivo_jev": "cancelamento",
-        "confianca": 0.8,
+        "confianca": 0.77,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -1703,20 +1722,20 @@
           "erro_personalizacao": 0,
           "cobranca_duplicada": 0,
           "endereco": 0,
-          "cancelamento": 0.81,
-          "troca_fragrancia": 0.04,
+          "cancelamento": 0.78,
+          "troca_fragrancia": 0.03,
           "duvida_produto": 0,
           "cupom": 0,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
           "elogio": 0,
-          "outro": 0.15
+          "outro": 0.19
         },
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.06,
+          "ameaca_reclame_aqui_ou_procon": 0.07,
           "cliente_irritado": 0.17,
           "pede_ou_envia_dado_sensivel": 0.06,
           "mais_de_um_motivo": 0.03
@@ -1820,7 +1839,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000048",
+          "acao_id": "AC-SIM-000052",
           "conversation_id": "AT116520",
           "order_id": "GBH469163",
           "data_hora": "2026-11-02 08:00:00",
@@ -1829,10 +1848,10 @@
           "valor_rs": 155.81,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000005"
+          "referencia_sistema": "APR-SIM-000007"
         },
         {
-          "acao_id": "AC-SIM-000055",
+          "acao_id": "AC-SIM-000059",
           "conversation_id": "AT116520",
           "order_id": "GBH469163",
           "data_hora": "2026-11-02 08:00:00",
@@ -1841,11 +1860,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000007"
+          "referencia_sistema": "APR-SIM-000009"
         }
       ],
       "resposta": {
-        "texto": "Entendemos que você deseja devolver o Kit Miniaturas. Uma pessoa da equipe vai analisar sua solicitação de reembolso por arrependimento antes de qualquer providência.",
+        "texto": "Entendemos que você deseja devolver o Kit Miniaturas do pedido GBH469163. A solicitação de reembolso por arrependimento precisa ser analisada por uma pessoa da equipe antes de qualquer providência. A equipe vai avaliar seu pedido.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -1853,17 +1872,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2412,
+        "ms": 2747,
         "jev": {
-          "ms": 392,
+          "ms": 413,
           "tokensEntrada": 1008,
           "tokensSaida": 319,
           "custoUsd": 0.000042336
         },
         "chat": {
-          "ms": 2012,
-          "tokensEntrada": 387,
-          "tokensSaida": 38,
+          "ms": 2331,
+          "tokensEntrada": 403,
+          "tokensSaida": 54,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042336,
@@ -1903,10 +1922,10 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.01,
-          "ameaca_reclame_aqui_ou_procon": 0.08,
-          "cliente_irritado": 0.6,
+          "ameaca_reclame_aqui_ou_procon": 0.07,
+          "cliente_irritado": 0.63,
           "pede_ou_envia_dado_sensivel": 0.04,
-          "mais_de_um_motivo": 0.04
+          "mais_de_um_motivo": 0.05
         },
         "flags": {
           "reacao_adversa": false,
@@ -1959,7 +1978,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000050",
+          "acao_id": "AC-SIM-000048",
           "conversation_id": "AT116521",
           "order_id": "GCH559560",
           "data_hora": "2026-11-02 08:00:00",
@@ -1971,7 +1990,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000051",
+          "acao_id": "AC-SIM-000049",
           "conversation_id": "AT116521",
           "order_id": "GCH559560",
           "data_hora": "2026-11-02 08:00:00",
@@ -1983,7 +2002,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000052",
+          "acao_id": "AC-SIM-000050",
           "conversation_id": "AT116521",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -1995,7 +2014,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000053",
+          "acao_id": "AC-SIM-000051",
           "conversation_id": "AT116521",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2007,7 +2026,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000054",
+          "acao_id": "AC-SIM-000053",
           "conversation_id": "AT116521",
           "order_id": "GCH559560",
           "data_hora": "2026-11-02 08:00:00",
@@ -2019,7 +2038,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000073",
+          "acao_id": "AC-SIM-000154",
           "conversation_id": "AT116521",
           "order_id": "GCH559560",
           "data_hora": "2026-11-02 08:00:00",
@@ -2028,29 +2047,34 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000010"
+          "referencia_sistema": "APR-SIM-000020"
         }
       ],
       "resposta": {
-        "texto": "Seu pedido GCH559560 está em trânsito pela transportadora Expressa Já. O último evento do rastreio foi uma transferência em 29/10/2026. A previsão de entrega informada é 04/11/2026.",
+        "texto": "Seu pedido está atrasado e consta em trânsito pela transportadora Expressa Já. O último registro indica que está em transferência.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 1,
-        "falhasChecagem": []
+        "tentativas": 2,
+        "falhasChecagem": [
+          [
+            "numero_sem_fonte",
+            "previsao_vencida"
+          ]
+        ]
       },
       "telemetria": {
-        "ms": 2699,
+        "ms": 15035,
         "jev": {
-          "ms": 487,
+          "ms": 409,
           "tokensEntrada": 1051,
           "tokensSaida": 319,
           "custoUsd": 0.000044142
         },
         "chat": {
-          "ms": 2210,
-          "tokensEntrada": 411,
-          "tokensSaida": 54,
+          "ms": 14624,
+          "tokensEntrada": 940,
+          "tokensSaida": 363,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000044142,
@@ -2090,10 +2114,10 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.16,
-          "cliente_irritado": 0.94,
-          "pede_ou_envia_dado_sensivel": 0.06,
-          "mais_de_um_motivo": 0.08
+          "ameaca_reclame_aqui_ou_procon": 0.17,
+          "cliente_irritado": 0.93,
+          "pede_ou_envia_dado_sensivel": 0.05,
+          "mais_de_um_motivo": 0.1
         },
         "flags": {
           "reacao_adversa": false,
@@ -2152,7 +2176,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000056",
+          "acao_id": "AC-SIM-000055",
           "conversation_id": "AT116524",
           "order_id": "GCH556292",
           "data_hora": "2026-11-02 08:00:00",
@@ -2164,7 +2188,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000057",
+          "acao_id": "AC-SIM-000056",
           "conversation_id": "AT116524",
           "order_id": "GCH556292",
           "data_hora": "2026-11-02 08:00:00",
@@ -2176,7 +2200,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000058",
+          "acao_id": "AC-SIM-000057",
           "conversation_id": "AT116524",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2188,7 +2212,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000059",
+          "acao_id": "AC-SIM-000058",
           "conversation_id": "AT116524",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2200,7 +2224,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000065",
+          "acao_id": "AC-SIM-000064",
           "conversation_id": "AT116524",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2212,7 +2236,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000079",
+          "acao_id": "AC-SIM-000072",
           "conversation_id": "AT116524",
           "order_id": "GCH556292",
           "data_hora": "2026-11-02 08:00:00",
@@ -2225,7 +2249,7 @@
         }
       ],
       "resposta": {
-        "texto": "Para seguirmos com sua solicitação sobre o Copo Vibe personalizado, por favor, envie uma foto do produto e da embalagem.",
+        "texto": "Sentimos muito pela experiência com a personalização do seu Copo Vibe. Para seguirmos com a solicitação, envie uma foto do produto e da embalagem, por favor.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -2233,17 +2257,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2403,
+        "ms": 2967,
         "jev": {
-          "ms": 418,
+          "ms": 449,
           "tokensEntrada": 1031,
           "tokensSaida": 322,
           "custoUsd": 0.000043302
         },
         "chat": {
-          "ms": 1984,
-          "tokensEntrada": 383,
-          "tokensSaida": 31,
+          "ms": 2516,
+          "tokensEntrada": 399,
+          "tokensSaida": 40,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043302,
@@ -2284,9 +2308,9 @@
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.06,
-          "cliente_irritado": 0.78,
-          "pede_ou_envia_dado_sensivel": 0.06,
-          "mais_de_um_motivo": 0.39
+          "cliente_irritado": 0.77,
+          "pede_ou_envia_dado_sensivel": 0.05,
+          "mais_de_um_motivo": 0.41
         },
         "flags": {
           "reacao_adversa": false,
@@ -2339,7 +2363,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000061",
+          "acao_id": "AC-SIM-000060",
           "conversation_id": "AT116538",
           "order_id": "GBH454865",
           "data_hora": "2026-11-02 08:00:00",
@@ -2351,7 +2375,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000062",
+          "acao_id": "AC-SIM-000061",
           "conversation_id": "AT116538",
           "order_id": "GBH454865",
           "data_hora": "2026-11-02 08:00:00",
@@ -2363,7 +2387,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000063",
+          "acao_id": "AC-SIM-000062",
           "conversation_id": "AT116538",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2375,7 +2399,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000064",
+          "acao_id": "AC-SIM-000063",
           "conversation_id": "AT116538",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2387,7 +2411,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000066",
+          "acao_id": "AC-SIM-000065",
           "conversation_id": "AT116538",
           "order_id": "GBH454865",
           "data_hora": "2026-11-02 08:00:00",
@@ -2399,7 +2423,7 @@
           "referencia_sistema": "EST-SIM-000001"
         },
         {
-          "acao_id": "AC-SIM-000085",
+          "acao_id": "AC-SIM-000077",
           "conversation_id": "AT116538",
           "order_id": "GBH454865",
           "data_hora": "2026-11-02 08:00:00",
@@ -2412,7 +2436,7 @@
         }
       ],
       "resposta": {
-        "texto": "Realizamos o reembolso de R$ 142,31 referente ao pedido GBH454865. Lamentamos o atraso na entrega do Deo Colônia Citrus Fresh 100ml.",
+        "texto": "Seu pedido GBH454865 está atrasado. Realizamos o reembolso de R$ 142,31 referente à compra.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -2420,17 +2444,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2525,
+        "ms": 2754,
         "jev": {
-          "ms": 413,
+          "ms": 407,
           "tokensEntrada": 1053,
           "tokensSaida": 319,
           "custoUsd": 0.000044226
         },
         "chat": {
-          "ms": 2109,
-          "tokensEntrada": 407,
-          "tokensSaida": 41,
+          "ms": 2345,
+          "tokensEntrada": 421,
+          "tokensSaida": 30,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000044226,
@@ -2470,8 +2494,8 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.03,
-          "ameaca_reclame_aqui_ou_procon": 0.1,
-          "cliente_irritado": 0.28,
+          "ameaca_reclame_aqui_ou_procon": 0.11,
+          "cliente_irritado": 0.27,
           "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.03
         },
@@ -2532,7 +2556,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000068",
+          "acao_id": "AC-SIM-000067",
           "conversation_id": "AT116556",
           "order_id": "GBH477520",
           "data_hora": "2026-11-02 08:00:00",
@@ -2544,7 +2568,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000069",
+          "acao_id": "AC-SIM-000068",
           "conversation_id": "AT116556",
           "order_id": "GBH477520",
           "data_hora": "2026-11-02 08:00:00",
@@ -2556,7 +2580,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000070",
+          "acao_id": "AC-SIM-000069",
           "conversation_id": "AT116556",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2568,7 +2592,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000071",
+          "acao_id": "AC-SIM-000070",
           "conversation_id": "AT116556",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2580,7 +2604,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000072",
+          "acao_id": "AC-SIM-000071",
           "conversation_id": "AT116556",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2592,7 +2616,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000090",
+          "acao_id": "AC-SIM-000082",
           "conversation_id": "AT116556",
           "order_id": "GBH477520",
           "data_hora": "2026-11-02 08:00:00",
@@ -2605,7 +2629,7 @@
         }
       ],
       "resposta": {
-        "texto": "Sentimos muito que a Máscara Capilar Nutrição Intensa tenha chegado avariada. Para seguirmos com sua solicitação, envie uma foto do produto e da embalagem, por favor.",
+        "texto": "Sinto muito que a Máscara Capilar Nutrição Intensa tenha chegado avariada. Para seguirmos com sua solicitação, envie uma foto do produto e da embalagem, por favor.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -2613,16 +2637,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2427,
+        "ms": 2371,
         "jev": {
-          "ms": 398,
+          "ms": 415,
           "tokensEntrada": 1022,
           "tokensSaida": 318,
           "custoUsd": 0.000042924
         },
         "chat": {
-          "ms": 2027,
-          "tokensEntrada": 383,
+          "ms": 1956,
+          "tokensEntrada": 399,
           "tokensSaida": 45,
           "custoUsd": null
         },
@@ -2664,9 +2688,9 @@
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.09,
-          "cliente_irritado": 0.84,
+          "cliente_irritado": 0.83,
           "pede_ou_envia_dado_sensivel": 0.04,
-          "mais_de_um_motivo": 0.12
+          "mais_de_um_motivo": 0.11
         },
         "flags": {
           "reacao_adversa": false,
@@ -2719,7 +2743,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000074",
+          "acao_id": "AC-SIM-000073",
           "conversation_id": "AT116559",
           "order_id": "GBH466364",
           "data_hora": "2026-11-02 08:00:00",
@@ -2731,7 +2755,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000075",
+          "acao_id": "AC-SIM-000074",
           "conversation_id": "AT116559",
           "order_id": "GBH466364",
           "data_hora": "2026-11-02 08:00:00",
@@ -2743,7 +2767,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000076",
+          "acao_id": "AC-SIM-000075",
           "conversation_id": "AT116559",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2755,7 +2779,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000077",
+          "acao_id": "AC-SIM-000076",
           "conversation_id": "AT116559",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2767,7 +2791,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000078",
+          "acao_id": "AC-SIM-000087",
           "conversation_id": "AT116559",
           "order_id": "GBH466364",
           "data_hora": "2026-11-02 08:00:00",
@@ -2779,7 +2803,7 @@
           "referencia_sistema": "CHM-SIM-000003"
         },
         {
-          "acao_id": "AC-SIM-000109",
+          "acao_id": "AC-SIM-000101",
           "conversation_id": "AT116559",
           "order_id": "GBH466364",
           "data_hora": "2026-11-02 08:00:00",
@@ -2788,33 +2812,29 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000016"
+          "referencia_sistema": "APR-SIM-000015"
         }
       ],
       "resposta": {
-        "texto": "O pedido segue em trânsito com a ViaLog. Abrimos um chamado com a transportadora sobre a entrega.",
+        "texto": "Seu pedido está atrasado, e entendemos a importância de recebê-lo para o presente. Abrimos um chamado com a ViaLog sobre a entrega.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 4385,
+        "ms": 2661,
         "jev": {
-          "ms": 418,
+          "ms": 458,
           "tokensEntrada": 1069,
           "tokensSaida": 319,
           "custoUsd": 0.000044898
         },
         "chat": {
-          "ms": 3964,
-          "tokensEntrada": 887,
-          "tokensSaida": 81,
+          "ms": 2201,
+          "tokensEntrada": 442,
+          "tokensSaida": 35,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000044898,
@@ -2852,12 +2872,12 @@
         },
         "urgencia": "alta",
         "sinais_texto": {
-          "reacao_adversa": 0.01,
+          "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.05,
-          "cliente_irritado": 0.8,
-          "pede_ou_envia_dado_sensivel": 0.37,
-          "mais_de_um_motivo": 0.06
+          "ameaca_reclame_aqui_ou_procon": 0.04,
+          "cliente_irritado": 0.79,
+          "pede_ou_envia_dado_sensivel": 0.48,
+          "mais_de_um_motivo": 0.05
         },
         "flags": {
           "reacao_adversa": false,
@@ -2916,7 +2936,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000080",
+          "acao_id": "AC-SIM-000078",
           "conversation_id": "AT116560",
           "order_id": "GBH470187",
           "data_hora": "2026-11-02 08:00:00",
@@ -2928,7 +2948,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000081",
+          "acao_id": "AC-SIM-000079",
           "conversation_id": "AT116560",
           "order_id": "GBH470187",
           "data_hora": "2026-11-02 08:00:00",
@@ -2940,7 +2960,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000082",
+          "acao_id": "AC-SIM-000080",
           "conversation_id": "AT116560",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2952,7 +2972,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000083",
+          "acao_id": "AC-SIM-000081",
           "conversation_id": "AT116560",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2964,7 +2984,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000084",
+          "acao_id": "AC-SIM-000088",
           "conversation_id": "AT116560",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -2976,7 +2996,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000098",
+          "acao_id": "AC-SIM-000096",
           "conversation_id": "AT116560",
           "order_id": "GBH470187",
           "data_hora": "2026-11-02 08:00:00",
@@ -2989,7 +3009,7 @@
         }
       ],
       "resposta": {
-        "texto": "Sentimos muito pelo ocorrido com o brinde do seu pedido. Para seguirmos com a solicitação, envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com sua solicitação sobre a necessaire, envie uma foto do produto recebido e da embalagem. Assim, poderemos verificar o que aconteceu com o pedido.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -2997,17 +3017,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2597,
+        "ms": 2283,
         "jev": {
-          "ms": 389,
+          "ms": 388,
           "tokensEntrada": 1037,
           "tokensSaida": 318,
           "custoUsd": 0.000043554
         },
         "chat": {
-          "ms": 2206,
-          "tokensEntrada": 406,
-          "tokensSaida": 35,
+          "ms": 1895,
+          "tokensEntrada": 422,
+          "tokensSaida": 38,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043554,
@@ -3047,9 +3067,9 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.01,
-          "cliente_irritado": 0.09,
-          "pede_ou_envia_dado_sensivel": 0.07,
+          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "cliente_irritado": 0.1,
+          "pede_ou_envia_dado_sensivel": 0.06,
           "mais_de_um_motivo": 0.03
         },
         "flags": {
@@ -3107,7 +3127,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000086",
+          "acao_id": "AC-SIM-000083",
           "conversation_id": "AT116563",
           "order_id": "GBH492667",
           "data_hora": "2026-11-02 08:00:00",
@@ -3119,7 +3139,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000087",
+          "acao_id": "AC-SIM-000084",
           "conversation_id": "AT116563",
           "order_id": "GBH492667",
           "data_hora": "2026-11-02 08:00:00",
@@ -3131,7 +3151,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000088",
+          "acao_id": "AC-SIM-000085",
           "conversation_id": "AT116563",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3143,7 +3163,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000089",
+          "acao_id": "AC-SIM-000086",
           "conversation_id": "AT116563",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3155,7 +3175,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000095",
+          "acao_id": "AC-SIM-000089",
           "conversation_id": "AT116563",
           "order_id": "GBH492667",
           "data_hora": "2026-11-02 08:00:00",
@@ -3167,7 +3187,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000121",
+          "acao_id": "AC-SIM-000110",
           "conversation_id": "AT116563",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3179,7 +3199,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000122",
+          "acao_id": "AC-SIM-000111",
           "conversation_id": "AT116563",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3204,16 +3224,16 @@
         ]
       },
       "telemetria": {
-        "ms": 3938,
+        "ms": 3799,
         "jev": {
-          "ms": 431,
+          "ms": 418,
           "tokensEntrada": 1013,
           "tokensSaida": 318,
           "custoUsd": 0.000042546
         },
         "chat": {
-          "ms": 3505,
-          "tokensEntrada": 715,
+          "ms": 3380,
+          "tokensEntrada": 777,
           "tokensSaida": 42,
           "custoUsd": null
         },
@@ -3252,7 +3272,7 @@
         },
         "urgencia": "alta",
         "sinais_texto": {
-          "reacao_adversa": 0.98,
+          "reacao_adversa": 0.97,
           "mencao_saude": 0.98,
           "ameaca_reclame_aqui_ou_procon": 0.07,
           "cliente_irritado": 0.22,
@@ -3314,7 +3334,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000091",
+          "acao_id": "AC-SIM-000092",
           "conversation_id": "AT116568",
           "order_id": "GBH471000",
           "data_hora": "2026-11-02 08:00:00",
@@ -3326,7 +3346,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000092",
+          "acao_id": "AC-SIM-000093",
           "conversation_id": "AT116568",
           "order_id": "GBH471000",
           "data_hora": "2026-11-02 08:00:00",
@@ -3338,7 +3358,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000093",
+          "acao_id": "AC-SIM-000094",
           "conversation_id": "AT116568",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3350,7 +3370,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000094",
+          "acao_id": "AC-SIM-000095",
           "conversation_id": "AT116568",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3362,7 +3382,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000096",
+          "acao_id": "AC-SIM-000106",
           "conversation_id": "AT116568",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3374,7 +3394,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000097",
+          "acao_id": "AC-SIM-000107",
           "conversation_id": "AT116568",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3386,7 +3406,7 @@
           "referencia_sistema": "ACI-SIM-000001"
         },
         {
-          "acao_id": "AC-SIM-000104",
+          "acao_id": "AC-SIM-000117",
           "conversation_id": "AT116568",
           "order_id": "GBH471000",
           "data_hora": "2026-11-02 08:00:00",
@@ -3395,11 +3415,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000015"
+          "referencia_sistema": "APR-SIM-000016"
         }
       ],
       "resposta": {
-        "texto": "Sinto muito pelo que aconteceu. Pare de usar o produto e, se precisar, procure atendimento médico. Uma pessoa da nossa equipe de qualidade vai cuidar do seu caso.",
+        "texto": "Sentimos muito pelo ocorrido. Pare de usar o produto e, se precisar, procure atendimento médico. Uma pessoa da nossa equipe de qualidade vai cuidar do seu caso e analisar seu pedido de troca.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -3407,17 +3427,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2629,
+        "ms": 3443,
         "jev": {
-          "ms": 424,
+          "ms": 543,
           "tokensEntrada": 1015,
           "tokensSaida": 320,
           "custoUsd": 0.00004263
         },
         "chat": {
-          "ms": 2202,
-          "tokensEntrada": 398,
-          "tokensSaida": 38,
+          "ms": 2898,
+          "tokensEntrada": 414,
+          "tokensSaida": 43,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004263,
@@ -3456,8 +3476,8 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.12,
+          "mencao_saude": 0.03,
+          "ameaca_reclame_aqui_ou_procon": 0.11,
           "cliente_irritado": 0.94,
           "pede_ou_envia_dado_sensivel": 0.07,
           "mais_de_um_motivo": 0.06
@@ -3524,7 +3544,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000099",
+          "acao_id": "AC-SIM-000097",
           "conversation_id": "AT116573",
           "order_id": "GBH468365",
           "data_hora": "2026-11-02 08:00:00",
@@ -3536,7 +3556,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000100",
+          "acao_id": "AC-SIM-000098",
           "conversation_id": "AT116573",
           "order_id": "GBH468365",
           "data_hora": "2026-11-02 08:00:00",
@@ -3548,7 +3568,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000101",
+          "acao_id": "AC-SIM-000099",
           "conversation_id": "AT116573",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3560,7 +3580,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000102",
+          "acao_id": "AC-SIM-000100",
           "conversation_id": "AT116573",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3572,7 +3592,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000103",
+          "acao_id": "AC-SIM-000108",
           "conversation_id": "AT116573",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3584,7 +3604,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000128",
+          "acao_id": "AC-SIM-000126",
           "conversation_id": "AT116573",
           "order_id": "GBH468365",
           "data_hora": "2026-11-02 08:00:00",
@@ -3593,11 +3613,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000019"
+          "referencia_sistema": "APR-SIM-000018"
         }
       ],
       "resposta": {
-        "texto": "Verificamos que o pedido foi entregue em 22/10/2026. A solicitação de reenvio do brinde sem custo exige o envio de uma foto em até 7 dias do recebimento e, por isso, não se enquadra na política.",
+        "texto": "O pedido GBH468365 consta como entregue pela ViaLog em 22/10/2026. A solicitação de reenvio do brinde não se enquadra na política, que exige o envio de uma foto em até 7 dias do recebimento. Para este pedido, não foi possível realizar o reenvio sem custo.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -3605,17 +3625,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2937,
+        "ms": 3434,
         "jev": {
-          "ms": 388,
+          "ms": 442,
           "tokensEntrada": 1025,
           "tokensSaida": 318,
           "custoUsd": 0.00004305
         },
         "chat": {
-          "ms": 2547,
-          "tokensEntrada": 415,
-          "tokensSaida": 59,
+          "ms": 2990,
+          "tokensEntrada": 431,
+          "tokensSaida": 73,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004305,
@@ -3655,8 +3675,8 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.08,
-          "cliente_irritado": 0.55,
+          "ameaca_reclame_aqui_ou_procon": 0.07,
+          "cliente_irritado": 0.53,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.05
         },
@@ -3711,7 +3731,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000105",
+          "acao_id": "AC-SIM-000102",
           "conversation_id": "AT116589",
           "order_id": "GCH558661",
           "data_hora": "2026-11-02 08:00:00",
@@ -3723,7 +3743,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000106",
+          "acao_id": "AC-SIM-000103",
           "conversation_id": "AT116589",
           "order_id": "GCH558661",
           "data_hora": "2026-11-02 08:00:00",
@@ -3735,7 +3755,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000107",
+          "acao_id": "AC-SIM-000104",
           "conversation_id": "AT116589",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3747,7 +3767,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000108",
+          "acao_id": "AC-SIM-000105",
           "conversation_id": "AT116589",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3759,7 +3779,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000114",
+          "acao_id": "AC-SIM-000109",
           "conversation_id": "AT116589",
           "order_id": "GCH558661",
           "data_hora": "2026-11-02 08:00:00",
@@ -3771,7 +3791,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000147",
+          "acao_id": "AC-SIM-000121",
           "conversation_id": "AT116589",
           "order_id": "GCH558661",
           "data_hora": "2026-11-02 08:00:00",
@@ -3780,33 +3800,29 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000020"
+          "referencia_sistema": "APR-SIM-000017"
         }
       ],
       "resposta": {
-        "texto": "Seu pedido está em trânsito pela transportadora TransNorte. A previsão de entrega informada pela transportadora é 30/10/2026.",
+        "texto": "Seu pedido GCH558661 está em trânsito pela transportadora TransNorte e está atrasado. O último rastreio informa chegada à unidade de destino em 28/10/2026.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 4511,
+        "ms": 3126,
         "jev": {
-          "ms": 374,
+          "ms": 545,
           "tokensEntrada": 1042,
           "tokensSaida": 319,
           "custoUsd": 0.000043764
         },
         "chat": {
-          "ms": 4136,
-          "tokensEntrada": 835,
-          "tokensSaida": 93,
+          "ms": 2577,
+          "tokensEntrada": 416,
+          "tokensSaida": 44,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043764,
@@ -3845,10 +3861,10 @@
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.34,
+          "mencao_saude": 0.33,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.59,
-          "pede_ou_envia_dado_sensivel": 0.06,
+          "cliente_irritado": 0.62,
+          "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.05
         },
         "flags": {
@@ -3908,7 +3924,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000110",
+          "acao_id": "AC-SIM-000112",
           "conversation_id": "AT116595",
           "order_id": "GBH470309",
           "data_hora": "2026-11-02 08:00:00",
@@ -3920,7 +3936,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000111",
+          "acao_id": "AC-SIM-000113",
           "conversation_id": "AT116595",
           "order_id": "GBH470309",
           "data_hora": "2026-11-02 08:00:00",
@@ -3932,7 +3948,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000112",
+          "acao_id": "AC-SIM-000114",
           "conversation_id": "AT116595",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3944,7 +3960,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000113",
+          "acao_id": "AC-SIM-000115",
           "conversation_id": "AT116595",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3956,7 +3972,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000119",
+          "acao_id": "AC-SIM-000116",
           "conversation_id": "AT116595",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3968,7 +3984,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000134",
+          "acao_id": "AC-SIM-000133",
           "conversation_id": "AT116595",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -3981,7 +3997,7 @@
         }
       ],
       "resposta": {
-        "texto": "Sentimos muito pelo ocorrido com o brinde do seu pedido. Para seguirmos com a solicitação, por favor, envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com sua solicitação sobre o brinde, envie uma foto do produto recebido e da embalagem.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -3989,17 +4005,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3032,
+        "ms": 2208,
         "jev": {
-          "ms": 436,
+          "ms": 407,
           "tokensEntrada": 1035,
           "tokensSaida": 318,
           "custoUsd": 0.00004347
         },
         "chat": {
-          "ms": 2596,
-          "tokensEntrada": 400,
-          "tokensSaida": 38,
+          "ms": 1800,
+          "tokensEntrada": 416,
+          "tokensSaida": 26,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004347,
@@ -4016,7 +4032,7 @@
         "falha": null,
         "motivo": "cupom",
         "motivo_jev": "cupom",
-        "confianca": 0.59,
+        "confianca": 0.61,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -4029,18 +4045,18 @@
           "cancelamento": 0,
           "troca_fragrancia": 0,
           "duvida_produto": 0.37,
-          "cupom": 0.62,
+          "cupom": 0.63,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
           "elogio": 0,
-          "outro": 0.01
+          "outro": 0
         },
         "urgencia": "media",
         "sinais_texto": {
-          "reacao_adversa": 0.02,
+          "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.16,
+          "cliente_irritado": 0.14,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.96
         },
@@ -4064,7 +4080,7 @@
         "ferramenta": "validar_cupom",
         "acao_sem_teto": false,
         "auditoria_posterior": false,
-        "justificativa": "Valida o cupom e responde com o motivo calculado pela plataforma. [politicas.csv › categorias › cupom_promocao.acoes_permitidas] Confiança 0.59 abaixo de 0.7: sobe para nível 1. [CLAUDE.md › regras (Jev)]",
+        "justificativa": "Valida o cupom e responde com o motivo calculado pela plataforma. [politicas.csv › categorias › cupom_promocao.acoes_permitidas] Confiança 0.61 abaixo de 0.7: sobe para nível 1. [CLAUDE.md › regras (Jev)]",
         "ajustes": []
       },
       "acoes": [
@@ -4091,7 +4107,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000116",
+          "acao_id": "AC-SIM-000118",
           "conversation_id": "AT116597",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4103,7 +4119,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000117",
+          "acao_id": "AC-SIM-000119",
           "conversation_id": "AT116597",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4115,7 +4131,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000118",
+          "acao_id": "AC-SIM-000120",
           "conversation_id": "AT116597",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4127,7 +4143,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000120",
+          "acao_id": "AC-SIM-000131",
           "conversation_id": "AT116597",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4136,10 +4152,10 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000018"
+          "referencia_sistema": "APR-SIM-000019"
         },
         {
-          "acao_id": "AC-SIM-000160",
+          "acao_id": "AC-SIM-000165",
           "conversation_id": "AT116597",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4148,11 +4164,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000021"
+          "referencia_sistema": "APR-SIM-000022"
         }
       ],
       "resposta": {
-        "texto": "Boa tarde! Como não há um pedido associado à conversa, uma pessoa da equipe precisa analisar a solicitação sobre o cupom antes de qualquer providência. Não tenho informações sobre por quanto tempo a garrafa Fresh mantém a bebida gelada.",
+        "texto": "Uma pessoa da equipe vai analisar a solicitação sobre o cupom. Para responder sobre a garrafa Fresh, precisamos de mais informações sobre o produto.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -4164,7 +4180,7 @@
         ]
       },
       "telemetria": {
-        "ms": 5562,
+        "ms": 5181,
         "jev": {
           "ms": 393,
           "tokensEntrada": 1021,
@@ -4172,9 +4188,9 @@
           "custoUsd": 0.000042882
         },
         "chat": {
-          "ms": 5166,
-          "tokensEntrada": 659,
-          "tokensSaida": 106,
+          "ms": 4784,
+          "tokensEntrada": 721,
+          "tokensSaida": 86,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042882,
@@ -4233,14 +4249,16 @@
       "sinais": [],
       "decisao": {
         "nivel": 0,
-        "nivel_final": 0,
+        "nivel_final": 1,
         "aprovacao_resposta": false,
         "acao": "informar_status",
         "ferramenta": "informar_status",
         "acao_sem_teto": false,
         "auditoria_posterior": false,
         "justificativa": "Pedido dentro do prazo: informa status e previsão. [politicas.csv › categorias › onde_esta_pedido.regra]",
-        "ajustes": []
+        "ajustes": [
+          "redação reprovada na checagem: texto de reserva e resposta para aprovação"
+        ]
       },
       "acoes": [
         {
@@ -4264,17 +4282,13 @@
           "ok": true
         },
         {
-          "ferramenta": "responder_cliente",
-          "ok": true
-        },
-        {
-          "ferramenta": "encerrar_conversa",
+          "ferramenta": "solicitar_aprovacao",
           "ok": true
         }
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000123",
+          "acao_id": "AC-SIM-000122",
           "conversation_id": "AT116603",
           "order_id": "GBH487889",
           "data_hora": "2026-11-02 08:00:00",
@@ -4286,7 +4300,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000124",
+          "acao_id": "AC-SIM-000123",
           "conversation_id": "AT116603",
           "order_id": "GBH487889",
           "data_hora": "2026-11-02 08:00:00",
@@ -4298,7 +4312,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000125",
+          "acao_id": "AC-SIM-000124",
           "conversation_id": "AT116603",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4310,7 +4324,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000126",
+          "acao_id": "AC-SIM-000125",
           "conversation_id": "AT116603",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4322,7 +4336,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000127",
+          "acao_id": "AC-SIM-000132",
           "conversation_id": "AT116603",
           "order_id": "GBH487889",
           "data_hora": "2026-11-02 08:00:00",
@@ -4334,50 +4348,45 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000140",
+          "acao_id": "AC-SIM-000160",
           "conversation_id": "AT116603",
-          "order_id": null,
+          "order_id": "GBH487889",
           "data_hora": "2026-11-02 08:00:00",
           "sistema": "Central de atendimento",
-          "acao": "responder_cliente",
-          "valor_rs": null,
+          "acao": "solicitar_aprovacao",
+          "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": null
-        },
-        {
-          "acao_id": "AC-SIM-000141",
-          "conversation_id": "AT116603",
-          "order_id": null,
-          "data_hora": "2026-11-02 08:00:00",
-          "sistema": "Central de atendimento",
-          "acao": "encerrar_conversa",
-          "valor_rs": null,
-          "executado_por": "agente",
-          "aprovado_por": null,
-          "referencia_sistema": null
+          "referencia_sistema": "APR-SIM-000021"
         }
       ],
       "resposta": {
-        "texto": "O pedido GBH487889 está em trânsito pela transportadora ViaLog. O último evento do rastreio foi uma transferência em 31/10/2026. A previsão de entrega informada pela transportadora é 04/11/2026.",
-        "enviada": true,
-        "paraAprovacao": false,
-        "reserva": false,
-        "tentativas": 1,
-        "falhasChecagem": []
+        "texto": "Recebemos sua mensagem. Uma pessoa da nossa equipe vai analisar o seu caso e responder por aqui.",
+        "enviada": false,
+        "paraAprovacao": true,
+        "reserva": true,
+        "tentativas": 2,
+        "falhasChecagem": [
+          [
+            "previsao_vencida"
+          ],
+          [
+            "numero_sem_fonte"
+          ]
+        ]
       },
       "telemetria": {
-        "ms": 2989,
+        "ms": 4678,
         "jev": {
-          "ms": 385,
+          "ms": 390,
           "tokensEntrada": 1002,
           "tokensSaida": 319,
           "custoUsd": 0.000042084
         },
         "chat": {
-          "ms": 2601,
-          "tokensEntrada": 360,
-          "tokensSaida": 56,
+          "ms": 4285,
+          "tokensEntrada": 827,
+          "tokensSaida": 94,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042084,
@@ -4417,8 +4426,8 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.1,
+          "ameaca_reclame_aqui_ou_procon": 0.01,
+          "cliente_irritado": 0.11,
           "pede_ou_envia_dado_sensivel": 0.03,
           "mais_de_um_motivo": 0.03
         },
@@ -4477,7 +4486,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000129",
+          "acao_id": "AC-SIM-000127",
           "conversation_id": "AT116606",
           "order_id": "GBH492460",
           "data_hora": "2026-11-02 08:00:00",
@@ -4489,7 +4498,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000130",
+          "acao_id": "AC-SIM-000128",
           "conversation_id": "AT116606",
           "order_id": "GBH492460",
           "data_hora": "2026-11-02 08:00:00",
@@ -4501,7 +4510,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000131",
+          "acao_id": "AC-SIM-000129",
           "conversation_id": "AT116606",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4513,7 +4522,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000132",
+          "acao_id": "AC-SIM-000130",
           "conversation_id": "AT116606",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4525,7 +4534,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000133",
+          "acao_id": "AC-SIM-000138",
           "conversation_id": "AT116606",
           "order_id": "GBH492460",
           "data_hora": "2026-11-02 08:00:00",
@@ -4537,7 +4546,7 @@
           "referencia_sistema": "USO-SIM-000001"
         },
         {
-          "acao_id": "AC-SIM-000153",
+          "acao_id": "AC-SIM-000140",
           "conversation_id": "AT116606",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4549,7 +4558,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000154",
+          "acao_id": "AC-SIM-000141",
           "conversation_id": "AT116606",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4570,16 +4579,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3282,
+        "ms": 2074,
         "jev": {
-          "ms": 411,
+          "ms": 472,
           "tokensEntrada": 1008,
           "tokensSaida": 318,
           "custoUsd": 0.000042336
         },
         "chat": {
-          "ms": 2869,
-          "tokensEntrada": 344,
+          "ms": 1600,
+          "tokensEntrada": 375,
           "tokensSaida": 26,
           "custoUsd": null
         },
@@ -4618,12 +4627,12 @@
         },
         "urgencia": "media",
         "sinais_texto": {
-          "reacao_adversa": 0.02,
+          "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.88,
+          "ameaca_reclame_aqui_ou_procon": 0.04,
+          "cliente_irritado": 0.87,
           "pede_ou_envia_dado_sensivel": 0.06,
-          "mais_de_um_motivo": 0.05
+          "mais_de_um_motivo": 0.06
         },
         "flags": {
           "reacao_adversa": false,
@@ -4680,7 +4689,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000135",
+          "acao_id": "AC-SIM-000134",
           "conversation_id": "AT116612",
           "order_id": "GCH553818",
           "data_hora": "2026-11-02 08:00:00",
@@ -4692,7 +4701,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000136",
+          "acao_id": "AC-SIM-000135",
           "conversation_id": "AT116612",
           "order_id": "GCH553818",
           "data_hora": "2026-11-02 08:00:00",
@@ -4704,7 +4713,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000137",
+          "acao_id": "AC-SIM-000136",
           "conversation_id": "AT116612",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4716,7 +4725,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000138",
+          "acao_id": "AC-SIM-000137",
           "conversation_id": "AT116612",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4740,7 +4749,7 @@
           "referencia_sistema": "OMS-SIM-000001"
         },
         {
-          "acao_id": "AC-SIM-000177",
+          "acao_id": "AC-SIM-000147",
           "conversation_id": "AT116612",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4752,7 +4761,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000178",
+          "acao_id": "AC-SIM-000148",
           "conversation_id": "AT116612",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -4765,29 +4774,25 @@
         }
       ],
       "resposta": {
-        "texto": "Fizemos o reenvio do produto sem custo para você.",
+        "texto": "Seu pedido está atrasado. Já providenciamos o reenvio do produto sem custo para você.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 4259,
+        "ms": 2262,
         "jev": {
-          "ms": 416,
+          "ms": 463,
           "tokensEntrada": 1015,
           "tokensSaida": 319,
           "custoUsd": 0.00004263
         },
         "chat": {
-          "ms": 3841,
-          "tokensEntrada": 803,
-          "tokensSaida": 67,
+          "ms": 1797,
+          "tokensEntrada": 400,
+          "tokensSaida": 25,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004263,
@@ -4827,9 +4832,9 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.03,
-          "ameaca_reclame_aqui_ou_procon": 0.06,
-          "cliente_irritado": 0.78,
-          "pede_ou_envia_dado_sensivel": 0.06,
+          "ameaca_reclame_aqui_ou_procon": 0.07,
+          "cliente_irritado": 0.8,
+          "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.04
         },
         "flags": {
@@ -4949,7 +4954,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000165",
+          "acao_id": "AC-SIM-000177",
           "conversation_id": "AT116614",
           "order_id": "GBH472693",
           "data_hora": "2026-11-02 08:00:00",
@@ -4958,11 +4963,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000022"
+          "referencia_sistema": "APR-SIM-000023"
         }
       ],
       "resposta": {
-        "texto": "Para seguir com sua solicitação sobre o brinde, pedimos que envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com a solicitação sobre o brinde, por favor, envie uma foto do produto recebido e da embalagem.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -4970,17 +4975,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2111,
+        "ms": 3118,
         "jev": {
-          "ms": 397,
+          "ms": 408,
           "tokensEntrada": 1026,
           "tokensSaida": 318,
           "custoUsd": 0.000043092
         },
         "chat": {
-          "ms": 1712,
-          "tokensEntrada": 399,
-          "tokensSaida": 28,
+          "ms": 2708,
+          "tokensEntrada": 415,
+          "tokensSaida": 29,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043092,
@@ -5020,9 +5025,9 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.04,
+          "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.95,
-          "pede_ou_envia_dado_sensivel": 0.04,
+          "pede_ou_envia_dado_sensivel": 0.03,
           "mais_de_um_motivo": 0.06
         },
         "flags": {
@@ -5080,7 +5085,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000148",
+          "acao_id": "AC-SIM-000149",
           "conversation_id": "AT116616",
           "order_id": "GCH556833",
           "data_hora": "2026-11-02 08:00:00",
@@ -5092,7 +5097,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000149",
+          "acao_id": "AC-SIM-000150",
           "conversation_id": "AT116616",
           "order_id": "GCH556833",
           "data_hora": "2026-11-02 08:00:00",
@@ -5104,7 +5109,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000150",
+          "acao_id": "AC-SIM-000151",
           "conversation_id": "AT116616",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5116,7 +5121,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000151",
+          "acao_id": "AC-SIM-000152",
           "conversation_id": "AT116616",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5128,7 +5133,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000152",
+          "acao_id": "AC-SIM-000153",
           "conversation_id": "AT116616",
           "order_id": "GCH556833",
           "data_hora": "2026-11-02 08:00:00",
@@ -5140,7 +5145,7 @@
           "referencia_sistema": "CHM-SIM-000004"
         },
         {
-          "acao_id": "AC-SIM-000208",
+          "acao_id": "AC-SIM-000171",
           "conversation_id": "AT116616",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5152,7 +5157,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000209",
+          "acao_id": "AC-SIM-000172",
           "conversation_id": "AT116616",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5165,29 +5170,25 @@
         }
       ],
       "resposta": {
-        "texto": "Entendemos sua frustração por não ter recebido o pedido na data prevista. Abrimos um chamado com a ViaLog para verificar a entrega.",
+        "texto": "Olá! Sentimos muito pelo atraso e por você não ter recebido o pedido na data em que precisava. Abrimos um chamado com a ViaLog sobre a entrega do seu pedido, que segue em trânsito.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 5566,
+        "ms": 2462,
         "jev": {
-          "ms": 418,
+          "ms": 448,
           "tokensEntrada": 1028,
           "tokensSaida": 319,
           "custoUsd": 0.000043176
         },
         "chat": {
-          "ms": 5146,
-          "tokensEntrada": 809,
-          "tokensSaida": 91,
+          "ms": 2013,
+          "tokensEntrada": 403,
+          "tokensSaida": 45,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043176,
@@ -5223,14 +5224,14 @@
           "elogio": 0,
           "outro": 0
         },
-        "urgencia": "media",
+        "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.03,
-          "ameaca_reclame_aqui_ou_procon": 0.08,
-          "cliente_irritado": 0.38,
+          "ameaca_reclame_aqui_ou_procon": 0.09,
+          "cliente_irritado": 0.39,
           "pede_ou_envia_dado_sensivel": 0.07,
-          "mais_de_um_motivo": 0.03
+          "mais_de_um_motivo": 0.04
         },
         "flags": {
           "reacao_adversa": false,
@@ -5349,7 +5350,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000172",
+          "acao_id": "AC-SIM-000185",
           "conversation_id": "AT116624",
           "order_id": "GBH475904",
           "data_hora": "2026-11-02 08:00:00",
@@ -5358,11 +5359,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000023"
+          "referencia_sistema": "APR-SIM-000024"
         }
       ],
       "resposta": {
-        "texto": "Para seguirmos com sua solicitação sobre o brinde do pedido GBH475904, pedimos que envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com sua solicitação sobre o brinde, por favor, envie uma foto do produto recebido e da embalagem.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -5370,17 +5371,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2143,
+        "ms": 2386,
         "jev": {
-          "ms": 422,
+          "ms": 424,
           "tokensEntrada": 1030,
           "tokensSaida": 318,
           "custoUsd": 0.00004326
         },
         "chat": {
-          "ms": 1719,
-          "tokensEntrada": 398,
-          "tokensSaida": 35,
+          "ms": 1961,
+          "tokensEntrada": 414,
+          "tokensSaida": 29,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004326,
@@ -5397,13 +5398,13 @@
         "falha": null,
         "motivo": "brinde",
         "motivo_jev": "brinde",
-        "confianca": 0.94,
+        "confianca": 0.95,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
-          "avaria": 0.06,
+          "avaria": 0.05,
           "item_faltante": 0,
-          "brinde": 0.94,
+          "brinde": 0.95,
           "erro_personalizacao": 0,
           "cobranca_duplicada": 0,
           "endereco": 0,
@@ -5551,7 +5552,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000192",
+          "acao_id": "AC-SIM-000197",
           "conversation_id": "AT116628",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5563,7 +5564,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000193",
+          "acao_id": "AC-SIM-000198",
           "conversation_id": "AT116628",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5576,7 +5577,7 @@
         }
       ],
       "resposta": {
-        "texto": "Entendo sua frustração por não ter recebido a necessaire e pelo estado da caixa. Como o pedido foi entregue em 21/10/2026, a solicitação não se enquadra na política de reenvio sem custo, que exige o envio de foto em até 7 dias do recebimento.",
+        "texto": "Entendemos que a necessaire não veio e que a caixa chegou amassada, com o produto danificado. O pedido consta como entregue em 21/10/2026; o reenvio sem custo do item faltante, inclusive brinde de campanha, depende de foto e solicitação em até 7 dias do recebimento. Como a solicitação não se enquadra nessa política, não foi possível providenciar o reenvio.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -5584,17 +5585,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3186,
+        "ms": 3294,
         "jev": {
-          "ms": 443,
+          "ms": 457,
           "tokensEntrada": 1050,
           "tokensSaida": 318,
           "custoUsd": 0.0000441
         },
         "chat": {
-          "ms": 2740,
-          "tokensEntrada": 446,
-          "tokensSaida": 68,
+          "ms": 2834,
+          "tokensEntrada": 462,
+          "tokensSaida": 95,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.0000441,
@@ -5633,7 +5634,7 @@
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.01,
-          "mencao_saude": 0.01,
+          "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
           "cliente_irritado": 0.35,
           "pede_ou_envia_dado_sensivel": 0.04,
@@ -5742,7 +5743,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000171",
+          "acao_id": "AC-SIM-000182",
           "conversation_id": "AT116637",
           "order_id": "GBH493566",
           "data_hora": "2026-11-02 08:00:00",
@@ -5754,7 +5755,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000185",
+          "acao_id": "AC-SIM-000191",
           "conversation_id": "AT116637",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5766,7 +5767,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000186",
+          "acao_id": "AC-SIM-000192",
           "conversation_id": "AT116637",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5779,7 +5780,7 @@
         }
       ],
       "resposta": {
-        "texto": "O pagamento do pedido GBH493566 consta como confirmado em nosso sistema de pagamentos. O pedido está aguardando separação e será enviado pela ViaLog. A entrega está prevista para 05/11/2026.",
+        "texto": "O pagamento do pedido GBH493566 consta como confirmado no sistema de pagamentos. O pedido está aguardando separação.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -5787,17 +5788,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2624,
+        "ms": 2087,
         "jev": {
-          "ms": 417,
+          "ms": 448,
           "tokensEntrada": 1013,
           "tokensSaida": 321,
           "custoUsd": 0.000042546
         },
         "chat": {
-          "ms": 2205,
-          "tokensEntrada": 333,
-          "tokensSaida": 48,
+          "ms": 1637,
+          "tokensEntrada": 364,
+          "tokensSaida": 28,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042546,
@@ -5814,10 +5815,10 @@
         "falha": null,
         "motivo": "atraso",
         "motivo_jev": "atraso",
-        "confianca": 0.83,
+        "confianca": 0.82,
         "probabilidades": {
-          "rastreio": 0.16,
-          "atraso": 0.84,
+          "rastreio": 0.17,
+          "atraso": 0.83,
           "avaria": 0,
           "item_faltante": 0,
           "brinde": 0,
@@ -5836,10 +5837,10 @@
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.01,
-          "mencao_saude": 0.01,
+          "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
           "cliente_irritado": 0.49,
-          "pede_ou_envia_dado_sensivel": 0.06,
+          "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.05
         },
         "flags": {
@@ -5957,7 +5958,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000198",
+          "acao_id": "AC-SIM-000355",
           "conversation_id": "AT116638",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5969,7 +5970,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000199",
+          "acao_id": "AC-SIM-000356",
           "conversation_id": "AT116638",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -5982,25 +5983,30 @@
         }
       ],
       "resposta": {
-        "texto": "Seu pedido está em trânsito pela transportadora Correio Ágil. A previsão de entrega informada pela transportadora é 04/11/2026.",
+        "texto": "Seu pedido está em trânsito pela transportadora Correio Ágil e consta como recebido na unidade de destino. A previsão informada já passou, então o pedido está atrasado.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
-        "tentativas": 1,
-        "falhasChecagem": []
+        "tentativas": 2,
+        "falhasChecagem": [
+          [
+            "numero_sem_fonte",
+            "previsao_vencida"
+          ]
+        ]
       },
       "telemetria": {
-        "ms": 2469,
+        "ms": 20100,
         "jev": {
-          "ms": 412,
+          "ms": 430,
           "tokensEntrada": 1010,
           "tokensSaida": 319,
           "custoUsd": 0.00004242
         },
         "chat": {
-          "ms": 2055,
-          "tokensEntrada": 399,
-          "tokensSaida": 35,
+          "ms": 19668,
+          "tokensEntrada": 916,
+          "tokensSaida": 384,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004242,
@@ -6039,9 +6045,9 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.01,
-          "mencao_saude": 0.01,
+          "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.97,
+          "cliente_irritado": 0.96,
           "pede_ou_envia_dado_sensivel": 0.03,
           "mais_de_um_motivo": 0.08
         },
@@ -6100,7 +6106,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000179",
+          "acao_id": "AC-SIM-000178",
           "conversation_id": "AT116646",
           "order_id": "GBH466038",
           "data_hora": "2026-11-02 08:00:00",
@@ -6112,7 +6118,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000180",
+          "acao_id": "AC-SIM-000179",
           "conversation_id": "AT116646",
           "order_id": "GBH466038",
           "data_hora": "2026-11-02 08:00:00",
@@ -6124,7 +6130,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000181",
+          "acao_id": "AC-SIM-000180",
           "conversation_id": "AT116646",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6136,7 +6142,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000182",
+          "acao_id": "AC-SIM-000181",
           "conversation_id": "AT116646",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6160,7 +6166,7 @@
           "referencia_sistema": "CHM-SIM-000005"
         },
         {
-          "acao_id": "AC-SIM-000238",
+          "acao_id": "AC-SIM-000230",
           "conversation_id": "AT116646",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6172,7 +6178,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000239",
+          "acao_id": "AC-SIM-000231",
           "conversation_id": "AT116646",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6185,7 +6191,7 @@
         }
       ],
       "resposta": {
-        "texto": "Abrimos um chamado com a ViaLog sobre a entrega do seu pedido. A transportadora informa que ele está em trânsito e consta a chegada à unidade de destino.",
+        "texto": "Seu pedido está atrasado. Abrimos um chamado com a ViaLog sobre a entrega.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -6197,17 +6203,17 @@
         ]
       },
       "telemetria": {
-        "ms": 5408,
+        "ms": 5145,
         "jev": {
-          "ms": 424,
+          "ms": 431,
           "tokensEntrada": 1020,
           "tokensSaida": 319,
           "custoUsd": 0.00004284
         },
         "chat": {
-          "ms": 4981,
-          "tokensEntrada": 807,
-          "tokensSaida": 86,
+          "ms": 4711,
+          "tokensEntrada": 835,
+          "tokensSaida": 62,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004284,
@@ -6224,13 +6230,13 @@
         "falha": null,
         "motivo": "brinde",
         "motivo_jev": "brinde",
-        "confianca": 0.97,
+        "confianca": 0.95,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
           "avaria": 0,
-          "item_faltante": 0.03,
-          "brinde": 0.97,
+          "item_faltante": 0.05,
+          "brinde": 0.95,
           "erro_personalizacao": 0,
           "cobranca_duplicada": 0,
           "endereco": 0,
@@ -6247,8 +6253,8 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.15,
-          "cliente_irritado": 0.92,
+          "ameaca_reclame_aqui_ou_procon": 0.18,
+          "cliente_irritado": 0.91,
           "pede_ou_envia_dado_sensivel": 0.06,
           "mais_de_um_motivo": 0.06
         },
@@ -6314,7 +6320,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000187",
+          "acao_id": "AC-SIM-000186",
           "conversation_id": "AT116647",
           "order_id": "GBH479612",
           "data_hora": "2026-11-02 08:00:00",
@@ -6326,7 +6332,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000188",
+          "acao_id": "AC-SIM-000187",
           "conversation_id": "AT116647",
           "order_id": "GBH479612",
           "data_hora": "2026-11-02 08:00:00",
@@ -6338,7 +6344,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000189",
+          "acao_id": "AC-SIM-000188",
           "conversation_id": "AT116647",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6350,7 +6356,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000190",
+          "acao_id": "AC-SIM-000189",
           "conversation_id": "AT116647",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6362,7 +6368,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000191",
+          "acao_id": "AC-SIM-000190",
           "conversation_id": "AT116647",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6374,7 +6380,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000216",
+          "acao_id": "AC-SIM-000208",
           "conversation_id": "AT116647",
           "order_id": "GBH479612",
           "data_hora": "2026-11-02 08:00:00",
@@ -6383,11 +6389,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000025"
+          "referencia_sistema": "APR-SIM-000026"
         }
       ],
       "resposta": {
-        "texto": "Sentimos muito por você ter recebido o pedido incompleto. Para seguirmos com a solicitação sobre o brinde, por favor, envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com sua solicitação sobre o brinde do pedido GBH479612, poderia nos enviar uma foto do produto recebido e da embalagem?",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -6395,17 +6401,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2410,
+        "ms": 2238,
         "jev": {
-          "ms": 418,
+          "ms": 390,
           "tokensEntrada": 1005,
           "tokensSaida": 318,
           "custoUsd": 0.00004221
         },
         "chat": {
-          "ms": 1991,
-          "tokensEntrada": 376,
-          "tokensSaida": 41,
+          "ms": 1847,
+          "tokensEntrada": 392,
+          "tokensSaida": 34,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004221,
@@ -6443,12 +6449,12 @@
         },
         "urgencia": "media",
         "sinais_texto": {
-          "reacao_adversa": 0.02,
+          "reacao_adversa": 0.03,
           "mencao_saude": 0.1,
           "ameaca_reclame_aqui_ou_procon": 0.01,
-          "cliente_irritado": 0.64,
+          "cliente_irritado": 0.63,
           "pede_ou_envia_dado_sensivel": 0.02,
-          "mais_de_um_motivo": 0.09
+          "mais_de_um_motivo": 0.08
         },
         "flags": {
           "reacao_adversa": false,
@@ -6497,7 +6503,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000194",
+          "acao_id": "AC-SIM-000193",
           "conversation_id": "AT116657",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6509,7 +6515,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000195",
+          "acao_id": "AC-SIM-000194",
           "conversation_id": "AT116657",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6521,7 +6527,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000196",
+          "acao_id": "AC-SIM-000195",
           "conversation_id": "AT116657",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6533,7 +6539,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000197",
+          "acao_id": "AC-SIM-000196",
           "conversation_id": "AT116657",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6542,10 +6548,10 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000024"
+          "referencia_sistema": "APR-SIM-000025"
         },
         {
-          "acao_id": "AC-SIM-000226",
+          "acao_id": "AC-SIM-000214",
           "conversation_id": "AT116657",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6554,11 +6560,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000026"
+          "referencia_sistema": "APR-SIM-000027"
         }
       ],
       "resposta": {
-        "texto": "Uma pessoa da nossa equipe vai analisar sua dúvida sobre o kit Rotina Glow para pele oleosa e responder por aqui.",
+        "texto": "Uma pessoa da equipe vai analisar sua dúvida sobre o kit Rotina Glow e se ele é indicado para pele oleosa.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -6566,16 +6572,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2552,
+        "ms": 2226,
         "jev": {
-          "ms": 481,
+          "ms": 409,
           "tokensEntrada": 982,
           "tokensSaida": 320,
           "custoUsd": 0.000041244
         },
         "chat": {
-          "ms": 2070,
-          "tokensEntrada": 285,
+          "ms": 1816,
+          "tokensEntrada": 316,
           "tokensSaida": 28,
           "custoUsd": null
         },
@@ -6647,7 +6653,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000200",
+          "acao_id": "AC-SIM-000199",
           "conversation_id": "AT116664",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6659,7 +6665,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000201",
+          "acao_id": "AC-SIM-000200",
           "conversation_id": "AT116664",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6671,7 +6677,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000202",
+          "acao_id": "AC-SIM-000201",
           "conversation_id": "AT116664",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6683,7 +6689,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000203",
+          "acao_id": "AC-SIM-000202",
           "conversation_id": "AT116664",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6756,8 +6762,8 @@
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.91,
-          "pede_ou_envia_dado_sensivel": 0.05,
-          "mais_de_um_motivo": 0.06
+          "pede_ou_envia_dado_sensivel": 0.06,
+          "mais_de_um_motivo": 0.07
         },
         "flags": {
           "reacao_adversa": false,
@@ -6814,7 +6820,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000204",
+          "acao_id": "AC-SIM-000203",
           "conversation_id": "AT116665",
           "order_id": "GCH551964",
           "data_hora": "2026-11-02 08:00:00",
@@ -6826,7 +6832,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000205",
+          "acao_id": "AC-SIM-000204",
           "conversation_id": "AT116665",
           "order_id": "GCH551964",
           "data_hora": "2026-11-02 08:00:00",
@@ -6838,7 +6844,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000206",
+          "acao_id": "AC-SIM-000205",
           "conversation_id": "AT116665",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6850,7 +6856,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000207",
+          "acao_id": "AC-SIM-000206",
           "conversation_id": "AT116665",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6862,7 +6868,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000214",
+          "acao_id": "AC-SIM-000207",
           "conversation_id": "AT116665",
           "order_id": "GCH551964",
           "data_hora": "2026-11-02 08:00:00",
@@ -6874,7 +6880,7 @@
           "referencia_sistema": "OMS-SIM-000002"
         },
         {
-          "acao_id": "AC-SIM-000231",
+          "acao_id": "AC-SIM-000224",
           "conversation_id": "AT116665",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6886,7 +6892,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000232",
+          "acao_id": "AC-SIM-000225",
           "conversation_id": "AT116665",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -6899,7 +6905,7 @@
         }
       ],
       "resposta": {
-        "texto": "Como seu pedido não chegou na data prevista, já realizamos o reenvio do produto sem custo para você.",
+        "texto": "Seu pedido GCH551964 está atrasado. Já realizamos o reenvio do produto sem custo para você.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -6907,17 +6913,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2043,
+        "ms": 2196,
         "jev": {
-          "ms": 386,
+          "ms": 422,
           "tokensEntrada": 1074,
           "tokensSaida": 319,
           "custoUsd": 0.000045108
         },
         "chat": {
-          "ms": 1656,
-          "tokensEntrada": 434,
-          "tokensSaida": 27,
+          "ms": 1772,
+          "tokensEntrada": 448,
+          "tokensSaida": 28,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000045108,
@@ -6955,7 +6961,7 @@
         },
         "urgencia": "alta",
         "sinais_texto": {
-          "reacao_adversa": 0.01,
+          "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.94,
@@ -7033,7 +7039,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000210",
+          "acao_id": "AC-SIM-000209",
           "conversation_id": "AT116666",
           "order_id": "GCH553176",
           "data_hora": "2026-11-02 08:00:00",
@@ -7045,7 +7051,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000211",
+          "acao_id": "AC-SIM-000210",
           "conversation_id": "AT116666",
           "order_id": "GCH553176",
           "data_hora": "2026-11-02 08:00:00",
@@ -7057,7 +7063,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000212",
+          "acao_id": "AC-SIM-000211",
           "conversation_id": "AT116666",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7069,7 +7075,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000213",
+          "acao_id": "AC-SIM-000212",
           "conversation_id": "AT116666",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7081,7 +7087,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000215",
+          "acao_id": "AC-SIM-000213",
           "conversation_id": "AT116666",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7093,7 +7099,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000244",
+          "acao_id": "AC-SIM-000242",
           "conversation_id": "AT116666",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7105,7 +7111,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000245",
+          "acao_id": "AC-SIM-000243",
           "conversation_id": "AT116666",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7118,7 +7124,7 @@
         }
       ],
       "resposta": {
-        "texto": "Entendo sua insatisfação com a capinha riscada. Não conseguimos atender ao reenvio sem custo, pois essa solicitação exige o envio de uma foto em até 7 dias do recebimento, e o pedido foi entregue em 16/10/2026.",
+        "texto": "Verificamos que o pedido GCH553176 foi entregue em 16/10/2026. O reenvio sem custo mediante foto é válido para solicitações feitas em até 7 dias do recebimento, então esta solicitação não se enquadra na política.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -7126,17 +7132,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2890,
+        "ms": 3116,
         "jev": {
-          "ms": 407,
+          "ms": 409,
           "tokensEntrada": 987,
           "tokensSaida": 318,
           "custoUsd": 0.000041454
         },
         "chat": {
-          "ms": 2481,
-          "tokensEntrada": 383,
-          "tokensSaida": 60,
+          "ms": 2705,
+          "tokensEntrada": 399,
+          "tokensSaida": 59,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041454,
@@ -7207,7 +7213,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000217",
+          "acao_id": "AC-SIM-000215",
           "conversation_id": "AT116667",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7219,7 +7225,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000218",
+          "acao_id": "AC-SIM-000216",
           "conversation_id": "AT116667",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7231,7 +7237,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000219",
+          "acao_id": "AC-SIM-000217",
           "conversation_id": "AT116667",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7243,7 +7249,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000220",
+          "acao_id": "AC-SIM-000218",
           "conversation_id": "AT116667",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7264,7 +7270,7 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 0,
+        "ms": 1,
         "jev": {
           "ms": 0,
           "tokensEntrada": 0,
@@ -7314,10 +7320,10 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.01,
-          "ameaca_reclame_aqui_ou_procon": 0.12,
-          "cliente_irritado": 0.3,
+          "ameaca_reclame_aqui_ou_procon": 0.09,
+          "cliente_irritado": 0.31,
           "pede_ou_envia_dado_sensivel": 0.05,
-          "mais_de_um_motivo": 0.07
+          "mais_de_um_motivo": 0.08
         },
         "flags": {
           "reacao_adversa": false,
@@ -7370,7 +7376,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000221",
+          "acao_id": "AC-SIM-000219",
           "conversation_id": "AT116668",
           "order_id": "GBH493520",
           "data_hora": "2026-11-02 08:00:00",
@@ -7382,7 +7388,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000222",
+          "acao_id": "AC-SIM-000220",
           "conversation_id": "AT116668",
           "order_id": "GBH493520",
           "data_hora": "2026-11-02 08:00:00",
@@ -7394,7 +7400,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000223",
+          "acao_id": "AC-SIM-000221",
           "conversation_id": "AT116668",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7406,7 +7412,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000224",
+          "acao_id": "AC-SIM-000222",
           "conversation_id": "AT116668",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7418,7 +7424,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000225",
+          "acao_id": "AC-SIM-000223",
           "conversation_id": "AT116668",
           "order_id": "GBH493520",
           "data_hora": "2026-11-02 08:00:00",
@@ -7430,7 +7436,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000257",
+          "acao_id": "AC-SIM-000237",
           "conversation_id": "AT116668",
           "order_id": "GBH493520",
           "data_hora": "2026-11-02 08:00:00",
@@ -7439,11 +7445,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000027"
+          "referencia_sistema": "APR-SIM-000028"
         }
       ],
       "resposta": {
-        "texto": "O pagamento do pedido GBH493520 consta como confirmado no sistema de pagamentos. O pedido está aguardando separação e será enviado pela TransNorte, com entrega prevista para 11/11/2026.",
+        "texto": "O pagamento do pedido GBH493520 consta como confirmado em nosso sistema de pagamentos. O pedido está aguardando separação.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -7451,17 +7457,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2499,
+        "ms": 2232,
         "jev": {
-          "ms": 427,
+          "ms": 392,
           "tokensEntrada": 1012,
           "tokensSaida": 321,
           "custoUsd": 0.000042504
         },
         "chat": {
-          "ms": 2071,
-          "tokensEntrada": 332,
-          "tokensSaida": 47,
+          "ms": 1840,
+          "tokensEntrada": 363,
+          "tokensSaida": 29,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042504,
@@ -7478,7 +7484,7 @@
         "falha": null,
         "motivo": "cupom",
         "motivo_jev": "cupom",
-        "confianca": 0.96,
+        "confianca": 0.95,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -7491,19 +7497,19 @@
           "cancelamento": 0,
           "troca_fragrancia": 0,
           "duvida_produto": 0.01,
-          "cupom": 0.96,
+          "cupom": 0.95,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
           "elogio": 0,
-          "outro": 0.03
+          "outro": 0.04
         },
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.65,
+          "mencao_saude": 0.67,
           "ameaca_reclame_aqui_ou_procon": 0.01,
           "cliente_irritado": 0.1,
-          "pede_ou_envia_dado_sensivel": 0.55,
+          "pede_ou_envia_dado_sensivel": 0.56,
           "mais_de_um_motivo": 0.44
         },
         "flags": {
@@ -7561,7 +7567,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000227",
+          "acao_id": "AC-SIM-000226",
           "conversation_id": "AT116669",
           "order_id": "GBH493044",
           "data_hora": "2026-11-02 08:00:00",
@@ -7573,7 +7579,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000228",
+          "acao_id": "AC-SIM-000227",
           "conversation_id": "AT116669",
           "order_id": "GBH493044",
           "data_hora": "2026-11-02 08:00:00",
@@ -7585,7 +7591,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000229",
+          "acao_id": "AC-SIM-000228",
           "conversation_id": "AT116669",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7597,7 +7603,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000230",
+          "acao_id": "AC-SIM-000229",
           "conversation_id": "AT116669",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7609,7 +7615,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000237",
+          "acao_id": "AC-SIM-000236",
           "conversation_id": "AT116669",
           "order_id": "GBH493044",
           "data_hora": "2026-11-02 08:00:00",
@@ -7621,7 +7627,7 @@
           "referencia_sistema": "USO-SIM-000002"
         },
         {
-          "acao_id": "AC-SIM-000263",
+          "acao_id": "AC-SIM-000255",
           "conversation_id": "AT116669",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7633,7 +7639,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000264",
+          "acao_id": "AC-SIM-000256",
           "conversation_id": "AT116669",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7646,7 +7652,7 @@
         }
       ],
       "resposta": {
-        "texto": "O cupom VOLTA15 consta como válido na plataforma.",
+        "texto": "Boa noite! O cupom VOLTA15 consta como válido na plataforma.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -7654,17 +7660,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2623,
+        "ms": 2089,
         "jev": {
-          "ms": 855,
+          "ms": 398,
           "tokensEntrada": 994,
           "tokensSaida": 318,
           "custoUsd": 0.000041748
         },
         "chat": {
-          "ms": 1767,
-          "tokensEntrada": 337,
-          "tokensSaida": 16,
+          "ms": 1690,
+          "tokensEntrada": 368,
+          "tokensSaida": 19,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041748,
@@ -7761,7 +7767,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000233",
+          "acao_id": "AC-SIM-000232",
           "conversation_id": "AT116671",
           "order_id": "GBH463088",
           "data_hora": "2026-11-02 08:00:00",
@@ -7773,7 +7779,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000234",
+          "acao_id": "AC-SIM-000233",
           "conversation_id": "AT116671",
           "order_id": "GBH463088",
           "data_hora": "2026-11-02 08:00:00",
@@ -7785,7 +7791,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000235",
+          "acao_id": "AC-SIM-000234",
           "conversation_id": "AT116671",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7797,7 +7803,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000236",
+          "acao_id": "AC-SIM-000235",
           "conversation_id": "AT116671",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7809,7 +7815,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000269",
+          "acao_id": "AC-SIM-000261",
           "conversation_id": "AT116671",
           "order_id": "GBH463088",
           "data_hora": "2026-11-02 08:00:00",
@@ -7818,11 +7824,11 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000028"
+          "referencia_sistema": "APR-SIM-000029"
         }
       ],
       "resposta": {
-        "texto": "O pedido GBH463088 segue em trânsito com a Expressa Já. Já existe um chamado aberto com a transportadora sobre a entrega. O último rastreio informa chegada à unidade de destino em 01/11/2026.",
+        "texto": "Seu pedido está atrasado. Já existe um chamado aberto com a transportadora Expressa Já sobre a entrega, que está em acompanhamento.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -7830,17 +7836,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2822,
+        "ms": 2259,
         "jev": {
-          "ms": 371,
+          "ms": 434,
           "tokensEntrada": 1053,
           "tokensSaida": 319,
           "custoUsd": 0.000044226
         },
         "chat": {
-          "ms": 2449,
-          "tokensEntrada": 408,
-          "tokensSaida": 52,
+          "ms": 1825,
+          "tokensEntrada": 438,
+          "tokensSaida": 31,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000044226,
@@ -7879,7 +7885,7 @@
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.05,
+          "mencao_saude": 0.04,
           "ameaca_reclame_aqui_ou_procon": 0.01,
           "cliente_irritado": 0.06,
           "pede_ou_envia_dado_sensivel": 0.02,
@@ -7936,7 +7942,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000240",
+          "acao_id": "AC-SIM-000238",
           "conversation_id": "AT116673",
           "order_id": "GBH492358",
           "data_hora": "2026-11-02 08:00:00",
@@ -7948,7 +7954,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000241",
+          "acao_id": "AC-SIM-000239",
           "conversation_id": "AT116673",
           "order_id": "GBH492358",
           "data_hora": "2026-11-02 08:00:00",
@@ -7960,7 +7966,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000242",
+          "acao_id": "AC-SIM-000240",
           "conversation_id": "AT116673",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7972,7 +7978,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000243",
+          "acao_id": "AC-SIM-000241",
           "conversation_id": "AT116673",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7984,7 +7990,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000285",
+          "acao_id": "AC-SIM-000278",
           "conversation_id": "AT116673",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -7996,7 +8002,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000286",
+          "acao_id": "AC-SIM-000279",
           "conversation_id": "AT116673",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8017,16 +8023,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2207,
+        "ms": 2230,
         "jev": {
-          "ms": 392,
+          "ms": 413,
           "tokensEntrada": 983,
           "tokensSaida": 320,
           "custoUsd": 0.000041286
         },
         "chat": {
-          "ms": 1814,
-          "tokensEntrada": 470,
+          "ms": 1816,
+          "tokensEntrada": 501,
           "tokensSaida": 22,
           "custoUsd": null
         },
@@ -8102,7 +8108,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000246",
+          "acao_id": "AC-SIM-000244",
           "conversation_id": "AT116675",
           "order_id": "GCH560446",
           "data_hora": "2026-11-02 08:00:00",
@@ -8114,7 +8120,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000247",
+          "acao_id": "AC-SIM-000245",
           "conversation_id": "AT116675",
           "order_id": "GCH560446",
           "data_hora": "2026-11-02 08:00:00",
@@ -8126,7 +8132,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000248",
+          "acao_id": "AC-SIM-000246",
           "conversation_id": "AT116675",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8138,7 +8144,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000249",
+          "acao_id": "AC-SIM-000247",
           "conversation_id": "AT116675",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8150,7 +8156,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000250",
+          "acao_id": "AC-SIM-000248",
           "conversation_id": "AT116675",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8221,17 +8227,17 @@
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.35,
-          "pede_ou_envia_dado_sensivel": 0.47,
-          "mais_de_um_motivo": 0.21
+          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "cliente_irritado": 0.33,
+          "pede_ou_envia_dado_sensivel": 0.52,
+          "mais_de_um_motivo": 0.2
         },
         "flags": {
           "reacao_adversa": false,
           "mencao_saude": false,
           "ameaca_reclame_aqui_ou_procon": false,
           "cliente_irritado": false,
-          "pede_ou_envia_dado_sensivel": false,
+          "pede_ou_envia_dado_sensivel": true,
           "mais_de_um_motivo": false
         },
         "tentativas": 1,
@@ -8285,7 +8291,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000251",
+          "acao_id": "AC-SIM-000249",
           "conversation_id": "AT116677",
           "order_id": "GBH491723",
           "data_hora": "2026-11-02 08:00:00",
@@ -8297,7 +8303,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000252",
+          "acao_id": "AC-SIM-000250",
           "conversation_id": "AT116677",
           "order_id": "GBH491723",
           "data_hora": "2026-11-02 08:00:00",
@@ -8309,7 +8315,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000253",
+          "acao_id": "AC-SIM-000251",
           "conversation_id": "AT116677",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8321,7 +8327,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000254",
+          "acao_id": "AC-SIM-000252",
           "conversation_id": "AT116677",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8333,7 +8339,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000255",
+          "acao_id": "AC-SIM-000253",
           "conversation_id": "AT116677",
           "order_id": "GBH491723",
           "data_hora": "2026-11-02 08:00:00",
@@ -8345,7 +8351,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000256",
+          "acao_id": "AC-SIM-000254",
           "conversation_id": "AT116677",
           "order_id": "GBH491723",
           "data_hora": "2026-11-02 08:00:00",
@@ -8357,7 +8363,7 @@
           "referencia_sistema": "EST-SIM-000002"
         },
         {
-          "acao_id": "AC-SIM-000279",
+          "acao_id": "AC-SIM-000267",
           "conversation_id": "AT116677",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8369,7 +8375,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000280",
+          "acao_id": "AC-SIM-000268",
           "conversation_id": "AT116677",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8390,16 +8396,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2180,
+        "ms": 2104,
         "jev": {
-          "ms": 419,
+          "ms": 460,
           "tokensEntrada": 994,
           "tokensSaida": 322,
           "custoUsd": 0.000041748
         },
         "chat": {
-          "ms": 1759,
-          "tokensEntrada": 336,
+          "ms": 1643,
+          "tokensEntrada": 367,
           "tokensSaida": 25,
           "custoUsd": null
         },
@@ -8500,7 +8506,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000258",
+          "acao_id": "AC-SIM-000257",
           "conversation_id": "AT116679",
           "order_id": "GBH450703",
           "data_hora": "2026-11-02 08:00:00",
@@ -8512,7 +8518,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000259",
+          "acao_id": "AC-SIM-000258",
           "conversation_id": "AT116679",
           "order_id": "GBH450703",
           "data_hora": "2026-11-02 08:00:00",
@@ -8524,7 +8530,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000260",
+          "acao_id": "AC-SIM-000259",
           "conversation_id": "AT116679",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8536,7 +8542,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000261",
+          "acao_id": "AC-SIM-000260",
           "conversation_id": "AT116679",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8548,7 +8554,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000262",
+          "acao_id": "AC-SIM-000266",
           "conversation_id": "AT116679",
           "order_id": "GBH450703",
           "data_hora": "2026-11-02 08:00:00",
@@ -8560,7 +8566,7 @@
           "referencia_sistema": "OMS-SIM-000003"
         },
         {
-          "acao_id": "AC-SIM-000293",
+          "acao_id": "AC-SIM-000285",
           "conversation_id": "AT116679",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8572,7 +8578,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000294",
+          "acao_id": "AC-SIM-000286",
           "conversation_id": "AT116679",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8585,7 +8591,7 @@
         }
       ],
       "resposta": {
-        "texto": "A troca foi solicitada com coleta reversa. O novo produto será enviado depois que o centro de distribuição conferir a devolução.",
+        "texto": "Sim, a troca do Hidratante Corporal Cupuaçu 250ml foi solicitada com coleta reversa. O novo produto será enviado após o centro de distribuição conferir a devolução.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -8593,17 +8599,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2136,
+        "ms": 2319,
         "jev": {
-          "ms": 418,
+          "ms": 425,
           "tokensEntrada": 981,
           "tokensSaida": 322,
           "custoUsd": 0.000041202
         },
         "chat": {
-          "ms": 1716,
-          "tokensEntrada": 361,
-          "tokensSaida": 30,
+          "ms": 1892,
+          "tokensEntrada": 377,
+          "tokensSaida": 43,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041202,
@@ -8620,11 +8626,11 @@
         "falha": null,
         "motivo": "duvida_produto",
         "motivo_jev": "duvida_produto",
-        "confianca": 0.83,
+        "confianca": 0.75,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
-          "avaria": 0.16,
+          "avaria": 0.23,
           "item_faltante": 0,
           "brinde": 0,
           "erro_personalizacao": 0,
@@ -8632,7 +8638,7 @@
           "endereco": 0,
           "cancelamento": 0,
           "troca_fragrancia": 0,
-          "duvida_produto": 0.84,
+          "duvida_produto": 0.77,
           "cupom": 0,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
@@ -8644,8 +8650,8 @@
           "reacao_adversa": 0.03,
           "mencao_saude": 0.03,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.09,
-          "pede_ou_envia_dado_sensivel": 0.06,
+          "cliente_irritado": 0.1,
+          "pede_ou_envia_dado_sensivel": 0.07,
           "mais_de_um_motivo": 0.03
         },
         "flags": {
@@ -8699,7 +8705,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000265",
+          "acao_id": "AC-SIM-000262",
           "conversation_id": "AT116680",
           "order_id": "GCH562861",
           "data_hora": "2026-11-02 08:00:00",
@@ -8711,7 +8717,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000266",
+          "acao_id": "AC-SIM-000263",
           "conversation_id": "AT116680",
           "order_id": "GCH562861",
           "data_hora": "2026-11-02 08:00:00",
@@ -8723,7 +8729,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000267",
+          "acao_id": "AC-SIM-000264",
           "conversation_id": "AT116680",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8735,7 +8741,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000268",
+          "acao_id": "AC-SIM-000265",
           "conversation_id": "AT116680",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8747,7 +8753,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000300",
+          "acao_id": "AC-SIM-000291",
           "conversation_id": "AT116680",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8759,7 +8765,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000301",
+          "acao_id": "AC-SIM-000292",
           "conversation_id": "AT116680",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8772,7 +8778,7 @@
         }
       ],
       "resposta": {
-        "texto": "A Garrafa Fresh 650ml Rosa possui tampa rosqueável com vedação de silicone. A ficha do produto não informa se ela pode vazar quando fica deitada na bolsa.",
+        "texto": "A Garrafa Fresh 650ml Rosa tem tampa rosqueável com vedação de silicone. A ficha do produto não informa se ela pode vazar quando fica deitada na bolsa.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -8780,16 +8786,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2620,
+        "ms": 2299,
         "jev": {
-          "ms": 408,
+          "ms": 406,
           "tokensEntrada": 1004,
           "tokensSaida": 320,
           "custoUsd": 0.000042168
         },
         "chat": {
-          "ms": 2212,
-          "tokensEntrada": 435,
+          "ms": 1893,
+          "tokensEntrada": 466,
           "tokensSaida": 41,
           "custoUsd": null
         },
@@ -8865,7 +8871,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000270",
+          "acao_id": "AC-SIM-000269",
           "conversation_id": "AT116681",
           "order_id": "GCH562591",
           "data_hora": "2026-11-02 08:00:00",
@@ -8877,7 +8883,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000271",
+          "acao_id": "AC-SIM-000270",
           "conversation_id": "AT116681",
           "order_id": "GCH562591",
           "data_hora": "2026-11-02 08:00:00",
@@ -8889,7 +8895,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000272",
+          "acao_id": "AC-SIM-000271",
           "conversation_id": "AT116681",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8901,7 +8907,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000273",
+          "acao_id": "AC-SIM-000272",
           "conversation_id": "AT116681",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8913,7 +8919,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000274",
+          "acao_id": "AC-SIM-000273",
           "conversation_id": "AT116681",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -8983,11 +8989,11 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.02,
+          "mencao_saude": 0.03,
           "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.9,
+          "cliente_irritado": 0.91,
           "pede_ou_envia_dado_sensivel": 0.07,
-          "mais_de_um_motivo": 0.07
+          "mais_de_um_motivo": 0.06
         },
         "flags": {
           "reacao_adversa": false,
@@ -9055,7 +9061,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000275",
+          "acao_id": "AC-SIM-000274",
           "conversation_id": "AT116682",
           "order_id": "GBH464417",
           "data_hora": "2026-11-02 08:00:00",
@@ -9067,7 +9073,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000276",
+          "acao_id": "AC-SIM-000275",
           "conversation_id": "AT116682",
           "order_id": "GBH464417",
           "data_hora": "2026-11-02 08:00:00",
@@ -9079,7 +9085,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000277",
+          "acao_id": "AC-SIM-000276",
           "conversation_id": "AT116682",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9091,7 +9097,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000278",
+          "acao_id": "AC-SIM-000277",
           "conversation_id": "AT116682",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9103,7 +9109,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000291",
+          "acao_id": "AC-SIM-000284",
           "conversation_id": "AT116682",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9115,7 +9121,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000367",
+          "acao_id": "AC-SIM-000368",
           "conversation_id": "AT116682",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9127,7 +9133,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000368",
+          "acao_id": "AC-SIM-000369",
           "conversation_id": "AT116682",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9140,7 +9146,7 @@
         }
       ],
       "resposta": {
-        "texto": "Entendemos sua frustração. O reenvio sem custo exige o envio de uma foto e que a solicitação seja feita dentro do prazo previsto; por isso, não podemos atender ao pedido pelas condições da política.",
+        "texto": "Entendo sua frustração por precisar entrar em contato novamente. A solicitação não se enquadra na política de reenvio sem custo, que exige o envio de uma foto e que o pedido seja feito dentro do prazo previsto após o recebimento.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -9152,17 +9158,17 @@
         ]
       },
       "telemetria": {
-        "ms": 9977,
+        "ms": 13137,
         "jev": {
-          "ms": 391,
+          "ms": 402,
           "tokensEntrada": 1033,
           "tokensSaida": 318,
           "custoUsd": 0.000043386
         },
         "chat": {
-          "ms": 9583,
-          "tokensEntrada": 895,
-          "tokensSaida": 279,
+          "ms": 12733,
+          "tokensEntrada": 927,
+          "tokensSaida": 441,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043386,
@@ -9202,10 +9208,10 @@
         "sinais_texto": {
           "reacao_adversa": 0.03,
           "mencao_saude": 0.04,
-          "ameaca_reclame_aqui_ou_procon": 0.01,
-          "cliente_irritado": 0.08,
-          "pede_ou_envia_dado_sensivel": 0.05,
-          "mais_de_um_motivo": 0.04
+          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "cliente_irritado": 0.07,
+          "pede_ou_envia_dado_sensivel": 0.06,
+          "mais_de_um_motivo": 0.03
         },
         "flags": {
           "reacao_adversa": false,
@@ -9258,7 +9264,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000281",
+          "acao_id": "AC-SIM-000280",
           "conversation_id": "AT116684",
           "order_id": "GBH462762",
           "data_hora": "2026-11-02 08:00:00",
@@ -9270,7 +9276,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000282",
+          "acao_id": "AC-SIM-000281",
           "conversation_id": "AT116684",
           "order_id": "GBH462762",
           "data_hora": "2026-11-02 08:00:00",
@@ -9282,7 +9288,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000283",
+          "acao_id": "AC-SIM-000282",
           "conversation_id": "AT116684",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9294,7 +9300,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000284",
+          "acao_id": "AC-SIM-000283",
           "conversation_id": "AT116684",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9306,7 +9312,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000307",
+          "acao_id": "AC-SIM-000299",
           "conversation_id": "AT116684",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9318,7 +9324,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000308",
+          "acao_id": "AC-SIM-000300",
           "conversation_id": "AT116684",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9331,7 +9337,7 @@
         }
       ],
       "resposta": {
-        "texto": "A ficha do Leave-in Termoprotetor informa que ele contém fragrância (Parfum), mas não especifica a intensidade do cheiro.",
+        "texto": "A ficha do Leave-in Termoprotetor 200ml informa que o produto contém perfume, mas não especifica a intensidade do cheiro.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -9339,16 +9345,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2378,
+        "ms": 2190,
         "jev": {
-          "ms": 404,
+          "ms": 418,
           "tokensEntrada": 1004,
           "tokensSaida": 320,
           "custoUsd": 0.000042168
         },
         "chat": {
-          "ms": 1973,
-          "tokensEntrada": 531,
+          "ms": 1771,
+          "tokensEntrada": 547,
           "tokensSaida": 32,
           "custoUsd": null
         },
@@ -9388,8 +9394,8 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.09,
+          "mencao_saude": 0.03,
+          "ameaca_reclame_aqui_ou_procon": 0.11,
           "cliente_irritado": 0.22,
           "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.04
@@ -9499,7 +9505,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000292",
+          "acao_id": "AC-SIM-000297",
           "conversation_id": "AT116686",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9511,7 +9517,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000324",
+          "acao_id": "AC-SIM-000306",
           "conversation_id": "AT116686",
           "order_id": "GBH470288",
           "data_hora": "2026-11-02 08:00:00",
@@ -9520,33 +9526,29 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000029"
+          "referencia_sistema": "APR-SIM-000030"
         }
       ],
       "resposta": {
-        "texto": "Para seguirmos com sua solicitação sobre o produto recebido, pedimos que envie uma foto do produto e da embalagem.",
+        "texto": "Sentimos muito pelo ocorrido com seu pedido GBH470288. Para seguirmos com sua solicitação, envie uma foto do produto recebido e da embalagem.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
-        "tentativas": 2,
-        "falhasChecagem": [
-          [
-            "numero_sem_fonte"
-          ]
-        ]
+        "tentativas": 1,
+        "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 4700,
+        "ms": 2293,
         "jev": {
-          "ms": 438,
+          "ms": 435,
           "tokensEntrada": 1008,
           "tokensSaida": 320,
           "custoUsd": 0.000042336
         },
         "chat": {
-          "ms": 4259,
-          "tokensEntrada": 773,
-          "tokensSaida": 72,
+          "ms": 1857,
+          "tokensEntrada": 387,
+          "tokensSaida": 35,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042336,
@@ -9587,7 +9589,7 @@
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.21,
+          "cliente_irritado": 0.19,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.03
         },
@@ -9648,7 +9650,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000295",
+          "acao_id": "AC-SIM-000293",
           "conversation_id": "AT116688",
           "order_id": "GBH469939",
           "data_hora": "2026-11-02 08:00:00",
@@ -9660,7 +9662,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000296",
+          "acao_id": "AC-SIM-000294",
           "conversation_id": "AT116688",
           "order_id": "GBH469939",
           "data_hora": "2026-11-02 08:00:00",
@@ -9672,7 +9674,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000297",
+          "acao_id": "AC-SIM-000295",
           "conversation_id": "AT116688",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9684,7 +9686,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000298",
+          "acao_id": "AC-SIM-000296",
           "conversation_id": "AT116688",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9696,7 +9698,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000299",
+          "acao_id": "AC-SIM-000298",
           "conversation_id": "AT116688",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9708,7 +9710,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000314",
+          "acao_id": "AC-SIM-000311",
           "conversation_id": "AT116688",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9721,7 +9723,7 @@
         }
       ],
       "resposta": {
-        "texto": "Para seguirmos com sua solicitação sobre a Necessaire GoBeauté, por favor, envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com sua solicitação sobre a Necessaire GoBeauté, envie uma foto do produto recebido e da embalagem, por favor.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -9729,16 +9731,16 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2238,
+        "ms": 2285,
         "jev": {
-          "ms": 425,
+          "ms": 432,
           "tokensEntrada": 1024,
           "tokensSaida": 318,
           "custoUsd": 0.000043008
         },
         "chat": {
-          "ms": 1810,
-          "tokensEntrada": 388,
+          "ms": 1851,
+          "tokensEntrada": 404,
           "tokensSaida": 32,
           "custoUsd": null
         },
@@ -9756,7 +9758,7 @@
         "falha": null,
         "motivo": "pagamento_pendente",
         "motivo_jev": "pagamento_pendente",
-        "confianca": 0.97,
+        "confianca": 0.98,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -9764,24 +9766,24 @@
           "item_faltante": 0,
           "brinde": 0,
           "erro_personalizacao": 0,
-          "cobranca_duplicada": 0.02,
+          "cobranca_duplicada": 0.01,
           "endereco": 0,
           "cancelamento": 0,
           "troca_fragrancia": 0,
           "duvida_produto": 0,
           "cupom": 0,
           "reacao_adversa": 0,
-          "pagamento_pendente": 0.97,
+          "pagamento_pendente": 0.98,
           "elogio": 0,
           "outro": 0.01
         },
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.01,
-          "mencao_saude": 0.01,
+          "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
           "cliente_irritado": 0.18,
-          "pede_ou_envia_dado_sensivel": 0.04,
+          "pede_ou_envia_dado_sensivel": 0.05,
           "mais_de_um_motivo": 0.11
         },
         "flags": {
@@ -9839,7 +9841,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000302",
+          "acao_id": "AC-SIM-000301",
           "conversation_id": "AT116689",
           "order_id": "GCH562995",
           "data_hora": "2026-11-02 08:00:00",
@@ -9851,7 +9853,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000303",
+          "acao_id": "AC-SIM-000302",
           "conversation_id": "AT116689",
           "order_id": "GCH562995",
           "data_hora": "2026-11-02 08:00:00",
@@ -9863,7 +9865,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000304",
+          "acao_id": "AC-SIM-000303",
           "conversation_id": "AT116689",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9875,7 +9877,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000305",
+          "acao_id": "AC-SIM-000304",
           "conversation_id": "AT116689",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9887,7 +9889,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000306",
+          "acao_id": "AC-SIM-000305",
           "conversation_id": "AT116689",
           "order_id": "GCH562995",
           "data_hora": "2026-11-02 08:00:00",
@@ -9899,7 +9901,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000318",
+          "acao_id": "AC-SIM-000316",
           "conversation_id": "AT116689",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9911,7 +9913,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000319",
+          "acao_id": "AC-SIM-000317",
           "conversation_id": "AT116689",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -9924,7 +9926,7 @@
         }
       ],
       "resposta": {
-        "texto": "O pagamento do pedido GCH562995 consta como confirmado no nosso sistema de pagamentos. O pedido está aguardando separação, com entrega prevista para 12/11/2026 pela transportadora TransNorte.",
+        "texto": "O pagamento do pedido GCH562995 consta como confirmado em nosso sistema de pagamentos. O pedido está aguardando separação.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -9932,17 +9934,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2597,
+        "ms": 2460,
         "jev": {
-          "ms": 401,
+          "ms": 412,
           "tokensEntrada": 1007,
           "tokensSaida": 321,
           "custoUsd": 0.000042294
         },
         "chat": {
-          "ms": 2193,
-          "tokensEntrada": 339,
-          "tokensSaida": 47,
+          "ms": 2047,
+          "tokensEntrada": 370,
+          "tokensSaida": 29,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042294,
@@ -9983,7 +9985,7 @@
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.93,
+          "cliente_irritado": 0.92,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.05
         },
@@ -10044,7 +10046,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000309",
+          "acao_id": "AC-SIM-000307",
           "conversation_id": "AT116690",
           "order_id": "GCH559202",
           "data_hora": "2026-11-02 08:00:00",
@@ -10056,7 +10058,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000310",
+          "acao_id": "AC-SIM-000308",
           "conversation_id": "AT116690",
           "order_id": "GCH559202",
           "data_hora": "2026-11-02 08:00:00",
@@ -10068,7 +10070,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000311",
+          "acao_id": "AC-SIM-000309",
           "conversation_id": "AT116690",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10080,7 +10082,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000312",
+          "acao_id": "AC-SIM-000310",
           "conversation_id": "AT116690",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10092,7 +10094,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000313",
+          "acao_id": "AC-SIM-000315",
           "conversation_id": "AT116690",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10104,7 +10106,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000337",
+          "acao_id": "AC-SIM-000323",
           "conversation_id": "AT116690",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10117,7 +10119,7 @@
         }
       ],
       "resposta": {
-        "texto": "Sentimos muito por você ter recebido a case personalizada com outro nome. Para seguirmos com sua solicitação, envie uma foto do produto e da embalagem.",
+        "texto": "Sentimos muito pela personalização incorreta. Para seguirmos com sua solicitação sobre a Case Guard, envie uma foto do produto e da embalagem, por favor.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -10125,17 +10127,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3650,
+        "ms": 2196,
         "jev": {
-          "ms": 382,
+          "ms": 402,
           "tokensEntrada": 997,
           "tokensSaida": 322,
           "custoUsd": 0.000041874
         },
         "chat": {
-          "ms": 3266,
-          "tokensEntrada": 368,
-          "tokensSaida": 35,
+          "ms": 1793,
+          "tokensEntrada": 384,
+          "tokensSaida": 37,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041874,
@@ -10152,7 +10154,7 @@
         "falha": null,
         "motivo": "cupom",
         "motivo_jev": "cupom",
-        "confianca": 0.97,
+        "confianca": 0.94,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -10165,18 +10167,18 @@
           "cancelamento": 0,
           "troca_fragrancia": 0,
           "duvida_produto": 0,
-          "cupom": 0.97,
+          "cupom": 0.94,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
           "elogio": 0,
-          "outro": 0.03
+          "outro": 0.06
         },
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.01,
           "mencao_saude": 0.01,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.22,
+          "cliente_irritado": 0.24,
           "pede_ou_envia_dado_sensivel": 0.03,
           "mais_de_um_motivo": 0.04
         },
@@ -10223,7 +10225,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000315",
+          "acao_id": "AC-SIM-000312",
           "conversation_id": "AT116692",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10235,7 +10237,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000316",
+          "acao_id": "AC-SIM-000313",
           "conversation_id": "AT116692",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10247,7 +10249,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000317",
+          "acao_id": "AC-SIM-000314",
           "conversation_id": "AT116692",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10259,7 +10261,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000330",
+          "acao_id": "AC-SIM-000328",
           "conversation_id": "AT116692",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10272,7 +10274,7 @@
         }
       ],
       "resposta": {
-        "texto": "Como não há pedido associado à conversa, pode me informar o código do cupom para verificarmos na plataforma?",
+        "texto": "Não localizamos um pedido associado a esta conversa. Pode nos informar o código do cupom para verificarmos na plataforma?",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -10280,17 +10282,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2265,
+        "ms": 2148,
         "jev": {
-          "ms": 412,
+          "ms": 420,
           "tokensEntrada": 995,
           "tokensSaida": 318,
           "custoUsd": 0.00004179
         },
         "chat": {
-          "ms": 1852,
-          "tokensEntrada": 271,
-          "tokensSaida": 26,
+          "ms": 1728,
+          "tokensEntrada": 302,
+          "tokensSaida": 28,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004179,
@@ -10332,7 +10334,7 @@
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
           "cliente_irritado": 0.23,
-          "pede_ou_envia_dado_sensivel": 0.07,
+          "pede_ou_envia_dado_sensivel": 0.06,
           "mais_de_um_motivo": 0.07
         },
         "flags": {
@@ -10390,7 +10392,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000320",
+          "acao_id": "AC-SIM-000318",
           "conversation_id": "AT116693",
           "order_id": "GCH563132",
           "data_hora": "2026-11-02 08:00:00",
@@ -10402,7 +10404,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000321",
+          "acao_id": "AC-SIM-000319",
           "conversation_id": "AT116693",
           "order_id": "GCH563132",
           "data_hora": "2026-11-02 08:00:00",
@@ -10414,7 +10416,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000322",
+          "acao_id": "AC-SIM-000320",
           "conversation_id": "AT116693",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10426,7 +10428,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000323",
+          "acao_id": "AC-SIM-000321",
           "conversation_id": "AT116693",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10438,7 +10440,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000329",
+          "acao_id": "AC-SIM-000322",
           "conversation_id": "AT116693",
           "order_id": "GCH563132",
           "data_hora": "2026-11-02 08:00:00",
@@ -10450,7 +10452,7 @@
           "referencia_sistema": "USO-SIM-000003"
         },
         {
-          "acao_id": "AC-SIM-000343",
+          "acao_id": "AC-SIM-000335",
           "conversation_id": "AT116693",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10462,7 +10464,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000344",
+          "acao_id": "AC-SIM-000336",
           "conversation_id": "AT116693",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10475,7 +10477,7 @@
         }
       ],
       "resposta": {
-        "texto": "O cupom VOLTA15 não foi aplicado ao pedido GCH563132 porque a plataforma não permite acumulá-lo com outra promoção.",
+        "texto": "O cupom VOLTA15 não foi aplicado porque a plataforma não permite acumular com outra promoção. Seu pedido GCH563132 está aguardando separação.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -10483,17 +10485,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2681,
+        "ms": 2645,
         "jev": {
-          "ms": 395,
+          "ms": 408,
           "tokensEntrada": 994,
           "tokensSaida": 318,
           "custoUsd": 0.000041748
         },
         "chat": {
-          "ms": 2286,
-          "tokensEntrada": 348,
-          "tokensSaida": 31,
+          "ms": 2235,
+          "tokensEntrada": 379,
+          "tokensSaida": 36,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041748,
@@ -10536,7 +10538,7 @@
           "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.98,
           "pede_ou_envia_dado_sensivel": 0.08,
-          "mais_de_um_motivo": 0.4
+          "mais_de_um_motivo": 0.35
         },
         "flags": {
           "reacao_adversa": false,
@@ -10593,7 +10595,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000325",
+          "acao_id": "AC-SIM-000324",
           "conversation_id": "AT116695",
           "order_id": "GBH472635",
           "data_hora": "2026-11-02 08:00:00",
@@ -10605,7 +10607,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000326",
+          "acao_id": "AC-SIM-000325",
           "conversation_id": "AT116695",
           "order_id": "GBH472635",
           "data_hora": "2026-11-02 08:00:00",
@@ -10617,7 +10619,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000327",
+          "acao_id": "AC-SIM-000326",
           "conversation_id": "AT116695",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10629,7 +10631,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000328",
+          "acao_id": "AC-SIM-000327",
           "conversation_id": "AT116695",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10641,7 +10643,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000335",
+          "acao_id": "AC-SIM-000333",
           "conversation_id": "AT116695",
           "order_id": "GBH472635",
           "data_hora": "2026-11-02 08:00:00",
@@ -10653,7 +10655,7 @@
           "referencia_sistema": "CHM-SIM-000006"
         },
         {
-          "acao_id": "AC-SIM-000361",
+          "acao_id": "AC-SIM-000347",
           "conversation_id": "AT116695",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10665,7 +10667,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000362",
+          "acao_id": "AC-SIM-000348",
           "conversation_id": "AT116695",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10678,7 +10680,7 @@
         }
       ],
       "resposta": {
-        "texto": "Entendo sua frustração com o atraso. O pedido está em trânsito, e o último registro indica chegada à unidade de destino. Abrimos um chamado com a Expressa Já sobre a entrega.",
+        "texto": "O pedido está atrasado e segue em trânsito com a Expressa Já. Abrimos um chamado com a transportadora sobre a entrega.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -10690,17 +10692,17 @@
         ]
       },
       "telemetria": {
-        "ms": 4826,
+        "ms": 4788,
         "jev": {
-          "ms": 394,
+          "ms": 420,
           "tokensEntrada": 1011,
           "tokensSaida": 319,
           "custoUsd": 0.000042462
         },
         "chat": {
-          "ms": 4431,
-          "tokensEntrada": 797,
-          "tokensSaida": 104,
+          "ms": 4366,
+          "tokensEntrada": 825,
+          "tokensSaida": 70,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042462,
@@ -10717,10 +10719,10 @@
         "falha": null,
         "motivo": "atraso",
         "motivo_jev": "atraso",
-        "confianca": 0.75,
+        "confianca": 0.8,
         "probabilidades": {
-          "rastreio": 0.21,
-          "atraso": 0.77,
+          "rastreio": 0.17,
+          "atraso": 0.81,
           "avaria": 0,
           "item_faltante": 0,
           "brinde": 0,
@@ -10739,10 +10741,10 @@
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
-          "mencao_saude": 0.06,
-          "ameaca_reclame_aqui_ou_procon": 0.04,
-          "cliente_irritado": 0.22,
-          "pede_ou_envia_dado_sensivel": 0.05,
+          "mencao_saude": 0.05,
+          "ameaca_reclame_aqui_ou_procon": 0.06,
+          "cliente_irritado": 0.21,
+          "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.95
         },
         "flags": {
@@ -10796,7 +10798,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000331",
+          "acao_id": "AC-SIM-000329",
           "conversation_id": "AT116697",
           "order_id": "GBH485960",
           "data_hora": "2026-11-02 08:00:00",
@@ -10808,7 +10810,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000332",
+          "acao_id": "AC-SIM-000330",
           "conversation_id": "AT116697",
           "order_id": "GBH485960",
           "data_hora": "2026-11-02 08:00:00",
@@ -10820,7 +10822,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000333",
+          "acao_id": "AC-SIM-000331",
           "conversation_id": "AT116697",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10832,7 +10834,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000334",
+          "acao_id": "AC-SIM-000332",
           "conversation_id": "AT116697",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -10844,7 +10846,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000336",
+          "acao_id": "AC-SIM-000334",
           "conversation_id": "AT116697",
           "order_id": "GBH485960",
           "data_hora": "2026-11-02 08:00:00",
@@ -10856,7 +10858,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000356",
+          "acao_id": "AC-SIM-000397",
           "conversation_id": "AT116697",
           "order_id": "GBH485960",
           "data_hora": "2026-11-02 08:00:00",
@@ -10865,33 +10867,34 @@
           "valor_rs": 0,
           "executado_por": "agente",
           "aprovado_por": null,
-          "referencia_sistema": "APR-SIM-000030"
+          "referencia_sistema": "APR-SIM-000033"
         }
       ],
       "resposta": {
-        "texto": "Seu pedido está em trânsito pela transportadora Rápido Sul. A previsão de entrega informada pela transportadora é 05/11/2026.",
+        "texto": "O pedido está atrasado e consta em trânsito com a transportadora Rápido Sul.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
         "tentativas": 2,
         "falhasChecagem": [
           [
-            "numero_sem_fonte"
+            "numero_sem_fonte",
+            "previsao_vencida"
           ]
         ]
       },
       "telemetria": {
-        "ms": 4426,
+        "ms": 18555,
         "jev": {
-          "ms": 392,
+          "ms": 417,
           "tokensEntrada": 1064,
           "tokensSaida": 319,
           "custoUsd": 0.000044688
         },
         "chat": {
-          "ms": 4030,
-          "tokensEntrada": 873,
-          "tokensSaida": 84,
+          "ms": 18137,
+          "tokensEntrada": 960,
+          "tokensSaida": 288,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000044688,
@@ -10932,9 +10935,9 @@
           "reacao_adversa": 0.01,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.76,
-          "pede_ou_envia_dado_sensivel": 0.05,
-          "mais_de_um_motivo": 0.05
+          "cliente_irritado": 0.74,
+          "pede_ou_envia_dado_sensivel": 0.04,
+          "mais_de_um_motivo": 0.06
         },
         "flags": {
           "reacao_adversa": false,
@@ -10998,7 +11001,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000338",
+          "acao_id": "AC-SIM-000337",
           "conversation_id": "AT116699",
           "order_id": "GBH477555",
           "data_hora": "2026-11-02 08:00:00",
@@ -11010,7 +11013,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000339",
+          "acao_id": "AC-SIM-000338",
           "conversation_id": "AT116699",
           "order_id": "GBH477555",
           "data_hora": "2026-11-02 08:00:00",
@@ -11022,7 +11025,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000340",
+          "acao_id": "AC-SIM-000339",
           "conversation_id": "AT116699",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11034,7 +11037,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000341",
+          "acao_id": "AC-SIM-000340",
           "conversation_id": "AT116699",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11046,7 +11049,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000342",
+          "acao_id": "AC-SIM-000341",
           "conversation_id": "AT116699",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11058,7 +11061,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000350",
+          "acao_id": "AC-SIM-000342",
           "conversation_id": "AT116699",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11071,7 +11074,7 @@
         }
       ],
       "resposta": {
-        "texto": "Para seguir com sua solicitação sobre a Necessaire GoBeauté, por favor, envie uma foto do produto recebido e da embalagem.",
+        "texto": "Para seguirmos com sua solicitação sobre a Necessaire GoBeauté, por favor, envie uma foto do produto recebido e da embalagem do pedido.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -11079,17 +11082,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2265,
+        "ms": 2588,
         "jev": {
-          "ms": 401,
+          "ms": 446,
           "tokensEntrada": 1031,
           "tokensSaida": 318,
           "custoUsd": 0.000043302
         },
         "chat": {
-          "ms": 1863,
-          "tokensEntrada": 392,
-          "tokensSaida": 31,
+          "ms": 2142,
+          "tokensEntrada": 408,
+          "tokensSaida": 34,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043302,
@@ -11132,7 +11135,7 @@
           "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.9,
           "pede_ou_envia_dado_sensivel": 0.04,
-          "mais_de_um_motivo": 0.88
+          "mais_de_um_motivo": 0.89
         },
         "flags": {
           "reacao_adversa": false,
@@ -11200,7 +11203,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000345",
+          "acao_id": "AC-SIM-000343",
           "conversation_id": "AT116700",
           "order_id": "GBH457517",
           "data_hora": "2026-11-02 08:00:00",
@@ -11212,7 +11215,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000346",
+          "acao_id": "AC-SIM-000344",
           "conversation_id": "AT116700",
           "order_id": "GBH457517",
           "data_hora": "2026-11-02 08:00:00",
@@ -11224,7 +11227,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000347",
+          "acao_id": "AC-SIM-000345",
           "conversation_id": "AT116700",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11236,7 +11239,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000348",
+          "acao_id": "AC-SIM-000346",
           "conversation_id": "AT116700",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11248,7 +11251,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000349",
+          "acao_id": "AC-SIM-000353",
           "conversation_id": "AT116700",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11260,7 +11263,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000376",
+          "acao_id": "AC-SIM-000400",
           "conversation_id": "AT116700",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11272,7 +11275,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000377",
+          "acao_id": "AC-SIM-000401",
           "conversation_id": "AT116700",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11285,25 +11288,29 @@
         }
       ],
       "resposta": {
-        "texto": "O pedido consta como entregue em 20/10/2026. Para o reenvio sem custo, é necessário enviar uma foto em até 7 dias do recebimento; como esse prazo já passou, a solicitação não se enquadra na política.",
+        "texto": "Entendo o transtorno com o vazamento. A solicitação não se enquadra no reenvio sem custo, que exige o envio de uma foto dentro de 7 dias do recebimento.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
-        "tentativas": 1,
-        "falhasChecagem": []
+        "tentativas": 2,
+        "falhasChecagem": [
+          [
+            "numero_sem_fonte"
+          ]
+        ]
       },
       "telemetria": {
-        "ms": 3197,
+        "ms": 25751,
         "jev": {
-          "ms": 399,
+          "ms": 449,
           "tokensEntrada": 1008,
           "tokensSaida": 318,
           "custoUsd": 0.000042336
         },
         "chat": {
-          "ms": 2797,
-          "tokensEntrada": 389,
-          "tokensSaida": 56,
+          "ms": 25300,
+          "tokensEntrada": 841,
+          "tokensSaida": 490,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042336,
@@ -11320,7 +11327,7 @@
         "falha": null,
         "motivo": "cupom",
         "motivo_jev": "cupom",
-        "confianca": 0.82,
+        "confianca": 0.78,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -11332,8 +11339,8 @@
           "endereco": 0,
           "cancelamento": 0,
           "troca_fragrancia": 0,
-          "duvida_produto": 0.16,
-          "cupom": 0.83,
+          "duvida_produto": 0.2,
+          "cupom": 0.79,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
           "elogio": 0,
@@ -11341,10 +11348,10 @@
         },
         "urgencia": "media",
         "sinais_texto": {
-          "reacao_adversa": 0.02,
+          "reacao_adversa": 0.03,
           "mencao_saude": 0.03,
           "ameaca_reclame_aqui_ou_procon": 0.01,
-          "cliente_irritado": 0.07,
+          "cliente_irritado": 0.06,
           "pede_ou_envia_dado_sensivel": 0.03,
           "mais_de_um_motivo": 0.91
         },
@@ -11403,7 +11410,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000351",
+          "acao_id": "AC-SIM-000349",
           "conversation_id": "AT116701",
           "order_id": "GBH495010",
           "data_hora": "2026-11-02 08:00:00",
@@ -11415,7 +11422,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000352",
+          "acao_id": "AC-SIM-000350",
           "conversation_id": "AT116701",
           "order_id": "GBH495010",
           "data_hora": "2026-11-02 08:00:00",
@@ -11427,7 +11434,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000353",
+          "acao_id": "AC-SIM-000351",
           "conversation_id": "AT116701",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11439,7 +11446,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000354",
+          "acao_id": "AC-SIM-000352",
           "conversation_id": "AT116701",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11451,7 +11458,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000355",
+          "acao_id": "AC-SIM-000354",
           "conversation_id": "AT116701",
           "order_id": "GBH495010",
           "data_hora": "2026-11-02 08:00:00",
@@ -11463,7 +11470,7 @@
           "referencia_sistema": "USO-SIM-000004"
         },
         {
-          "acao_id": "AC-SIM-000382",
+          "acao_id": "AC-SIM-000362",
           "conversation_id": "AT116701",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11475,7 +11482,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000383",
+          "acao_id": "AC-SIM-000363",
           "conversation_id": "AT116701",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11488,7 +11495,7 @@
         }
       ],
       "resposta": {
-        "texto": "O cupom FRETEGRATIS consta como válido na plataforma. Sobre a frequência de uso do óleo, não tenho essa informação disponível.",
+        "texto": "O cupom FRETEGRATIS consta como válido na plataforma. Sobre o uso diário do óleo finalizador, não tenho essa informação disponível.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -11496,17 +11503,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2169,
+        "ms": 3035,
         "jev": {
-          "ms": 393,
+          "ms": 440,
           "tokensEntrada": 994,
           "tokensSaida": 318,
           "custoUsd": 0.000041748
         },
         "chat": {
-          "ms": 1774,
-          "tokensEntrada": 332,
-          "tokensSaida": 31,
+          "ms": 2594,
+          "tokensEntrada": 363,
+          "tokensSaida": 32,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041748,
@@ -11523,10 +11530,10 @@
         "falha": null,
         "motivo": "atraso",
         "motivo_jev": "atraso",
-        "confianca": 0.96,
+        "confianca": 0.94,
         "probabilidades": {
-          "rastreio": 0.04,
-          "atraso": 0.96,
+          "rastreio": 0.06,
+          "atraso": 0.94,
           "avaria": 0,
           "item_faltante": 0,
           "brinde": 0,
@@ -11542,12 +11549,12 @@
           "elogio": 0,
           "outro": 0
         },
-        "urgencia": "media",
+        "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.01,
-          "mencao_saude": 0.02,
+          "mencao_saude": 0.01,
           "ameaca_reclame_aqui_ou_procon": 0.02,
-          "cliente_irritado": 0.75,
+          "cliente_irritado": 0.7,
           "pede_ou_envia_dado_sensivel": 0.07,
           "mais_de_um_motivo": 0.06
         },
@@ -11654,7 +11661,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000373",
+          "acao_id": "AC-SIM-000361",
           "conversation_id": "AT116702",
           "order_id": "GBH489005",
           "data_hora": "2026-11-02 08:00:00",
@@ -11666,7 +11673,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000390",
+          "acao_id": "AC-SIM-000398",
           "conversation_id": "AT116702",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11678,7 +11685,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000391",
+          "acao_id": "AC-SIM-000399",
           "conversation_id": "AT116702",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11691,25 +11698,30 @@
         }
       ],
       "resposta": {
-        "texto": "Seu pedido está em trânsito pela Expressa Já. A previsão de entrega informada pela transportadora é 06/11/2026.",
+        "texto": "O pedido está atrasado e segue em trânsito pela Expressa Já. A última atualização do rastreio foi sobre a transferência.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
-        "tentativas": 1,
-        "falhasChecagem": []
+        "tentativas": 2,
+        "falhasChecagem": [
+          [
+            "numero_sem_fonte",
+            "previsao_vencida"
+          ]
+        ]
       },
       "telemetria": {
-        "ms": 2772,
+        "ms": 21166,
         "jev": {
-          "ms": 410,
+          "ms": 399,
           "tokensEntrada": 1011,
           "tokensSaida": 319,
           "custoUsd": 0.000042462
         },
         "chat": {
-          "ms": 2360,
-          "tokensEntrada": 378,
-          "tokensSaida": 32,
+          "ms": 20765,
+          "tokensEntrada": 874,
+          "tokensSaida": 405,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042462,
@@ -11752,7 +11764,7 @@
           "ameaca_reclame_aqui_ou_procon": 0.05,
           "cliente_irritado": 0.97,
           "pede_ou_envia_dado_sensivel": 0.04,
-          "mais_de_um_motivo": 0.64
+          "mais_de_um_motivo": 0.68
         },
         "flags": {
           "reacao_adversa": false,
@@ -11809,7 +11821,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000363",
+          "acao_id": "AC-SIM-000364",
           "conversation_id": "AT116703",
           "order_id": "GCH551605",
           "data_hora": "2026-11-02 08:00:00",
@@ -11821,7 +11833,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000364",
+          "acao_id": "AC-SIM-000365",
           "conversation_id": "AT116703",
           "order_id": "GCH551605",
           "data_hora": "2026-11-02 08:00:00",
@@ -11833,7 +11845,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000365",
+          "acao_id": "AC-SIM-000366",
           "conversation_id": "AT116703",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11845,7 +11857,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000366",
+          "acao_id": "AC-SIM-000367",
           "conversation_id": "AT116703",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11857,7 +11869,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000374",
+          "acao_id": "AC-SIM-000375",
           "conversation_id": "AT116703",
           "order_id": "GCH551605",
           "data_hora": "2026-11-02 08:00:00",
@@ -11869,7 +11881,7 @@
           "referencia_sistema": "EST-SIM-000003"
         },
         {
-          "acao_id": "AC-SIM-000396",
+          "acao_id": "AC-SIM-000376",
           "conversation_id": "AT116703",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11881,7 +11893,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000397",
+          "acao_id": "AC-SIM-000377",
           "conversation_id": "AT116703",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -11894,7 +11906,7 @@
         }
       ],
       "resposta": {
-        "texto": "O reembolso de R$ 219,90 referente ao pedido GCH551605 já foi realizado.",
+        "texto": "O pedido está atrasado. Já realizamos o reembolso de R$ 219,90 referente ao pedido GCH551605.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -11902,17 +11914,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2747,
+        "ms": 2255,
         "jev": {
-          "ms": 424,
+          "ms": 431,
           "tokensEntrada": 1038,
           "tokensSaida": 319,
           "custoUsd": 0.000043596
         },
         "chat": {
-          "ms": 2321,
-          "tokensEntrada": 412,
-          "tokensSaida": 25,
+          "ms": 1823,
+          "tokensEntrada": 426,
+          "tokensSaida": 31,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000043596,
@@ -11929,7 +11941,7 @@
         "falha": null,
         "motivo": "cancelamento",
         "motivo_jev": "cancelamento",
-        "confianca": 0.9,
+        "confianca": 0.87,
         "probabilidades": {
           "rastreio": 0,
           "atraso": 0,
@@ -11937,22 +11949,22 @@
           "item_faltante": 0,
           "brinde": 0,
           "erro_personalizacao": 0,
-          "cobranca_duplicada": 0.01,
+          "cobranca_duplicada": 0.02,
           "endereco": 0,
-          "cancelamento": 0.91,
+          "cancelamento": 0.88,
           "troca_fragrancia": 0,
           "duvida_produto": 0,
           "cupom": 0,
           "reacao_adversa": 0,
           "pagamento_pendente": 0,
           "elogio": 0,
-          "outro": 0.08
+          "outro": 0.1
         },
         "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.48,
           "pede_ou_envia_dado_sensivel": 0.95,
           "mais_de_um_motivo": 0.08
@@ -12008,7 +12020,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000369",
+          "acao_id": "AC-SIM-000370",
           "conversation_id": "AT116705",
           "order_id": "GBH450552",
           "data_hora": "2026-11-02 08:00:00",
@@ -12020,7 +12032,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000370",
+          "acao_id": "AC-SIM-000371",
           "conversation_id": "AT116705",
           "order_id": "GBH450552",
           "data_hora": "2026-11-02 08:00:00",
@@ -12032,7 +12044,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000371",
+          "acao_id": "AC-SIM-000372",
           "conversation_id": "AT116705",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12044,7 +12056,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000372",
+          "acao_id": "AC-SIM-000373",
           "conversation_id": "AT116705",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12056,7 +12068,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000375",
+          "acao_id": "AC-SIM-000374",
           "conversation_id": "AT116705",
           "order_id": "GBH450552",
           "data_hora": "2026-11-02 08:00:00",
@@ -12068,7 +12080,7 @@
           "referencia_sistema": "APR-SIM-000031"
         },
         {
-          "acao_id": "AC-SIM-000402",
+          "acao_id": "AC-SIM-000389",
           "conversation_id": "AT116705",
           "order_id": "GBH450552",
           "data_hora": "2026-11-02 08:00:00",
@@ -12096,17 +12108,17 @@
         ]
       },
       "telemetria": {
-        "ms": 5292,
+        "ms": 4795,
         "jev": {
-          "ms": 387,
+          "ms": 423,
           "tokensEntrada": 996,
           "tokensSaida": 319,
           "custoUsd": 0.000041832
         },
         "chat": {
-          "ms": 4902,
-          "tokensEntrada": 787,
-          "tokensSaida": 96,
+          "ms": 4370,
+          "tokensEntrada": 819,
+          "tokensSaida": 87,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000041832,
@@ -12144,11 +12156,11 @@
         },
         "urgencia": "alta",
         "sinais_texto": {
-          "reacao_adversa": 0.01,
-          "mencao_saude": 0.02,
+          "reacao_adversa": 0.02,
+          "mencao_saude": 0.01,
           "ameaca_reclame_aqui_ou_procon": 0.04,
           "cliente_irritado": 0.95,
-          "pede_ou_envia_dado_sensivel": 0.07,
+          "pede_ou_envia_dado_sensivel": 0.06,
           "mais_de_um_motivo": 0.07
         },
         "flags": {
@@ -12254,7 +12266,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000388",
+          "acao_id": "AC-SIM-000382",
           "conversation_id": "AT116707",
           "order_id": "GCH558661",
           "data_hora": "2026-11-02 08:00:00",
@@ -12266,7 +12278,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000398",
+          "acao_id": "AC-SIM-000383",
           "conversation_id": "AT116707",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12278,7 +12290,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000399",
+          "acao_id": "AC-SIM-000384",
           "conversation_id": "AT116707",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12291,7 +12303,7 @@
         }
       ],
       "resposta": {
-        "texto": "Seu pedido GCH558661 está em trânsito pela transportadora TransNorte. A previsão informada pela transportadora é 30/10/2026; o último registro indica chegada à unidade de destino em 28/10/2026.",
+        "texto": "Seu pedido GCH558661 está atrasado e consta em trânsito pela transportadora TransNorte. O último evento do rastreio foi a chegada à unidade de destino em 28/10/2026.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -12299,17 +12311,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2568,
+        "ms": 2383,
         "jev": {
-          "ms": 388,
+          "ms": 414,
           "tokensEntrada": 1017,
           "tokensSaida": 319,
           "custoUsd": 0.000042714
         },
         "chat": {
-          "ms": 2178,
-          "tokensEntrada": 387,
-          "tokensSaida": 54,
+          "ms": 1968,
+          "tokensEntrada": 401,
+          "tokensSaida": 47,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042714,
@@ -12348,9 +12360,9 @@
         "urgencia": "alta",
         "sinais_texto": {
           "reacao_adversa": 0.03,
-          "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.76,
+          "mencao_saude": 0.03,
+          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "cliente_irritado": 0.75,
           "pede_ou_envia_dado_sensivel": 0.04,
           "mais_de_um_motivo": 0.05
         },
@@ -12420,7 +12432,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000384",
+          "acao_id": "AC-SIM-000385",
           "conversation_id": "AT116709",
           "order_id": "GBH453855",
           "data_hora": "2026-11-02 08:00:00",
@@ -12432,7 +12444,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000385",
+          "acao_id": "AC-SIM-000386",
           "conversation_id": "AT116709",
           "order_id": "GBH453855",
           "data_hora": "2026-11-02 08:00:00",
@@ -12444,7 +12456,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000386",
+          "acao_id": "AC-SIM-000387",
           "conversation_id": "AT116709",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12456,7 +12468,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000387",
+          "acao_id": "AC-SIM-000388",
           "conversation_id": "AT116709",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12468,7 +12480,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000389",
+          "acao_id": "AC-SIM-000394",
           "conversation_id": "AT116709",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12480,7 +12492,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000400",
+          "acao_id": "AC-SIM-000395",
           "conversation_id": "AT116709",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12492,7 +12504,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000401",
+          "acao_id": "AC-SIM-000396",
           "conversation_id": "AT116709",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12505,7 +12517,7 @@
         }
       ],
       "resposta": {
-        "texto": "Entendemos o transtorno com o Co-wash Hidratante. Para o pedido GBH453855, a entrega foi registrada em 23/10/2026, e a política de reenvio sem custo exige o envio de uma foto em até 7 dias do recebimento. Como essa solicitação não se enquadra nessa política, não foi possível realizar o reenvio sem custo.",
+        "texto": "Entendo o transtorno com o Co-wash Hidratante. Como o pedido foi entregue em 23/10/2026, a solicitação não se enquadra na política de reenvio sem custo, que exige o envio de uma foto em até 7 dias do recebimento.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -12513,17 +12525,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3275,
+        "ms": 2869,
         "jev": {
-          "ms": 423,
+          "ms": 404,
           "tokensEntrada": 1009,
           "tokensSaida": 318,
           "custoUsd": 0.000042378
         },
         "chat": {
-          "ms": 2851,
-          "tokensEntrada": 390,
-          "tokensSaida": 86,
+          "ms": 2464,
+          "tokensEntrada": 406,
+          "tokensSaida": 64,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042378,
@@ -12594,7 +12606,7 @@
       ],
       "log": [
         {
-          "acao_id": "AC-SIM-000392",
+          "acao_id": "AC-SIM-000390",
           "conversation_id": "AT116711",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12606,7 +12618,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000393",
+          "acao_id": "AC-SIM-000391",
           "conversation_id": "AT116711",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12618,7 +12630,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000394",
+          "acao_id": "AC-SIM-000392",
           "conversation_id": "AT116711",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",
@@ -12630,7 +12642,7 @@
           "referencia_sistema": null
         },
         {
-          "acao_id": "AC-SIM-000395",
+          "acao_id": "AC-SIM-000393",
           "conversation_id": "AT116711",
           "order_id": null,
           "data_hora": "2026-11-02 08:00:00",

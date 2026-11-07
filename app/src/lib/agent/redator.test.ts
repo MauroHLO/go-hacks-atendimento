@@ -66,3 +66,15 @@ describe("redigir", () => {
     expect((await redigir(ia, ENTRADA)).texto).toBe(BOM);
   });
 });
+
+describe("previsão vencida", () => {
+  it("prompt proíbe citar previsão vencida; redação com data vencida é refeita", async () => {
+    const e = { ...ENTRADA, agora: "2026-11-02 08:00:00", fatos: [...ENTRADA.fatos, "O prazo de entrega já passou: o pedido está atrasado."] };
+    expect(promptRedacao(e)[0].content).toContain("Nunca cite previsão ou prazo de entrega que já passou");
+    const bom = "Seu pedido GBH900001 está atrasado. Abrimos um chamado com a Expressa Já sobre a entrega.";
+    const { ia } = clienteFalso({ chat: [{ json: respostaChat("A previsão de entrega era 27/10/2026.") }, { json: respostaChat(bom) }] });
+    const r = await redigir(ia, e);
+    expect(r).toMatchObject({ texto: bom, tentativas: 2 });
+    expect(r.falhas[0]).toContain("previsao_vencida");
+  });
+});

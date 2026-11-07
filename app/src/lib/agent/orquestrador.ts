@@ -6,7 +6,7 @@
 // O modelo classifica e redige; quem decide nível e ação é lib/policy. Cada passo vai para o log do Simulador.
 
 import { fatosParaPolitica, montarContexto, STATUS_COBRANCA_EFETIVADA, type Ficha } from "../contexto";
-import { dia } from "../dados";
+import { AGORA, dia } from "../dados";
 import { calcularSinais, type ResultadoEvidencias } from "../evidencias";
 import { FERRAMENTAS, type RegistroAcao, type Resultado, type Simulador } from "../ferramentas";
 import {
@@ -98,22 +98,35 @@ const STATUS_TXT: Record<string, string> = {
   cancelado: "cancelado",
 };
 
-export function fatosTexto(ficha: Ficha): string[] {
+// Previsão ou prazo já vencido em `agora` não entra como data: vira "o pedido está atrasado" (a checagem
+// também recusa a data vencida). Pedido entregue não leva a data prometida (é passado).
+export function fatosTexto(ficha: Ficha, agora: string = AGORA): string[] {
   const p = ficha.pedido.valor;
   if (!p) return ["Conversa sem pedido associado."];
   const r = ficha.resumo;
+  const hoje = agora.slice(0, 10);
   const f = [
     `Pedido ${p.order_id} (${p.marca}), valor ${reais(p.valor)}.`,
     `Produto: ${p.descricao_produto}.`,
     `Status: ${STATUS_TXT[p.status_entrega] ?? p.status_entrega}; transportadora ${p.transportadora}.`,
   ];
-  if (p.data_prometida) f.push(`Data prometida de entrega: ${dataBr(p.data_prometida)}.`);
-  if (p.data_entrega) f.push(`Entregue em ${dataBr(p.data_entrega)}.`);
+  const entregue = !!p.data_entrega;
+  let atrasado = false;
+  if (p.data_prometida && !entregue) {
+    if (p.data_prometida.slice(0, 10) < hoje) atrasado = true;
+    else f.push(`Data prometida de entrega: ${dataBr(p.data_prometida)}.`);
+  }
+  if (entregue) f.push(`Entregue em ${dataBr(p.data_entrega)}.`);
   const ult = r.ultimoEventoRastreio.valor;
   if (ult) {
     f.push(`Último evento do rastreio: ${ult.status.replaceAll("_", " ")} em ${dataBr(ult.data_hora_evento)}.`);
-    if (ult.previsao_entrega && !p.data_entrega) f.push(`Previsão da transportadora: ${dataBr(ult.previsao_entrega)}.`);
+    if (ult.previsao_entrega && !entregue) {
+      if (ult.previsao_entrega.slice(0, 10) < hoje) atrasado = true;
+      else f.push(`Previsão da transportadora: ${dataBr(ult.previsao_entrega)}.`);
+    }
   }
+  if (atrasado) f.push("O prazo de entrega já passou: o pedido está atrasado.");
+  if (!entregue && r.chamadosAbertos.valor.length > 0) f.push(`Há chamado aberto com a ${p.transportadora} sobre a entrega, em acompanhamento.`);
   return f;
 }
 
@@ -396,7 +409,8 @@ export async function processarConversa(conversationId: string, deps: DepsOrques
       decisao: { ...decisao, nivel: nivelFinal },
       acaoExecutada: executada,
       descricaoAcao: descreverAcao(decisao, executada, ficha, decisao.ferramenta === "cancelar_pedido" ? (pedido?.valor ?? valorAcao) : valorAcao, extra),
-      fatos: fatosTexto(ficha),
+      fatos: fatosTexto(ficha, agora),
+      agora,
       mensagensCliente,
       marca: conversa.marca,
       canal: conversa.canal,

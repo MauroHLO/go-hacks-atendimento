@@ -59,9 +59,9 @@
         "sinais_texto": {
           "reacao_adversa": 0.02,
           "mencao_saude": 0.02,
-          "ameaca_reclame_aqui_ou_procon": 0.02,
+          "ameaca_reclame_aqui_ou_procon": 0.03,
           "cliente_irritado": 0.15,
-          "pede_ou_envia_dado_sensivel": 0.91,
+          "pede_ou_envia_dado_sensivel": 0.92,
           "mais_de_um_motivo": 0.06
         },
         "flags": {
@@ -204,7 +204,7 @@
         }
       ],
       "resposta": {
-        "texto": "Fizemos o reenvio do produto Creme de Pentear Cachos Definidos 1kg, sem custo, referente ao pedido GBH366247.",
+        "texto": "Identificamos o pedido GBH366247 e já realizamos o reenvio do produto sem custo para você.",
         "enviada": true,
         "paraAprovacao": false,
         "reserva": false,
@@ -212,17 +212,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 3203,
+        "ms": 2873,
         "jev": {
-          "ms": 626,
+          "ms": 612,
           "tokensEntrada": 1014,
           "tokensSaida": 320,
           "custoUsd": 0.000042588
         },
         "chat": {
-          "ms": 2556,
-          "tokensEntrada": 372,
-          "tokensSaida": 37,
+          "ms": 2241,
+          "tokensEntrada": 388,
+          "tokensSaida": 28,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.000042588,
@@ -284,12 +284,12 @@
         },
         "urgencia": "alta",
         "sinais_texto": {
-          "reacao_adversa": 0.04,
+          "reacao_adversa": 0.05,
           "mencao_saude": 0.02,
           "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.33,
+          "cliente_irritado": 0.32,
           "pede_ou_envia_dado_sensivel": 0.12,
-          "mais_de_um_motivo": 0.07
+          "mais_de_um_motivo": 0.06
         },
         "flags": {
           "reacao_adversa": false,
@@ -436,9 +436,9 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 432,
+        "ms": 408,
         "jev": {
-          "ms": 430,
+          "ms": 406,
           "tokensEntrada": 1013,
           "tokensSaida": 318,
           "custoUsd": 0.000042546
@@ -506,13 +506,13 @@
           "elogio": 0,
           "outro": 0
         },
-        "urgencia": "alta",
+        "urgencia": "media",
         "sinais_texto": {
           "reacao_adversa": 0.97,
           "mencao_saude": 0.95,
           "ameaca_reclame_aqui_ou_procon": 0.03,
-          "cliente_irritado": 0.68,
-          "pede_ou_envia_dado_sensivel": 0.54,
+          "cliente_irritado": 0.7,
+          "pede_ou_envia_dado_sensivel": 0.52,
           "mais_de_um_motivo": 0.15
         },
         "flags": {
@@ -655,7 +655,7 @@
         }
       ],
       "resposta": {
-        "texto": "Sinto muito que você esteja passando por isso. Pare de usar o produto e procure atendimento médico se precisar. Uma pessoa da equipe de qualidade vai cuidar do seu caso.",
+        "texto": "Sinto muito pelo que você está sentindo. Pare de usar o Magnésio Dimalato e procure atendimento médico se precisar. Uma pessoa da equipe de qualidade vai cuidar do seu caso.",
         "enviada": false,
         "paraAprovacao": true,
         "reserva": false,
@@ -663,17 +663,17 @@
         "falhasChecagem": []
       },
       "telemetria": {
-        "ms": 2594,
+        "ms": 2983,
         "jev": {
-          "ms": 405,
+          "ms": 402,
           "tokensEntrada": 1015,
           "tokensSaida": 320,
           "custoUsd": 0.00004263
         },
         "chat": {
-          "ms": 2180,
-          "tokensEntrada": 397,
-          "tokensSaida": 38,
+          "ms": 2573,
+          "tokensEntrada": 413,
+          "tokensSaida": 43,
           "custoUsd": null
         },
         "custoUsdEstimado": 0.00004263,

@@ -8,7 +8,7 @@ import { useState, type FormEvent } from "react";
 import type { Resumo } from "@/lib/agent/resumo";
 import type { DadosPainel, LinhaFicha } from "@/lib/painel/dados";
 import { FichaCaso } from "./FichaCaso";
-import { CANAL, MOTIVO, Titulo } from "./ui";
+import { Cabecalho, CANAL, Detalhes, Fonte, MOTIVO } from "./ui";
 
 const LIMITE = 2_000;
 
@@ -62,12 +62,7 @@ export function TesteAoVivo({ conversas, fichas }: { conversas: DadosPainel["con
   const campo = "w-full rounded-xl border-2 border-zinc-300 bg-white px-3 py-2 text-tinta focus:border-azul focus:outline-none";
   return (
     <div className="space-y-6">
-      <Titulo
-        etiqueta="Teste ao vivo"
-        sub="Escolha uma conversa da fila e rode o agente de verdade: Jev, ficha, evidências, motor de política, ferramentas simuladas e redação checada. Opcional: escreva uma mensagem fictícia, que vira uma conversa de teste ligada ao pedido da conversa escolhida."
-      >
-        Rode o agente
-      </Titulo>
+      <Cabecalho etiqueta="Teste ao vivo" titulo="Rode o agente" frase="Escolha uma conversa da fila, ou escreva uma mensagem fictícia ligada ao pedido dela, e veja a decisão em segundos." />
       <form onSubmit={enviar} className="space-y-4 rounded-3xl bg-creme p-4 sm:p-6">
         <label className="block space-y-1">
           <span className="font-semibold text-azul">Conversa da fila</span>
@@ -96,8 +91,14 @@ export function TesteAoVivo({ conversas, fichas }: { conversas: DadosPainel["con
         <button type="submit" disabled={estado.tipo === "carregando"} className="rounded-full bg-azul px-6 py-3 font-semibold text-white hover:bg-azul-escuro focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano disabled:opacity-60">
           {estado.tipo === "carregando" ? "Processando… (até ~15 s)" : "Rodar o agente"}
         </button>
-        <p className="text-xs text-tinta-suave [overflow-wrap:anywhere]">A chave do AI Proxy fica só no servidor. Limites: 10 requisições por minuto e 100 por dia por IP, 300 por dia no total.</p>
+
       </form>
+
+      <Detalhes>
+        <p className="text-sm text-tinta">O agente roda de verdade: Jev, ficha, evidências, motor de política, ferramentas simuladas e redação checada. A mensagem fictícia vira uma conversa de teste ligada ao pedido e ao cliente da conversa escolhida, sem as mensagens e anexos originais.</p>
+        <p className="text-sm text-tinta">A chave do AI Proxy fica só no servidor. A rota aceita só a mesma origem e até 2.000 caracteres; limites de 10 requisições por minuto e 100 por dia por IP, 300 por dia no total. Se o proxy falhar, a tela mostra o resultado gravado e avisa.</p>
+        <Fonte>POST /api/agent (app/src/app/api/agent/route.ts → lib/agent/servico.ts → processarConversa)</Fonte>
+      </Detalhes>
 
       <div aria-live="polite">
         {estado.tipo === "erro" ? <p className="rounded-xl border-2 border-nivel-2 bg-nivel-2-claro p-4 text-tinta">{estado.texto}</p> : null}

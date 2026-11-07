@@ -399,3 +399,31 @@ Página única (`app/src/app/page.tsx`) com sete abas (`_componentes/`). Os dado
 - Testes: as regras 1 a 3 continuam fortes; a regra 4 é fraca; um pedido de R$ 80 só com esse sinal fica no nível 0 (0,15 × 0,45 × 80 = R$ 5,40 < R$ 6), e com hash repetido continua no nível 2.
 
 **Nome do projeto: Ponta Firme.** Da cultura Gogroup: se compromete, cumpre e cumpre bem. Subtítulo: "o agente de atendimento que resolve sozinho onde é seguro e chama uma pessoa só onde ela faz diferença". Aplicado no cabeçalho do app, no metadata da página e no README.
+
+## 10. Visual com hierarquia; previsão vencida na redação
+
+**Previsão de entrega vencida.** A redação nunca cita previsão ou prazo de entrega anterior a "agora" (2026-11-02 08:00). A correção tem três camadas:
+
+- *Fatos* (`fatosTexto` no orquestrador): data prometida ou previsão da transportadora já vencidas não entram como data; entra "O prazo de entrega já passou: o pedido está atrasado." Se há chamado aberto com a transportadora, entra que ele está em acompanhamento. Pedido entregue não leva a data prometida.
+- *Prompt*: regra explícita de dizer que o pedido está atrasado e o que foi feito com a transportadora.
+- *Checagem* (`previsaoVencida`, falha `previsao_vencida`): recusa a frase que fala de previsão, prazo ou chegada e cita uma data anterior a agora. "Entregue em" e eventos passados do rastreio ("chegada à unidade em 28/10") não contam.
+
+Testes: checagem (recusa e não recusa), redator (nova tentativa) e fatos do orquestrador.
+
+**Fila e casos de demo reprocessados** (`npm run processar-fila`, `npm run casos-demo`, AI Proxy real):
+
+- A checagem barrou 6 citações de previsão vencida, todas corrigidas na segunda redação ou no texto de reserva.
+- Nível 0 da ação: 90,8%; nível final 0, 1 e 2: 58, 6 e 1 conversas.
+- Respostas: 32 enviadas, 28 para aprovação, 12 aprovadas na 2ª redação e 2 com o texto de reserva.
+- 0 classificações inválidas.
+- 4,3 s por conversa e 65,9 s o lote. O lote ficou mais lento que o anterior (3,2 s) por causa das novas tentativas e da variação do proxy.
+- Os casos de demo mantêm nível e ação; os textos das respostas mudaram (o modelo não é determinístico).
+
+**Visual (sem mudar lógica nem dados).**
+
+- *Todas as abas*: título curto e uma frase. O detalhe técnico (fontes, caminhos, tabelas longas) fica em "Ver detalhes", com as fontes em texto pequeno e cinza.
+- *Visão geral*: hero "Se compromete, cumpre e cumpre bem" com 3 números (conversas sem nenhuma pessoa 58% → 68%, 433 h liberadas por mês, 80% das ações sozinho), barras antes/depois, fluxo com ícones em círculos e os 3 níveis em cartões. O resto fica em "Ver os números e as fontes". 57,5% aparece arredondado para 58%.
+- *Fila*: barra empilhada por nível final, que cresce enquanto o botão anima.
+- *Autonomia*: só o gráfico dos cenários aberto.
+- *Ficha do caso*: resumo em destaque no topo (nível, ação, motivo) e as seções 1 a 6 em acordeão, com a linha do tempo e a resposta abertas.
+- Ícones em SVG de traço, decorativos: o texto ao lado sempre diz o que é.

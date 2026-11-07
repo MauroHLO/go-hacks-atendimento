@@ -41,7 +41,136 @@ export function Cartao({ children, className = "" }: { children: ReactNode; clas
 }
 
 export function Fonte({ children }: { children: ReactNode }) {
-  return <p className="mt-2 text-xs text-tinta-suave [overflow-wrap:anywhere]">Fonte: {children}</p>;
+  return <p className="mt-2 text-xs text-zinc-500 [overflow-wrap:anywhere]">Fonte: {children}</p>;
+}
+
+// Bloco recolhível para o detalhe técnico (fontes, caminhos, tabelas longas).
+export function Detalhes({ children, rotulo = "Ver detalhes", aberto = false }: { children: ReactNode; rotulo?: string; aberto?: boolean }) {
+  return (
+    <details open={aberto} className="group rounded-2xl border border-zinc-200 bg-white">
+      <summary className="flex cursor-pointer list-none items-center gap-2 rounded-2xl px-4 py-3 text-sm font-semibold text-azul hover:bg-creme focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano [&::-webkit-details-marker]:hidden">
+        <span aria-hidden="true" className="inline-block transition-transform group-open:rotate-90">▸</span>
+        {rotulo}
+      </summary>
+      <div className="space-y-4 px-4 pb-4">{children}</div>
+    </details>
+  );
+}
+
+// Cabeçalho de aba: etiqueta, título curto e UMA frase.
+export function Cabecalho({ etiqueta, titulo, frase }: { etiqueta: string; titulo: ReactNode; frase: ReactNode }) {
+  return (
+    <div className="space-y-2">
+      <Pilula>{etiqueta}</Pilula>
+      <h2 className="text-3xl font-extrabold tracking-tight text-azul sm:text-4xl">{titulo}</h2>
+      <p className="max-w-2xl text-lg text-tinta">{frase}</p>
+    </div>
+  );
+}
+
+// Ícones de traço (24×24), decorativos: o texto ao lado sempre diz o que é.
+const TRACOS: Record<string, ReactNode> = {
+  conversa: <path d="M4 5h16v11H9l-5 4V5z" />,
+  ficha: (
+    <>
+      <rect x="4" y="3" width="16" height="18" rx="2" />
+      <path d="M8 8h8M8 12h8M8 16h5" />
+    </>
+  ),
+  jev: <path d="M12 3l1.8 4.6L18.5 9l-4.7 1.6L12 15l-1.8-4.4L5.5 9l4.7-1.4L12 3zM18 15l.9 2.1L21 18l-2.1.9L18 21l-.9-2.1L15 18l2.1-.9L18 15z" />,
+  evidencias: (
+    <>
+      <circle cx="10.5" cy="10.5" r="6" />
+      <path d="M15 15l5 5" />
+    </>
+  ),
+  politica: <path d="M12 4v16M6 20h12M5 8h14M5 8l-2.5 6a3 3 0 005 0L5 8zM19 8l-2.5 6a3 3 0 005 0L19 8z" />,
+  ferramentas: <path d="M14.7 6.3a4 4 0 00-5.4 5.2L4 16.8V20h3.2l5.3-5.3a4 4 0 005.2-5.4l-2.6 2.6-2.4-.6-.6-2.4 2.6-2.6z" />,
+  resposta: (
+    <>
+      <path d="M4 5h16v11H9l-5 4V5z" />
+      <path d="M8.5 10.5l2 2 4-4" />
+    </>
+  ),
+  robo: (
+    <>
+      <rect x="5" y="8" width="14" height="11" rx="3" />
+      <path d="M12 4v4M9 13h.01M15 13h.01M9.5 16h5" />
+    </>
+  ),
+  aprova: (
+    <>
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20a7 7 0 0114 0M15.5 15.5l1.5 1.5 3-3" />
+    </>
+  ),
+  pessoa: (
+    <>
+      <circle cx="12" cy="8" r="3.5" />
+      <path d="M5 20a7 7 0 0114 0M12 12v0" />
+      <path d="M19 4v4M19 10.5v.5" />
+    </>
+  ),
+};
+
+export function Icone({ nome, className = "h-6 w-6" }: { nome: keyof typeof TRACOS; className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" className={className}>
+      {TRACOS[nome]}
+    </svg>
+  );
+}
+
+// Barra 100% empilhada por nível, com rótulo direto (número e %), 2 px entre segmentos.
+export function BarraNiveis({ contagem, rotulo }: { contagem: [number, number, number]; rotulo: string }) {
+  const total = contagem.reduce((a, b) => a + b, 0) || 1;
+  const texto: Record<Nivel, string> = { 0: "text-white", 1: "text-tinta", 2: "text-white" };
+  return (
+    <div className="space-y-2">
+      <div className="flex h-12 w-full gap-[2px]" role="img" aria-label={`${rotulo}: ${contagem.map((n, i) => `nível ${i}: ${n}`).join(", ")}`}>
+        {contagem.map((n, i) =>
+          n > 0 ? (
+            <div
+              key={i}
+              title={`Nível ${i}: ${n} (${pct((n / total) * 100, 0)})`}
+              className={`flex h-full items-center justify-center overflow-hidden text-sm font-semibold first:rounded-l-lg last:rounded-r-lg ${FUNDO_NIVEL[i as Nivel]} ${texto[i as Nivel]}`}
+              style={{ width: `${(n / total) * 100}%`, minWidth: 6 }}
+            >
+              {n / total >= 0.08 ? n : ""}
+            </div>
+          ) : null,
+        )}
+      </div>
+      <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+        {contagem.map((n, i) => (
+          <li key={i}>
+            <NivelChip nivel={i as Nivel} curto /> <span className="tabular-nums text-tinta">· {n} ({pct((n / total) * 100, 0)})</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+// Antes × depois em barras horizontais (0 a 100%), rótulo direto no fim de cada barra.
+export function AntesDepois({ titulo, antes, depois }: { titulo: string; antes: number; depois: number }) {
+  return (
+    <div className="space-y-2" role="img" aria-label={`${titulo}: vigente ${pct(antes)}, nova política ${pct(depois)}`}>
+      <p className="font-semibold text-azul">{titulo}</p>
+      {[
+        ["Vigente", antes, "bg-zinc-300"],
+        ["Ponta Firme", depois, "bg-azul"],
+      ].map(([nome, v, cor]) => (
+        <div key={nome as string} className="grid grid-cols-[6.5rem_1fr] items-center gap-3 text-sm">
+          <span className="text-tinta">{nome}</span>
+          <div className="flex items-center gap-2">
+            <div className={`h-6 rounded-r-md ${cor}`} style={{ width: `${(v as number) * 0.85}%` }} />
+            <span className="font-semibold tabular-nums text-tinta">{pct(v as number)}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function NivelChip({ nivel, curto = false }: { nivel: Nivel; curto?: boolean }) {

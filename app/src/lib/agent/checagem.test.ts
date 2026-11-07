@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MAX_RESPOSTA, motivoDaRecusa, TEXTO_RESERVA, verificarResposta, type Permitido } from "./checagem";
+import { MAX_RESPOSTA, motivoDaRecusa, previsaoVencida, TEXTO_RESERVA, verificarResposta, type Permitido } from "./checagem";
 
 const FATOS = ["Pedido GBH900001 (Kokeshi), valor R$ 129,90.", "Data prometida de entrega: 27/10/2026.", "Status: em trânsito; transportadora Expressa Já."];
 const nivel0 = (descricao: string): Permitido => ({ textos: [descricao], fatos: FATOS, nivel: 0, acaoExecutada: true });
@@ -53,5 +53,31 @@ describe("reprova", () => {
 
   it("motivo da recusa em linguagem para o modelo", () => {
     expect(motivoDaRecusa(["numero_sem_fonte", "acusacao"])).toBe("número, data ou valor que não está nos fatos; tom de suspeita ou acusação ao cliente");
+  });
+});
+
+describe("previsão de entrega vencida (agora = 02/11/2026 08:00)", () => {
+  const AGORA = "2026-11-02 08:00:00";
+  const comAgora = (p: Permitido): Permitido => ({ ...p, agora: AGORA });
+  it.each([
+    ["previsão anterior a agora", "A previsão informada pela transportadora é 29/10/2026."],
+    ["prazo vencido sem ano", "O prazo de entrega era 27/10."],
+    ["chega numa data que já passou", "Seu pedido chega em 30/10/2026."],
+  ])("%s: recusa", (_n, texto) => {
+    const r = verificarResposta(texto, comAgora(nivel0("informar status")));
+    expect(r.falhas).toContain("previsao_vencida");
+  });
+  it.each([
+    ["atraso sem a data vencida", "O prazo de entrega já passou: seu pedido está atrasado. Abrimos um chamado com a Expressa Já."],
+    ["previsão futura", "A previsão de entrega é 05/11/2026."],
+    ["data de entrega passada como fato", "O pedido foi entregue em 30/10/2026."],
+  ])("%s: não recusa por previsão", (_n, texto) => {
+    expect(previsaoVencida(texto, AGORA)).toBe(false);
+  });
+  it("sem agora informado, a regra não se aplica (compatível com chamadas antigas)", () => {
+    expect(verificarResposta("A data prometida era 27/10/2026.", nivel0("informar status")).falhas).not.toContain("previsao_vencida");
+  });
+  it("motivo da recusa orienta a dizer que está atrasado", () => {
+    expect(motivoDaRecusa(["previsao_vencida"])).toContain("atrasado");
   });
 });

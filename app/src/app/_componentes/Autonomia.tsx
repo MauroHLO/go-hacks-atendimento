@@ -6,7 +6,7 @@
 
 import { useState } from "react";
 import type { DadosPainel } from "@/lib/painel/dados";
-import { Cartao, Fonte, FUNDO_NIVEL, NivelChip, pct, Subtitulo, Tabela, TD, TH, Titulo, type Nivel } from "./ui";
+import { Cabecalho, Cartao, Detalhes, Fonte, FUNDO_NIVEL, NivelChip, pct, Subtitulo, Tabela, TD, TH, type Nivel } from "./ui";
 
 const TEXTO_SEGMENTO: Record<Nivel, string> = { 0: "text-white", 1: "text-tinta", 2: "text-white" };
 const r$ = (v: number) => `R$ ${Math.round(v).toLocaleString("pt-BR")}`;
@@ -19,18 +19,17 @@ export function Autonomia({ a }: { a: DadosPainel["autonomia"] }) {
 
   return (
     <div className="space-y-8">
-      <Titulo etiqueta="Autonomia" sub="As 2.984 conversas do histórico pelo motor real, com as regras somadas uma a uma. Cada regra nova só entra se o saldo continuar positivo nos três valores de p (probabilidade de a reclamação não proceder).">
-        O que cada regra libera
-      </Titulo>
+      <Cabecalho etiqueta="Autonomia" titulo="O que cada regra libera" frase="Cada mudança de política foi medida nas 2.984 conversas do histórico e só entrou se o saldo seguiu positivo." />
 
       <section className="rounded-3xl border-4 border-limao p-5">
         <span className="inline-block rounded-full bg-limao px-3 py-0.5 text-sm font-semibold text-azul-escuro">Recomendação de política nº 1</span>
         <p className="mt-2 text-xl font-extrabold text-azul sm:text-2xl">
           Em {pctAtraso}% dos reenvios por atraso o pedido original chegou depois: cerca de R$ {(p.perda_reenvio_atraso_politica_mes_rs / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} mil por mês.
         </p>
-        <p className="mt-2 text-tinta">
+        <p className="mt-2 text-tinta">É custo da política, não da autonomia. Proposta: reenviar sozinho só com extravio confirmado pela transportadora.</p>
+        <details className="mt-2 text-sm text-tinta"><summary className="cursor-pointer font-semibold text-azul">Ver o cálculo</summary><p className="mt-1">
           {p.reenvios_atraso_original_entregue_depois} de {p.reenvios_atraso_nivel0} reenvios por atraso acima de 7 dias úteis (amostra) tiveram o original entregue depois; custo de {r$(p.perda_reenvio_atraso_politica_mes_rs)}/mês (0,45 × valor do pedido). É custo da política, não da autonomia: quem aprova no nível 1 também não sabe se o original vai chegar. Proposta, a medir antes de mudar: reenviar sozinho só com extravio confirmado pela transportadora; no atraso sem extravio, abrir o chamado e esperar a resposta.
-        </p>
+        </p></details>
       </section>
 
       <section className="space-y-3">
@@ -70,6 +69,9 @@ export function Autonomia({ a }: { a: DadosPainel["autonomia"] }) {
         <p className="min-h-5 text-sm text-tinta" aria-live="polite">
           {dica ?? "Passe o mouse numa barra para ver o detalhe."}
         </p>
+      </section>
+
+      <Detalhes rotulo="Ver tabelas, ganho de cada regra, faixa de p, freio e auditoria">
         <Tabela legenda="Cenários da simulação">
           <thead>
             <tr>
@@ -99,9 +101,9 @@ export function Autonomia({ a }: { a: DadosPainel["autonomia"] }) {
         <p className="text-sm text-tinta-suave">
           O cenário 6 sobe o nível 0 da ação em 8 pontos sem mexer nas conversas sem nenhuma pessoa: a ação do Reclame Aqui sai sozinha, mas a resposta pública continua com uma pessoa. O cenário 8 é a mesma política do padrão com o motivo dado pelo Jev às conversas que a tag deixou como &quot;Outros&quot;.
         </p>
-      </section>
 
-      <section className="space-y-3">
+
+      <div className="space-y-3">
         <Subtitulo>Ganho de cada regra somada (p = 0,05)</Subtitulo>
         <Tabela legenda="Ganho incremental de cada regra">
           <thead>
@@ -132,7 +134,7 @@ export function Autonomia({ a }: { a: DadosPainel["autonomia"] }) {
         <p className="text-sm text-tinta-suave">
           Saldo líquido: custo de atendimento evitado − perda esperada − atrito de sinalizar − auditoria. Saldo comparável: igual, mas desconta o reenvio por atraso em qualquer nível, para não cobrar da autonomia um custo que é da política.
         </p>
-      </section>
+      </div>
 
       <div className="grid gap-4 lg:grid-cols-3">
         <Cartao>
@@ -159,7 +161,8 @@ export function Autonomia({ a }: { a: DadosPainel["autonomia"] }) {
           </p>
         </Cartao>
       </div>
-      <Fonte>{a.fonte}</Fonte>
+        <Fonte>{a.fonte}</Fonte>
+      </Detalhes>
     </div>
   );
 }

@@ -6,7 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { DadosPainel, ItemFila } from "@/lib/painel/dados";
 import { FichaCaso } from "./FichaCaso";
-import { CANAL, Cartao, Fonte, MOTIVO, NivelChip, nomeFerramenta, pct, Tabela, TD, TH, Titulo, type Nivel } from "./ui";
+import { BarraNiveis, Cabecalho, CANAL, Cartao, Detalhes, Fonte, MOTIVO, NivelChip, nomeFerramenta, pct, Tabela, TD, TH, type Nivel } from "./ui";
 
 const PASSO_MS = 90;
 
@@ -58,9 +58,7 @@ export function Fila({ fila }: { fila: DadosPainel["fila"] }) {
 
   return (
     <div className="space-y-6">
-      <Titulo etiqueta="Fila de agora" sub="Segunda-feira, 02/11/2026, 08:00. As conversas estão em ordem de prioridade: SLA estourado primeiro, depois o menor SLA restante.">
-        {total} conversas esperando
-      </Titulo>
+      <Cabecalho etiqueta="Fila de agora" titulo={`${total} conversas esperando`} frase="Segunda, 02/11, 08:00: aperte o botão e veja o agente decidir cada uma, na ordem do SLA." />
 
       <div className="flex flex-wrap items-center gap-4">
         <button
@@ -73,18 +71,19 @@ export function Fila({ fila }: { fila: DadosPainel["fila"] }) {
         </button>
         <p className="text-sm text-tinta" aria-live="polite">
           {processadas === 0
-            ? "Mostra o resultado gravado do lote real (AI Proxy de verdade, nada inventado)."
+            ? "Resultado gravado do lote real."
             : `${processadas} de ${total} processadas · ${n0} no nível 0 · ${enviadas} respostas enviadas sem pessoa`}
         </p>
       </div>
 
-      {processadas === total ? (
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <li><Cartao><p className="text-2xl font-extrabold">{pct(s.pct_nivel_acao["0"])}</p><p className="text-sm text-tinta">das ações no nível 0</p></Cartao></li>
-          <li><Cartao><p className="text-2xl font-extrabold">{s.respostas_enviadas} / {s.respostas_para_aprovacao}</p><p className="text-sm text-tinta">respostas enviadas / rascunhos para aprovação</p></Cartao></li>
-          <li><Cartao><p className="text-2xl font-extrabold">{(s.tempo_medio_ms / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} s</p><p className="text-sm text-tinta">por conversa ({(s.tempo_total_lote_ms / 1000).toFixed(0)} s o lote, concorrência {s.concorrencia})</p></Cartao></li>
-          <li><Cartao><p className="text-2xl font-extrabold">{s.sistemas_acessados_por_conversa.toLocaleString("pt-BR")}</p><p className="text-sm text-tinta">sistemas consultados por conversa (humano: 1,83)</p></Cartao></li>
-        </ul>
+      {processadas > 0 ? (
+        <div className="rounded-[1.5rem] bg-creme p-5">
+          <p className="mb-3 font-semibold text-azul">Nível final de cada conversa{processadas < total ? " (processando…)" : ""}</p>
+          <BarraNiveis
+            rotulo="Nível final das conversas processadas"
+            contagem={[0, 1, 2].map((n) => feitas.filter((i) => i.caso.decisao.nivel_final === n).length) as [number, number, number]}
+          />
+        </div>
       ) : null}
 
       <Tabela legenda="Fila de agora">
@@ -138,7 +137,16 @@ export function Fila({ fila }: { fila: DadosPainel["fila"] }) {
           })}
         </tbody>
       </Tabela>
-      <Fonte>{fila.fonte}; idade e SLA de data/processed/fila_conversas.csv.</Fonte>
+      <Detalhes>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <li><Cartao><p className="text-2xl font-extrabold">{pct(s.pct_nivel_acao["0"])}</p><p className="text-sm text-tinta">das ações no nível 0</p></Cartao></li>
+          <li><Cartao><p className="text-2xl font-extrabold">{s.respostas_enviadas} / {s.respostas_para_aprovacao}</p><p className="text-sm text-tinta">respostas enviadas / rascunhos para aprovação</p></Cartao></li>
+          <li><Cartao><p className="text-2xl font-extrabold">{(s.tempo_medio_ms / 1000).toLocaleString("pt-BR", { maximumFractionDigits: 1 })} s</p><p className="text-sm text-tinta">por conversa ({(s.tempo_total_lote_ms / 1000).toFixed(0)} s o lote, concorrência {s.concorrencia})</p></Cartao></li>
+          <li><Cartao><p className="text-2xl font-extrabold">{s.sistemas_acessados_por_conversa.toLocaleString("pt-BR")}</p><p className="text-sm text-tinta">sistemas consultados por conversa (humano: 1,83)</p></Cartao></li>
+        </ul>
+        <p className="text-sm text-tinta">O botão mostra o resultado gravado do lote real (AI Proxy de verdade); não chama o modelo de novo.</p>
+        <Fonte>{fila.fonte}; idade e SLA de data/processed/fila_conversas.csv.</Fonte>
+      </Detalhes>
 
       <div ref={fichaRef} className="scroll-mt-24">
         {item ? (

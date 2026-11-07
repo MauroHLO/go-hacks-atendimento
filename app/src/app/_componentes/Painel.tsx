@@ -56,7 +56,7 @@ export function Painel({ dados }: { dados: DadosPainel }) {
                 aria-selected={aba === id}
                 aria-controls={`painel-${id}`}
                 onClick={() => ir(id)}
-                className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano ${aba === id ? "bg-azul text-white" : "text-azul hover:bg-creme"}`}
+                className={`rounded-full px-4 py-2 text-sm font-semibold focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-ciano ${aba === id ? "bg-azul text-white" : "text-azul hover:bg-creme"}`}
               >
                 {nome}
               </button>
