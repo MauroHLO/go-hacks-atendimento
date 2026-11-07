@@ -26,7 +26,7 @@ Métricas centrais: "precisa de humano ou não" e "contatos evitáveis (hipótes
 
 # Regras que não podem ser quebradas
 
-- `data/raw/` nunca vai para o Git. Só código e agregados em `data/processed/`. Rodar `git status` antes de todo commit.
+- `data/raw/` nunca vai para o Git. Em `data/processed/` vão agregados e tabelas por item que contenham só identificadores fictícios e campos estruturados, nunca texto livre de cliente. Rodar `git status` antes de todo commit.
 - Mascarar CPF, telefone, e-mail e cartão antes de enviar texto ao LLM. Nunca repetir CPF, cartão ou telefone nas respostas. Nunca pedir CPF, cartão ou senha.
 - O LLM não decide ação nem nível. Ele classifica e redige; o código decide.
 - Políticas só vêm de `data/raw/atendimento/politicas.csv`, `ferramentas.csv` e `parametros.md`. Nunca inventar regra.

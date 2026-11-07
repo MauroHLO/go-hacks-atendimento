@@ -285,31 +285,28 @@ function regraEvidencia(motivo: keyof typeof ACAO_EVIDENCIA, e: EntradaPolitica)
     return d(0, "solicitar_foto", "solicitar_foto", "A política exige foto: pede a foto antes de decidir.", regra);
   }
 
-  // 2. Custo esperado: resolve sozinho só sem nenhum sinal, sem reenvio anterior, dentro do limite
-  //    e com p × 45% × valor do pedido abaixo de R$ 6.
-  const p = probabilidadeImprocedente(sinais);
-  const custo = custoEsperadoResolver(p, f.valorPedido);
-  const limite = limiteDoAtendente(ferramenta)!;
-  const textoCusto = `p=${p.toFixed(2)}, custo esperado ${reais(custo)} contra ${reais(CUSTO_SINALIZAR_RS)} de sinalizar`;
-  const reenvioAnterior = (f.reenviosCliente12m ?? 0) >= 1;
-  const semSinal = fortes.length === 0 && fracos.length === 0;
-  if (semSinal && !reenvioAnterior && e.valorAcao <= limite && compensaResolverSozinho(p, f.valorPedido)) {
-    return d(0, acao, ferramenta, `Foto recebida, sem sinal de suspeita, dentro do prazo e de ${reais(limite)} (${textoCusto}).`, regra);
-  }
-
-  // 3. Sinal forte: sinaliza ao supervisor, que decide. Nunca nega por suspeita; ao cliente, só "em análise".
+  // 2. Sinal forte: sempre nível 2, antes de qualquer fórmula. O supervisor decide.
+  //    Nunca nega por suspeita; ao cliente, só "em análise".
   if (fortes.length > 0) {
-    return d(2, "sinalizar_suspeita", "sinalizar_suspeita", `Sinal forte de evidência (${fortes.join(", ")}; ${textoCusto}): o supervisor decide.`, "suspeita", {
+    return d(2, "sinalizar_suspeita", "sinalizar_suspeita", `Sinal forte de evidência (${fortes.join(", ")}): o supervisor decide.`, "suspeita", {
       mensagemCliente: MENSAGEM_EM_ANALISE,
     });
   }
 
-  // 4. Demais casos: agente prepara, pessoa aprova.
+  // 3. Sem sinal forte, a fórmula decide entre 0 e 1 (inclusive com sinais fracos):
+  //    nível 0 se p × 45% × valor do pedido < R$ 6 e o valor da ação cabe no limite do atendente.
+  const p = probabilidadeImprocedente(sinais);
+  const custo = custoEsperadoResolver(p, f.valorPedido);
+  const limite = limiteDoAtendente(ferramenta)!;
+  const fracosTxt = fracos.length > 0 ? `sinais fracos: ${fracos.join(", ")}; ` : "sem sinal; ";
+  const textoCusto = `${fracosTxt}p=${p.toFixed(2)}, custo esperado ${reais(custo)} contra ${reais(CUSTO_SINALIZAR_RS)} de sinalizar`;
+  const compensa = compensaResolverSozinho(p, f.valorPedido);
+  if (compensa && e.valorAcao <= limite) {
+    return d(0, acao, ferramenta, `Foto recebida, dentro do prazo e de ${reais(limite)} (${textoCusto}).`, regra);
+  }
   const porques: string[] = [];
-  if (fracos.length > 0) porques.push(`sinal fraco (${fracos.join(", ")})`);
-  if (reenvioAnterior) porques.push(`cliente com ${f.reenviosCliente12m} reenvio(s) em 12 meses`);
+  if (!compensa) porques.push("custo esperado acima do de sinalizar");
   if (e.valorAcao > limite) porques.push(`valor ${reais(e.valorAcao)} acima de ${reais(limite)}`);
-  if (porques.length === 0) porques.push(`custo esperado acima do de sinalizar`);
   return d(1, acao, ferramenta, `${porques.join("; ")} (${textoCusto}): prepara ${acao} para aprovação.`, regra);
 }
 
@@ -403,9 +400,11 @@ function porMotivo(e: EntradaPolitica): Parcial {
         { ferramentasAdicionais: ["orientar_suspensao_uso"] },
       );
     case "pagamento_pendente":
-      return d(1, "verificar_pagamento", "verificar_pagamento", "Pagamento pendente: fora da tabela de autonomia, uma pessoa revisa.", "pagamento_pendente");
+      return d(0, "verificar_e_informar_pagamento", "verificar_pagamento", "Pagamento pendente: verifica no gateway e informa a situação ao cliente.", "pagamento_pendente", {
+        ferramentasAdicionais: ["informar_status"],
+      });
     case "elogio":
-      return d(1, "agradecer", "agradecer", "Elogio: fora da tabela de autonomia, uma pessoa revisa.", "fora_da_tabela");
+      return d(0, "agradecer", "agradecer", "Elogio: agradece.", "elogio");
     case "sem_interacao":
       return d(1, "encerrar_sem_acao", "encerrar_conversa", "Sem interação do cliente: fora da tabela de autonomia, uma pessoa revisa.", "fora_da_tabela");
     case "outro":

@@ -188,6 +188,10 @@ export const REGRAS = {
     origem: "politicas.csv › categorias › pagamento_pendente.regra",
     texto: "Pix compensa em até 30 minutos; boleto em até 2 dias úteis.",
   },
+  elogio: {
+    origem: "politicas.csv › categorias › elogio.acoes_permitidas",
+    texto: "agradecer.",
+  },
 } as const satisfies Record<string, Regra>;
 
 export type IdRegra = keyof typeof REGRAS;

@@ -118,16 +118,20 @@ describe.each<[Motivo, string]>([
     expect(r.precisaAprovacaoDe).toBeUndefined();
   });
 
-  it("sinal fraco: nível 1", () => {
+  it("sinal fraco em pedido de R$ 120: a fórmula manda para nível 1", () => {
     expect(evidencia(motivo, {}, { sinais: ["software_de_edicao"] })).toMatchObject({ nivel: 1, ferramenta, precisaAprovacaoDe: "supervisor" });
+  });
+
+  it("sinal fraco em pedido de R$ 50: a fórmula resolve no nível 0", () => {
+    expect(evidencia(motivo, { valorPedido: 50 }, { valorAcao: 50, sinais: ["software_de_edicao"] })).toMatchObject({ nivel: 0, ferramenta });
   });
 
   it("valor da ação acima de R$ 200: nível 1", () => {
     expect(evidencia(motivo, { valorPedido: 210 }, { valorAcao: 200.01 })).toMatchObject({ nivel: 1, ferramenta });
   });
 
-  it("reenvio anterior em 12 meses: nível 1", () => {
-    expect(evidencia(motivo, { reenviosCliente12m: 1 })).toMatchObject({ nivel: 1, ferramenta });
+  it("1 reenvio em 12 meses não é sinal: continua nível 0", () => {
+    expect(evidencia(motivo, { reenviosCliente12m: 1 })).toMatchObject({ nivel: 0, ferramenta });
   });
 
   it.each<SinalEvidencia>(["hash_em_outro_pedido_ou_cliente", "exif_antes_da_entrega", "produto_da_foto_diferente_do_pedido"])(
@@ -225,12 +229,29 @@ describe("custo esperado: p × 0,45 × valor do pedido < R$ 6", () => {
     expect(r.justificativa).toContain("custo esperado acima do de sinalizar");
   });
 
-  it("sinal fraco com pedido pequeno: a tabela manda nível 1 mesmo se a fórmula compensasse", () => {
-    expect(compensaResolverSozinho(0.15, 50)).toBe(true);
-    expect(evidencia("avaria", { valorPedido: 50 }, { valorAcao: 50, sinais: ["software_de_edicao"] }).nivel).toBe(1);
+  it("um sinal fraco: R$ 88,88 resolve; R$ 88,89 vai para nível 1", () => {
+    const fraco: SinalEvidencia[] = ["software_de_edicao"];
+    expect(evidencia("avaria", { valorPedido: 88.88 }, { valorAcao: 50, sinais: fraco }).nivel).toBe(0);
+    expect(evidencia("avaria", { valorPedido: 88.89 }, { valorAcao: 50, sinais: fraco }).nivel).toBe(1);
   });
 
-  it("sinal forte com pedido pequeno: continua nível 2", () => {
+  it("dois sinais fracos: R$ 44,44 resolve; R$ 44,45 vai para nível 1", () => {
+    const fracos: SinalEvidencia[] = ["software_de_edicao", "cliente_2_ou_mais_reenvios_12m"];
+    expect(evidencia("avaria", { valorPedido: 44.44 }, { valorAcao: 44.44, sinais: fracos }).nivel).toBe(0);
+    expect(evidencia("avaria", { valorPedido: 44.45 }, { valorAcao: 44.45, sinais: fracos }).nivel).toBe(1);
+  });
+
+  it("2+ reenvios pelo fato do CRM contam como sinal fraco na fórmula", () => {
+    expect(evidencia("avaria", { valorPedido: 80, reenviosCliente12m: 3 }, { valorAcao: 80 }).nivel).toBe(0); // 0,15 × 0,45 × 80 = 5,40
+    expect(evidencia("avaria", { valorPedido: 100, reenviosCliente12m: 3 }, { valorAcao: 80 }).nivel).toBe(1); // 6,75
+  });
+
+  it("fórmula compensa mas valor da ação passa do limite: nível 1", () => {
+    expect(compensaResolverSozinho(0.05, 250)).toBe(true);
+    expect(evidencia("avaria", { valorPedido: 250 }, { valorAcao: 250 }).nivel).toBe(1);
+  });
+
+  it("sinal forte com pedido pequeno: nível 2 mesmo com a fórmula compensando", () => {
     expect(compensaResolverSozinho(0.9, 10)).toBe(true);
     expect(evidencia("avaria", { valorPedido: 10 }, { valorAcao: 10, sinais: ["exif_antes_da_entrega"] }).nivel).toBe(2);
   });
@@ -374,8 +395,26 @@ describe("confiança do classificador", () => {
 // ---------- Fora da tabela e validação ----------
 
 describe("fora da tabela", () => {
-  it.each<Motivo>(["pagamento_pendente", "elogio", "sem_interacao", "outro"])("%s: nível 1", (motivo) => {
+  it.each<Motivo>(["sem_interacao", "outro"])("%s: nível 1", (motivo) => {
     expect(decidirNivel(entrada(motivo)).nivel).toBe(1);
+  });
+});
+
+describe("pagamento pendente e elogio", () => {
+  it("pagamento pendente: nível 0, verifica no gateway e informa", () => {
+    expect(decidirNivel(entrada("pagamento_pendente"))).toMatchObject({
+      nivel: 0,
+      ferramenta: "verificar_pagamento",
+      ferramentasAdicionais: ["informar_status"],
+    });
+  });
+  it("elogio: nível 0, agradece", () => {
+    const r = decidirNivel(entrada("elogio"));
+    expect(r).toMatchObject({ nivel: 0, ferramenta: "agradecer" });
+    expect(r.justificativa).toContain("elogio.acoes_permitidas");
+  });
+  it("no Reclame Aqui sobem para nível 1", () => {
+    expect(decidirNivel(entrada("elogio", {}, { canal: "reclame_aqui" })).nivel).toBe(1);
   });
 });
 
